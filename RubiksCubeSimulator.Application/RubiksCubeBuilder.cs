@@ -8,29 +8,38 @@ public sealed class RubiksCubeBuilder : IRubiksCubeBuilder
 {
     public RubiksCube BuildSolvedRubiksCube(int dimension)
     {
-        ArgumentOutOfRangeException.ThrowIfLessThan(dimension, 2);
+        ThrowExceptionIfDimensionIsNotCorrect(dimension);
 
-        var upFace = BuildRubiksCubeFace(RubiksCubeColor.White);
-        var rightFace = BuildRubiksCubeFace(RubiksCubeColor.Blue);
-        var frontFace = BuildRubiksCubeFace(RubiksCubeColor.Red);
+        var upFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.White);
+        var rightFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Blue);
+        var frontFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Red);
 
-        var downFace = BuildRubiksCubeFace(RubiksCubeColor.Yellow);
-        var leftFace = BuildRubiksCubeFace(RubiksCubeColor.Green);
-        var backFace = BuildRubiksCubeFace(RubiksCubeColor.Orange);
+        var downFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Yellow);
+        var leftFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Green);
+        var backFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Orange);
 
         var cube = new RubiksCube(dimension, upFace, rightFace, frontFace, downFace, leftFace, backFace);
         return cube;
+    }
+    private static void ThrowExceptionIfDimensionIsNotCorrect(int dimension)
+    {
+        if (dimension >= 2) return;
 
-        RubiksCubeFace BuildRubiksCubeFace(RubiksCubeColor color)
-        {
-            var stickerColors = Enumerable
-                .Repeat(
-                    Enumerable.Repeat(color, dimension).ToImmutableArray(),
-                    dimension)
-                .ToImmutableArray();
+        const string paramName = nameof(dimension);
+        var message = $"Rubik's cube dimension must be greater or equal '2'. Actual dimension: '{dimension}'.";
 
-            var face = new RubiksCubeFace(stickerColors);
-            return face;
-        }
+        throw new ArgumentOutOfRangeException(paramName, message);
+    }
+
+    private static RubiksCubeFace BuildSolidColorRubiksCubeFace(int dimension, RubiksCubeColor color)
+    {
+        var stickerColors = Enumerable
+            .Repeat(
+                Enumerable.Repeat(color, dimension).ToImmutableArray(),
+                dimension)
+            .ToImmutableArray();
+
+        var face = new RubiksCubeFace(stickerColors);
+        return face;
     }
 }
