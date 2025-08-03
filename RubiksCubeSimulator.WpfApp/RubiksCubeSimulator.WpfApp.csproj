@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <AssemblyName>Rubik's Cube Simulator</AssemblyName>
+        <ApplicationIcon>Resources\Icons\Icon32.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
