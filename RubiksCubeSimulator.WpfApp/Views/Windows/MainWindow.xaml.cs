@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 
-namespace RubiksCubeSimulator.WpfApp;
+namespace RubiksCubeSimulator.WpfApp.Views.Windows;
 
-public partial class MainWindow : Window
+internal partial class MainWindow : Window
 {
     public MainWindow()
     {

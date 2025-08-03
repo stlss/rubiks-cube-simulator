@@ -1,5 +1,5 @@
 ﻿namespace RubiksCubeSimulator.WpfApp;
 
-public partial class App : System.Windows.Application
+internal partial class App : System.Windows.Application
 {
 }
