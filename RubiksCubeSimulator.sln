@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.UnitTests", "RubiksCubeSimulator.UnitTests\RubiksCubeSimulator.UnitTests.csproj", "{B659BB56-C5C7-401A-B790-26B8E10D8C06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.WpfApp", "RubiksCubeSimulator.WpfApp\RubiksCubeSimulator.WpfApp.csproj", "{DE6D7576-BC86-435A-9F39-129247248529}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.App", "RubiksCubeSimulator.Wpf.App\RubiksCubeSimulator.Wpf.App.csproj", "{DE6D7576-BC86-435A-9F39-129247248529}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

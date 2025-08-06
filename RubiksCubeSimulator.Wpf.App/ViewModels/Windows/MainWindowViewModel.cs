@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.WpfApp.Infrastructure.Providers;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
 
-namespace RubiksCubeSimulator.WpfApp.ViewModels.Windows;
+namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 
 internal sealed class MainWindowViewModel : ObservableObject
 {

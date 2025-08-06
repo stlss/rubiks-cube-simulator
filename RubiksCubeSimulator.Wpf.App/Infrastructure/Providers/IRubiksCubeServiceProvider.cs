@@ -2,7 +2,7 @@
 using RubiksCubeSimulator.Application;
 using RubiksCubeSimulator.Domain.Services;
 
-namespace RubiksCubeSimulator.WpfApp.Infrastructure.Providers;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
 
 internal interface IRubiksCubeServiceProvider
 {

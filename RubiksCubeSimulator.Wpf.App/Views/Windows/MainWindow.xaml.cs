@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace RubiksCubeSimulator.WpfApp.Views.Windows;
+namespace RubiksCubeSimulator.Wpf.App.Views.Windows;
 
 internal partial class MainWindow : Window
 {
