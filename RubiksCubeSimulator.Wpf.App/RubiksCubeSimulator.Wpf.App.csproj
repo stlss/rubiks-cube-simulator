@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RubiksCubeSimulator.Application\RubiksCubeSimulator.Application.csproj" />
+      <ProjectReference Include="..\RubiksCubeSimulator.Wpf.UserControls\RubiksCubeSimulator.Wpf.UserControls.csproj" />
     </ItemGroup>
 
     <ItemGroup>
