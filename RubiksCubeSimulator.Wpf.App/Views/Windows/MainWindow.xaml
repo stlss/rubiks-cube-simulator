@@ -14,7 +14,7 @@
         <viewModels:MainWindowViewModel />
     </Window.DataContext>
 
-    <Grid>
+    <Grid Background="GhostWhite">
         <Viewbox>
             <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeControlViewModel}"
                                                   Margin="50"/>
