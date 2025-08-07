@@ -16,7 +16,8 @@
 
     <Grid>
         <Viewbox>
-            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeControlViewModel}"/>
+            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeControlViewModel}"
+                                                  Margin="50"/>
         </Viewbox>
     </Grid>
 </Window>
