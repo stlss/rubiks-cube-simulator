@@ -5,11 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="50" d:DesignWidth="50">
-
-    <UserControl.DataContext>
-        <cubeViewModels:RubiksCubeStickerControlViewModel />
-    </UserControl.DataContext>
 
     <Grid Background="{Binding StickerColorBrush}"/>
 </UserControl>

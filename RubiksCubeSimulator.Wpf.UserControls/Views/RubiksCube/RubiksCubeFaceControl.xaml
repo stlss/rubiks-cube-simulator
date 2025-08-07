@@ -6,11 +6,8 @@
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              xmlns:cubeViews="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeFaceControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="150" d:DesignWidth="150">
-
-    <UserControl.DataContext>
-        <cubeViewModels:RubiksCubeFaceControlViewModel />
-    </UserControl.DataContext>
 
     <ItemsControl ItemsSource="{Binding StickerControlViewModels}">
         <ItemsControl.ItemsPanel>
