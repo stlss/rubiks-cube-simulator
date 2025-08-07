@@ -8,10 +8,22 @@ internal interface IRubiksCubeFaceControlViewModelBuilder
     public RubiksCubeFaceControlViewModel Build(RubiksCubeFace cubeFace);
 }
 
-internal sealed class RubiksCubeFaceControlViewModelBuilder : IRubiksCubeFaceControlViewModelBuilder
+internal sealed class RubiksCubeFaceControlViewModelBuilder(
+    IRubiksCubeStickerControlViewModelBuilder stickerViewModelBuilder)
+    : IRubiksCubeFaceControlViewModelBuilder
 {
     public RubiksCubeFaceControlViewModel Build(RubiksCubeFace cubeFace)
     {
-        throw new NotImplementedException();
+        var stickerViewModels = cubeFace.StickerColors
+            .SelectMany(row => row)
+            .Select(stickerViewModelBuilder.Build)
+            .ToList();
+
+        var viewModel = new RubiksCubeFaceControlViewModel
+        {
+            StickerControlViewModels = stickerViewModels,
+        };
+
+        return viewModel;
     }
 }
