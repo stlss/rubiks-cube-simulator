@@ -2,9 +2,9 @@
 
 public sealed class RubiksCubeControlViewModel
 {
-    public RubiksCubeFaceControlViewModel UpFaceControlViewModel { get; init; } = new();
+    public RubiksCubeFaceControlViewModel UpFaceViewModel { get; init; } = new();
 
-    public RubiksCubeFaceControlViewModel RightFaceControlViewModel { get; init; } = new();
+    public RubiksCubeFaceControlViewModel RightFaceViewModel { get; init; } = new();
 
-    public RubiksCubeFaceControlViewModel FrontFaceControlViewModel { get; init; } = new();
+    public RubiksCubeFaceControlViewModel FrontFaceViewModel { get; init; } = new();
 }

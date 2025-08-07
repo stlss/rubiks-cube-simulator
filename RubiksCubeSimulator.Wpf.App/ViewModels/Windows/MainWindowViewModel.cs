@@ -9,7 +9,7 @@ namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 internal sealed class MainWindowViewModel : ObservableObject
 {
     private readonly IRubiksCubeBuilder _cubeBuilder;
-    private readonly IRubiksCubeControlViewModelBuilder _cubeControlViewModelBuilder;
+    private readonly IRubiksCubeControlViewModelBuilder _cubeViewModelBuilder;
 
     private RubiksCubeControlViewModel _cubeControlViewModel = new();
 
@@ -25,15 +25,15 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private MainWindowViewModel(IRubiksCubeServiceProvider serviceProvider)
     {
-        _cubeBuilder = serviceProvider.GetRubiksCubeBuilder();
-        _cubeControlViewModelBuilder = serviceProvider.GetRubiksCubeControlViewModelBuilder();
+        _cubeBuilder = serviceProvider.GetCubeBuilder();
+        _cubeViewModelBuilder = serviceProvider.GetCubeViewModelBuilder();
 
-        SetCubeControlViewModel();
+        SetCubeViewModel();
     }
 
-    private void SetCubeControlViewModel()
+    private void SetCubeViewModel()
     {
         var cube = _cubeBuilder.BuildSolvedRubiksCube(3);
-        CubeControlViewModel = _cubeControlViewModelBuilder.Build(cube);
+        CubeControlViewModel = _cubeViewModelBuilder.Build(cube);
     }
 }

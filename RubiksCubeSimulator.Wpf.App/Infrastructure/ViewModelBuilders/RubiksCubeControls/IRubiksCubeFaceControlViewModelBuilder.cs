@@ -21,7 +21,7 @@ internal sealed class RubiksCubeFaceControlViewModelBuilder(
 
         var viewModel = new RubiksCubeFaceControlViewModel
         {
-            StickerControlViewModels = stickerViewModels,
+            StickerViewModels = stickerViewModels,
         };
 
         return viewModel;

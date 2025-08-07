@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeFaceControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="150" d:DesignWidth="150">
 
-    <ItemsControl ItemsSource="{Binding StickerControlViewModels}">
+    <ItemsControl ItemsSource="{Binding StickerViewModels}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <UniformGrid Rows="{Binding Dimension}"

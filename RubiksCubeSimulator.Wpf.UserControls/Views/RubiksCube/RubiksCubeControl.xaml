@@ -12,7 +12,7 @@
     <Viewbox>
         <Canvas Height="165" Width="165">
             <cubeControls:RubiksCubeFaceControl Width="100" Height="100"
-                                                DataContext="{Binding UpFaceControlViewModel}"
+                                                DataContext="{Binding UpFaceViewModel}"
                                                 Canvas.Right="82.5" Canvas.Bottom="100">
 
                 <cubeControls:RubiksCubeFaceControl.RenderTransform>
@@ -26,7 +26,7 @@
             </cubeControls:RubiksCubeFaceControl>
 
             <cubeControls:RubiksCubeFaceControl Width="100" Height="100"
-                                                DataContext="{Binding RightFaceControlViewModel}"
+                                                DataContext="{Binding RightFaceViewModel}"
                                                 Canvas.Left="82.5" Canvas.Bottom="0">
 
                 <cubeControls:RubiksCubeFaceControl.RenderTransform>
@@ -41,7 +41,7 @@
             </cubeControls:RubiksCubeFaceControl>
 
             <cubeControls:RubiksCubeFaceControl Width="100" Height="100"
-                                                DataContext="{Binding FrontFaceControlViewModel}"
+                                                DataContext="{Binding FrontFaceViewModel}"
                                                 Canvas.Left="0" Canvas.Bottom="0">
 
                 <cubeControls:RubiksCubeFaceControl.RenderTransform>

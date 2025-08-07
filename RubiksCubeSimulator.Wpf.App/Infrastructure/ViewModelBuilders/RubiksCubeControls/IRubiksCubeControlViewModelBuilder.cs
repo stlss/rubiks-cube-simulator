@@ -20,9 +20,9 @@ internal sealed class RubiksCubeControlViewModelBuilder(
 
         var cubeViewModel = new RubiksCubeControlViewModel
         {
-            UpFaceControlViewModel = upFaceViewModel,
-            RightFaceControlViewModel = rightFaceViewModel,
-            FrontFaceControlViewModel = frontFaceViewModel,
+            UpFaceViewModel = upFaceViewModel,
+            RightFaceViewModel = rightFaceViewModel,
+            FrontFaceViewModel = frontFaceViewModel,
         };
 
         return cubeViewModel;

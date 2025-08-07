@@ -7,9 +7,9 @@ namespace RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
 
 internal interface IRubiksCubeServiceProvider
 {
-    public IRubiksCubeBuilder GetRubiksCubeBuilder();
+    public IRubiksCubeBuilder GetCubeBuilder();
 
-    public IRubiksCubeControlViewModelBuilder GetRubiksCubeControlViewModelBuilder();
+    public IRubiksCubeControlViewModelBuilder GetCubeViewModelBuilder();
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -34,9 +34,9 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
         services.AddSingleton<IRubiksCubeControlViewModelBuilder, RubiksCubeControlViewModelBuilder>();
     }
 
-    public IRubiksCubeBuilder GetRubiksCubeBuilder()
+    public IRubiksCubeBuilder GetCubeBuilder()
         => _serviceProvider.GetRequiredService<IRubiksCubeBuilder>();
 
-    public IRubiksCubeControlViewModelBuilder GetRubiksCubeControlViewModelBuilder()
+    public IRubiksCubeControlViewModelBuilder GetCubeViewModelBuilder()
         => _serviceProvider.GetRequiredService<IRubiksCubeControlViewModelBuilder>();
 }
