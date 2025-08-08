@@ -21,13 +21,13 @@ public class RubiksCubeBuilderTests
 
         var cube = _builder.BuildSolvedRubiksCube(dimension);
 
-        var faces = new List<RubiksCubeFace>()
+        var faces = new List<RubiksCubeFace>
         {
             cube.UpFace, cube.RightFace, cube.FrontFace,
             cube.DownFace, cube.LeftFace, cube.BackFace,
         };
 
-        var colors = new List<RubiksCubeColor>()
+        var colors = new List<RubiksCubeColor>
         {
             RubiksCubeColor.White, RubiksCubeColor.Blue, RubiksCubeColor.Red,
             RubiksCubeColor.Yellow, RubiksCubeColor.Green, RubiksCubeColor.Orange,
@@ -50,7 +50,7 @@ public class RubiksCubeBuilderTests
         {
             foreach (var (face, color) in facesWithColors)
             {
-                var stickerColors = face.StickerColors.SelectMany(x => x);
+                var stickerColors = face.StickerColors.SelectMany(row => row);
                 Assert.That(stickerColors, Is.All.EqualTo(color));
             }
         });
