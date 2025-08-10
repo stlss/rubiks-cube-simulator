@@ -4,11 +4,11 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeBuilder;
 
-public sealed class RubiksCubeBuilder : IRubiksCubeBuilder
+public sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuildExceptionThrower) : IRubiksCubeBuilder
 {
     public RubiksCube BuildSolvedRubiksCube(int cubeDimension)
     {
-        ThrowExceptionIfDimensionIsNotCorrect(cubeDimension);
+        cubeBuildExceptionThrower.ThrowExceptionIfRubiksCubeDimensionIsNotCorrect(cubeDimension);
 
         var upFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.White);
         var rightFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Blue);
@@ -20,15 +20,6 @@ public sealed class RubiksCubeBuilder : IRubiksCubeBuilder
 
         var cube = new RubiksCube(cubeDimension, upFace, rightFace, frontFace, downFace, leftFace, backFace);
         return cube;
-    }
-    private static void ThrowExceptionIfDimensionIsNotCorrect(int dimension)
-    {
-        if (dimension >= 2) return;
-
-        const string paramName = nameof(dimension);
-        var message = $"Rubik's cube dimension must be greater or equal '2'. Actual dimension: '{dimension}'.";
-
-        throw new ArgumentOutOfRangeException(paramName, message);
     }
 
     private static RubiksCubeFace BuildSolidColorRubiksCubeFace(int dimension, RubiksCubeColor color)
