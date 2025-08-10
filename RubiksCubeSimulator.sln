@@ -7,9 +7,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RootFiles", "RootFiles", "{
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Domain", "RubiksCubeSimulator.Domain\RubiksCubeSimulator.Domain.csproj", "{1E7B2128-EED3-47D2-923D-E9068DF33B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Application", "RubiksCubeSimulator.Application\RubiksCubeSimulator.Application.csproj", "{C9D8700D-DC07-4A16-A1C5-73C2A0E9725B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.UnitTests", "RubiksCubeSimulator.UnitTests\RubiksCubeSimulator.UnitTests.csproj", "{B659BB56-C5C7-401A-B790-26B8E10D8C06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.App", "RubiksCubeSimulator.Wpf.App\RubiksCubeSimulator.Wpf.App.csproj", "{DE6D7576-BC86-435A-9F39-129247248529}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.UserControls", "RubiksCubeSimulator.Wpf.UserControls\RubiksCubeSimulator.Wpf.UserControls.csproj", "{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E7B2128-EED3-47D2-923D-E9068DF33B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7B2128-EED3-47D2-923D-E9068DF33B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7B2128-EED3-47D2-923D-E9068DF33B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7B2128-EED3-47D2-923D-E9068DF33B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9D8700D-DC07-4A16-A1C5-73C2A0E9725B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D8700D-DC07-4A16-A1C5-73C2A0E9725B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9D8700D-DC07-4A16-A1C5-73C2A0E9725B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9D8700D-DC07-4A16-A1C5-73C2A0E9725B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B659BB56-C5C7-401A-B790-26B8E10D8C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B659BB56-C5C7-401A-B790-26B8E10D8C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B659BB56-C5C7-401A-B790-26B8E10D8C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B659BB56-C5C7-401A-B790-26B8E10D8C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6D7576-BC86-435A-9F39-129247248529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6D7576-BC86-435A-9F39-129247248529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6D7576-BC86-435A-9F39-129247248529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6D7576-BC86-435A-9F39-129247248529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
