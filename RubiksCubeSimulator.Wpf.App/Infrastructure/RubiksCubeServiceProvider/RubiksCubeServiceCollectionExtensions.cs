@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
 
 public static class RubiksCubeServiceCollectionExtensions
 {

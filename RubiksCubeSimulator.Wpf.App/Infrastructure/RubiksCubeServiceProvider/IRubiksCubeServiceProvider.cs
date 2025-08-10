@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
 
 internal interface IRubiksCubeServiceProvider
 {

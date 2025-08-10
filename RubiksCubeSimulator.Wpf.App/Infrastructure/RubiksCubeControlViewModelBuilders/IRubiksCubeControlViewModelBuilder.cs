@@ -1,7 +1,7 @@
 ﻿using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
 
 internal interface IRubiksCubeControlViewModelBuilder
 {

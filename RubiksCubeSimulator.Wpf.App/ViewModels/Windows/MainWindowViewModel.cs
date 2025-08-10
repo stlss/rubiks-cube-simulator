@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.Providers;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
