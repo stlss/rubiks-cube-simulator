@@ -1,4 +1,5 @@
 ﻿using RubiksCubeSimulator.Application;
+using RubiksCubeSimulator.Application.RubiksCubeBuilder;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
 namespace RubiksCubeSimulator.UnitTests;

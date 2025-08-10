@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Application;
+using RubiksCubeSimulator.Application.RubiksCubeBuilder;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
 

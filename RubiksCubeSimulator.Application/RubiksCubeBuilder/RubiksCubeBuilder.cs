@@ -2,7 +2,7 @@
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
-namespace RubiksCubeSimulator.Application;
+namespace RubiksCubeSimulator.Application.RubiksCubeBuilder;
 
 public sealed class RubiksCubeBuilder : IRubiksCubeBuilder
 {
