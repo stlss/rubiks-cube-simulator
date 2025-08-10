@@ -1,5 +1,6 @@
-﻿using RubiksCubeSimulator.Application;
-using RubiksCubeSimulator.Application.RubiksCubeBuilder;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RubiksCubeSimulator.Application.Infrastructure.Extensions;
+using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
 namespace RubiksCubeSimulator.UnitTests;
@@ -7,20 +8,21 @@ namespace RubiksCubeSimulator.UnitTests;
 [TestFixture]
 public class RubiksCubeBuilderTests
 {
-    private RubiksCubeBuilder _builder = null!;
+    private IRubiksCubeBuilder _builder = null!;
 
     [SetUp]
     public void SetUp()
     {
-        _builder = new RubiksCubeBuilder();
+        var provider = new ServiceCollection().AddRubiksCubeBuilder().BuildServiceProvider();
+        _builder = provider.GetRequiredService<IRubiksCubeBuilder>();
     }
 
     [Test]
     public void Build_When_DimensionIsCorrect_Should_Ok()
     {
-        const int dimension = 5;
+        const int cubeDimension = 5;
 
-        var cube = _builder.BuildSolvedRubiksCube(dimension);
+        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
 
         var faces = new List<RubiksCubeFace>
         {
@@ -36,14 +38,14 @@ public class RubiksCubeBuilderTests
 
         var facesWithColors = faces.Zip(colors);
 
-        Assert.That(cube.Dimension, Is.EqualTo(dimension));
+        Assert.That(cube.Dimension, Is.EqualTo(cubeDimension));
 
         Assert.Multiple(() =>
         {
             foreach (var face in faces)
             {
-                Assert.That(face.StickerColors, Has.Length.EqualTo(dimension));
-                Assert.That(face.StickerColors, Is.All.Length.EqualTo(dimension));
+                Assert.That(face.StickerColors, Has.Length.EqualTo(cubeDimension));
+                Assert.That(face.StickerColors, Is.All.Length.EqualTo(cubeDimension));
             }
         });
 
@@ -60,12 +62,14 @@ public class RubiksCubeBuilderTests
     [Test]
     public void Build_When_DimensionIsNotCorrect_Should_Error()
     {
-        const int dimension = -3;
+        const int cubeDimension = -3;
 
-        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.BuildSolvedRubiksCube(dimension));
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.BuildSolvedRubiksCube(cubeDimension));
 
-        const string expectedParamName = nameof(dimension);
-        var expectedMessage = $"Rubik's cube dimension must be greater or equal '2'. Actual dimension: '{dimension}'. (Parameter 'dimension')";
+        const string expectedParamName = nameof(cubeDimension);
+
+        var expectedMessage = $"Rubik's cube dimension must be greater or equal '2'. " +
+                              $"Actual cube dimension: '{cubeDimension}'. (Parameter '{expectedParamName}')";
 
         Assert.Multiple(() =>
         {
