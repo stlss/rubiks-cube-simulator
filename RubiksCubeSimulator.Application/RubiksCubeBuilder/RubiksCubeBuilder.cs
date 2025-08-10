@@ -10,23 +10,23 @@ public sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuild
     {
         cubeBuildExceptionThrower.ThrowExceptionIfRubiksCubeDimensionIsNotCorrect(cubeDimension);
 
-        var upFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.White);
-        var rightFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Blue);
-        var frontFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Red);
+        var upFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.White);
+        var rightFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.Blue);
+        var frontFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.Red);
 
-        var downFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Yellow);
-        var leftFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Green);
-        var backFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Orange);
+        var downFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.Yellow);
+        var leftFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.Green);
+        var backFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeStickerColor.Orange);
 
         var cube = new RubiksCube(cubeDimension, upFace, rightFace, frontFace, downFace, leftFace, backFace);
         return cube;
     }
 
-    private static RubiksCubeFace BuildSolidColorRubiksCubeFace(int dimension, RubiksCubeColor color)
+    private static RubiksCubeFace BuildSolidColorRubiksCubeFace(int dimension, RubiksCubeStickerColor stickerColor)
     {
         var stickerColors = Enumerable
             .Repeat(
-                Enumerable.Repeat(color, dimension).ToImmutableArray(),
+                Enumerable.Repeat(stickerColor, dimension).ToImmutableArray(),
                 dimension)
             .ToImmutableArray();
 

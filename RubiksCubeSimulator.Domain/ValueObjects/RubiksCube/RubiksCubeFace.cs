@@ -2,4 +2,4 @@
 
 namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
-public sealed record RubiksCubeFace(ImmutableArray<ImmutableArray<RubiksCubeColor>> StickerColors);
+public sealed record RubiksCubeFace(ImmutableArray<ImmutableArray<RubiksCubeStickerColor>> StickerColors);

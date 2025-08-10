@@ -30,10 +30,10 @@ public class RubiksCubeBuilderTests
             cube.DownFace, cube.LeftFace, cube.BackFace,
         };
 
-        var colors = new List<RubiksCubeColor>
+        var colors = new List<RubiksCubeStickerColor>
         {
-            RubiksCubeColor.White, RubiksCubeColor.Blue, RubiksCubeColor.Red,
-            RubiksCubeColor.Yellow, RubiksCubeColor.Green, RubiksCubeColor.Orange,
+            RubiksCubeStickerColor.White, RubiksCubeStickerColor.Blue, RubiksCubeStickerColor.Red,
+            RubiksCubeStickerColor.Yellow, RubiksCubeStickerColor.Green, RubiksCubeStickerColor.Orange,
         };
 
         var facesWithColors = faces.Zip(colors);

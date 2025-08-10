@@ -1,6 +1,6 @@
 ﻿namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
-public enum RubiksCubeColor
+public enum RubiksCubeStickerColor
 {
     White,
     Blue,

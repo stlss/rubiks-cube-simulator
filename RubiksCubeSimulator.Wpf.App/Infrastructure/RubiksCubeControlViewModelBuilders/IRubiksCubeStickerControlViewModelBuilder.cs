@@ -6,19 +6,19 @@ namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelB
 
 internal interface IRubiksCubeStickerControlViewModelBuilder
 {
-    public RubiksCubeStickerControlViewModel Build(RubiksCubeColor color);
+    public RubiksCubeStickerControlViewModel Build(RubiksCubeStickerColor stickerColor);
 }
 
 internal sealed class RubiksCubeStickerControlViewModelBuilder : IRubiksCubeStickerControlViewModelBuilder
 {
-    private static readonly Dictionary<RubiksCubeColor, SolidColorBrush> BrushByColor = new()
+    private static readonly Dictionary<RubiksCubeStickerColor, SolidColorBrush> BrushByStickerColor = new()
     {
-        [RubiksCubeColor.White] = CreateBrush(255, 255, 255),
-        [RubiksCubeColor.Blue] = CreateBrush(36,90,255),
-        [RubiksCubeColor.Red] = CreateBrush(222,28,48),
-        [RubiksCubeColor.Yellow] = CreateBrush(240,255,16),
-        [RubiksCubeColor.Green] = CreateBrush(98,232,102),
-        [RubiksCubeColor.Orange] = CreateBrush(248,176,24),
+        [RubiksCubeStickerColor.White] = CreateBrush(255, 255, 255),
+        [RubiksCubeStickerColor.Blue] = CreateBrush(36,90,255),
+        [RubiksCubeStickerColor.Red] = CreateBrush(222,28,48),
+        [RubiksCubeStickerColor.Yellow] = CreateBrush(240,255,16),
+        [RubiksCubeStickerColor.Green] = CreateBrush(98,232,102),
+        [RubiksCubeStickerColor.Orange] = CreateBrush(248,176,24),
     };
 
     private static SolidColorBrush CreateBrush(byte r, byte g, byte b)
@@ -26,9 +26,9 @@ internal sealed class RubiksCubeStickerControlViewModelBuilder : IRubiksCubeStic
         return new SolidColorBrush(Color.FromRgb(r, g, b));
     }
 
-    public RubiksCubeStickerControlViewModel Build(RubiksCubeColor color)
+    public RubiksCubeStickerControlViewModel Build(RubiksCubeStickerColor stickerColor)
     {
-        var brush = BrushByColor[color];
+        var brush = BrushByStickerColor[stickerColor];
 
         var viewModel = new RubiksCubeStickerControlViewModel
         {
