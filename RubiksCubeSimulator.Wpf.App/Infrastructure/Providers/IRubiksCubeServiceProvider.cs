@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RubiksCubeSimulator.Application;
-using RubiksCubeSimulator.Application.RubiksCubeBuilder;
+using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelBuilders.RubiksCubeControls;
 
@@ -28,11 +27,8 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<IRubiksCubeBuilder, RubiksCubeBuilder>();
-
-        services.AddSingleton<IRubiksCubeStickerControlViewModelBuilder, RubiksCubeStickerControlViewModelBuilder>();
-        services.AddSingleton<IRubiksCubeFaceControlViewModelBuilder, RubiksCubeFaceControlViewModelBuilder>();
-        services.AddSingleton<IRubiksCubeControlViewModelBuilder, RubiksCubeControlViewModelBuilder>();
+        services.AddRubiksCubeBuilder();
+        services.AddRubiksCubeControlViewModelBuilders();
     }
 
     public IRubiksCubeBuilder GetCubeBuilder()
