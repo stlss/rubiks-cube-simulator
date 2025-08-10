@@ -2,7 +2,7 @@
 using RubiksCubeSimulator.Application.RubiksCubeBuilder;
 using RubiksCubeSimulator.Domain.Services;
 
-namespace RubiksCubeSimulator.Application.Infrastructure.Extensions;
+namespace RubiksCubeSimulator.Application;
 
 public static class RubiksCubeServiceCollectionExtensions
 {
