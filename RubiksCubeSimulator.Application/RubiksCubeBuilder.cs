@@ -6,19 +6,19 @@ namespace RubiksCubeSimulator.Application;
 
 public sealed class RubiksCubeBuilder : IRubiksCubeBuilder
 {
-    public RubiksCube BuildSolvedRubiksCube(int dimension)
+    public RubiksCube BuildSolvedRubiksCube(int cubeDimension)
     {
-        ThrowExceptionIfDimensionIsNotCorrect(dimension);
+        ThrowExceptionIfDimensionIsNotCorrect(cubeDimension);
 
-        var upFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.White);
-        var rightFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Blue);
-        var frontFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Red);
+        var upFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.White);
+        var rightFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Blue);
+        var frontFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Red);
 
-        var downFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Yellow);
-        var leftFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Green);
-        var backFace = BuildSolidColorRubiksCubeFace(dimension, RubiksCubeColor.Orange);
+        var downFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Yellow);
+        var leftFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Green);
+        var backFace = BuildSolidColorRubiksCubeFace(cubeDimension, RubiksCubeColor.Orange);
 
-        var cube = new RubiksCube(dimension, upFace, rightFace, frontFace, downFace, leftFace, backFace);
+        var cube = new RubiksCube(cubeDimension, upFace, rightFace, frontFace, downFace, leftFace, backFace);
         return cube;
     }
     private static void ThrowExceptionIfDimensionIsNotCorrect(int dimension)
