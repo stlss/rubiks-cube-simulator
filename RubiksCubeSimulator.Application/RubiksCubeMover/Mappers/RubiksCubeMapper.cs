@@ -11,7 +11,7 @@ public interface IRubiksCubeMapper
     public RubiksCube Map(MutableRubiksCube.MutableRubiksCube mutableCube);
 }
 
-internal sealed class MutableRubiksCubeMapper : IRubiksCubeMapper
+internal sealed class RubiksCubeMapper : IRubiksCubeMapper
 {
     public MutableRubiksCube.MutableRubiksCube Map(RubiksCube cube)
     {
