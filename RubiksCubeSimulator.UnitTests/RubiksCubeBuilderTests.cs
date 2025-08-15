@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Application;
+using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 

@@ -1,4 +1,6 @@
-﻿namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
+﻿using RubiksCubeSimulator.Application.Infrastructure.Extensions;
+
+namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 
 public interface IClockwiseMutableRubiksCubeMover : IMutableRubiksCubeMover
 {

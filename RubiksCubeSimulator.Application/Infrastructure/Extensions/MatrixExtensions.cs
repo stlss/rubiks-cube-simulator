@@ -1,4 +1,4 @@
-﻿namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
+﻿namespace RubiksCubeSimulator.Application.Infrastructure.Extensions;
 
 internal static class MatrixExtensions
 {
