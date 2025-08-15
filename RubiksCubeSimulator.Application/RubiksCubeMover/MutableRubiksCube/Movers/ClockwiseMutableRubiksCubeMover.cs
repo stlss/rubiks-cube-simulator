@@ -1,24 +1,12 @@
 ﻿namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 
-public interface IClockwiseMutableRubiksCubeMover
+public interface IClockwiseMutableRubiksCubeMover : IMutableRubiksCubeMover
 {
-    public MutableRubiksCube MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber);
-
-    public MutableRubiksCube MoveMutableRubiksCubeRight(MutableRubiksCube cube, int sliceNumber);
-
-    public MutableRubiksCube MoveMutableRubiksCubeFront(MutableRubiksCube cube, int sliceNumber);
-
-
-    public MutableRubiksCube MoveMutableRubiksCubeDown(MutableRubiksCube cube, int sliceNumber);
-
-    public MutableRubiksCube MoveMutableRubiksCubeLeft(MutableRubiksCube cube, int sliceNumber);
-
-    public MutableRubiksCube MoveMutableRubiksCubeBack(MutableRubiksCube cube, int sliceNumber);
 }
 
 internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksCubeMover
 {
-    public MutableRubiksCube MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber)
     {
         var frontColors = cube.FrontFace.StickerColors;
         var leftColors = cube.LeftFace.StickerColors;
@@ -41,11 +29,9 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
 
         if (sliceNumber == 0) cube.UpFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.DownFace.StickerColors.CounterclockwiseRotateSquareMatrix();
-
-        return cube;
     }
 
-    public MutableRubiksCube MoveMutableRubiksCubeDown(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeDown(MutableRubiksCube cube, int sliceNumber)
     {
         var frontColors = cube.FrontFace.StickerColors;
         var rightColors = cube.RightFace.StickerColors;
@@ -68,12 +54,10 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
 
         if (sliceNumber == 0) cube.DownFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.UpFace.StickerColors.CounterclockwiseRotateSquareMatrix();
-
-        return cube;
     }
 
 
-    public MutableRubiksCube MoveMutableRubiksCubeRight(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeRight(MutableRubiksCube cube, int sliceNumber)
     {
         var frontColors = cube.FrontFace.StickerColors;
         var upColors = cube.UpFace.StickerColors;
@@ -97,12 +81,12 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         if (sliceNumber == 0) cube.RightFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.LeftFace.StickerColors.CounterclockwiseRotateSquareMatrix();
 
-        return cube;
+        return;
 
         int ReverseIndex(int index) => cube.Dimension - index - 1;
     }
 
-    public MutableRubiksCube MoveMutableRubiksCubeLeft(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeLeft(MutableRubiksCube cube, int sliceNumber)
     {
         var frontColors = cube.FrontFace.StickerColors;
         var downColors = cube.DownFace.StickerColors;
@@ -126,13 +110,13 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         if (sliceNumber == 0) cube.LeftFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.RightFace.StickerColors.CounterclockwiseRotateSquareMatrix();
 
-        return cube;
+        return;
 
         int ReverseIndex(int index) => cube.Dimension - index - 1;
     }
 
 
-    public MutableRubiksCube MoveMutableRubiksCubeFront(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeFront(MutableRubiksCube cube, int sliceNumber)
     {
         var rightColors = cube.RightFace.StickerColors;
         var downColors = cube.DownFace.StickerColors;
@@ -156,12 +140,12 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         if (sliceNumber == 0) cube.FrontFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.BackFace.StickerColors.CounterclockwiseRotateSquareMatrix();
 
-        return cube;
+        return;
 
         int ReverseIndex(int index) => cube.Dimension - index - 1;
     }
 
-    public MutableRubiksCube MoveMutableRubiksCubeBack(MutableRubiksCube cube, int sliceNumber)
+    public void MoveMutableRubiksCubeBack(MutableRubiksCube cube, int sliceNumber)
     {
         var rightColors = cube.RightFace.StickerColors;
         var upColors = cube.UpFace.StickerColors;
@@ -185,7 +169,7 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         if (sliceNumber == 0) cube.BackFace.StickerColors.ClockwiseRotateSquareMatrix();
         else if (reversedSliceNumber == 0) cube.FrontFace.StickerColors.CounterclockwiseRotateSquareMatrix();
 
-        return cube;
+        return;
 
         int ReverseIndex(int index) => cube.Dimension - index - 1;
     }
