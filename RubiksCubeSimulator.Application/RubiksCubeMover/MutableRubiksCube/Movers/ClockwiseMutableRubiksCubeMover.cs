@@ -43,7 +43,7 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
 
         var copyLeftColors = Enumerable.Range(0, cube.Dimension)
-            .Select(i => rightColors[reversedSliceNumber, i])
+            .Select(i => leftColors[reversedSliceNumber, i])
             .ToArray();
 
         for (var i = 0; i < cube.Dimension; i++)
@@ -98,7 +98,7 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
 
         var copyUpColors = Enumerable.Range(0, cube.Dimension)
-            .Select(i => downColors[i, sliceNumber])
+            .Select(i => upColors[i, sliceNumber])
             .ToArray();
 
         for (var i = 0; i < cube.Dimension; i++)
@@ -157,12 +157,12 @@ internal sealed class ClockwiseMutableRubiksCubeMover : IClockwiseMutableRubiksC
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
 
         var copyDownColors = Enumerable.Range(0, cube.Dimension)
-            .Select(i => downColors[reversedSliceNumber, cube.Dimension - i - 1])
+            .Select(i => downColors[reversedSliceNumber, i])
             .ToArray();
 
         for (var i = 0; i < cube.Dimension; i++)
         {
-            downColors[reversedSliceNumber, ReverseIndex(i)] = leftColors[i, sliceNumber];
+            downColors[reversedSliceNumber, i] = leftColors[i, sliceNumber];
             leftColors[i, sliceNumber] = upColors[sliceNumber, ReverseIndex(i)];
             upColors[sliceNumber, ReverseIndex(i)] = rightColors[ReverseIndex(i), reversedSliceNumber];
             rightColors[ReverseIndex(i), reversedSliceNumber] = copyDownColors[i];

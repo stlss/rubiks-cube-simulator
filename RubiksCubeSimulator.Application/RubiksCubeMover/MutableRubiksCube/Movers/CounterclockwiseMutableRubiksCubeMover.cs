@@ -5,7 +5,7 @@ public interface ICounterclockwiseMutableRubiksCubeMover : IMutableRubiksCubeMov
 }
 
 internal sealed class CounterclockwiseMutableRubiksCubeMover(
-    IMutableRubiksCubeMover clockwiseMutableCubeMover)
+    IClockwiseMutableRubiksCubeMover clockwiseMutableCubeMover)
     : ICounterclockwiseMutableRubiksCubeMover
 {
     public void MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber)
