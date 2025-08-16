@@ -10,8 +10,8 @@ internal static class OppositeMoveDirectionProvider
     {
         return moveDirection switch
         {
-            MoveDirection.Clockwise => MoveDirection.CounterClockwise,
-            MoveDirection.CounterClockwise => MoveDirection.Clockwise,
+            MoveDirection.Clockwise => MoveDirection.Counterclockwise,
+            MoveDirection.Counterclockwise => MoveDirection.Clockwise,
 
             _ => throw new InvalidEnumArgumentException(
                 nameof(moveDirection),

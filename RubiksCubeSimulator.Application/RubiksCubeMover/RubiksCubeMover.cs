@@ -70,7 +70,7 @@ public sealed class RubiksCubeMover(
                 MoveMutableRubiksCubeClockwise(cube, move.Face, move.Slice);
                 break;
 
-            case MoveDirection.CounterClockwise:
+            case MoveDirection.Counterclockwise:
                 MoveMutableRubiksCubeCounterclockwise(cube, move.Face, move.Slice);
                 break;
         }

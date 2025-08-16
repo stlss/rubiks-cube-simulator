@@ -33,7 +33,7 @@ internal static class RubiksCubeMovesConverter
             _ => throw new InvalidEnumArgumentException(nameof(move.Axis), (int)move.Axis, typeof(AxisName)),
         };
 
-        if (move.Direction == MoveDirection.CounterClockwise) result += "'";
+        if (move.Direction == MoveDirection.Counterclockwise) result += "'";
         return result;
     }
 
@@ -50,7 +50,7 @@ internal static class RubiksCubeMovesConverter
             _ => throw new InvalidEnumArgumentException(nameof(move.Face), (int)move.Face, typeof(MoveFace)),
         };
 
-        if (move.Direction == MoveDirection.CounterClockwise) result += "'";
+        if (move.Direction == MoveDirection.Counterclockwise) result += "'";
         return result;
     }
 }

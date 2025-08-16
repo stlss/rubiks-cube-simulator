@@ -119,7 +119,7 @@ public sealed class RubiksCubeMoverTests
         {
             new WholeRubiksCubeMove(AxisName.X, MoveDirection.Clockwise),
             new WholeRubiksCubeMove(AxisName.X, MoveDirection.Clockwise),
-            new WholeRubiksCubeMove(AxisName.Y, MoveDirection.CounterClockwise),
+            new WholeRubiksCubeMove(AxisName.Y, MoveDirection.Counterclockwise),
         };
 
         var movedCube = _mover.MoveRubiksCube(cube, moves);
@@ -256,8 +256,8 @@ public sealed class RubiksCubeMoverTests
 
             var wholeCubeMoves = AxisNames.SelectMany(axis => new[]
             {
-                new WholeRubiksCubeMove(axis, MoveDirection.CounterClockwise),
-                new WholeRubiksCubeMove(axis, MoveDirection.CounterClockwise),
+                new WholeRubiksCubeMove(axis, MoveDirection.Counterclockwise),
+                new WholeRubiksCubeMove(axis, MoveDirection.Counterclockwise),
             });
 
             var moves = sliceMoves.Select(sliceMove => (RubiksCubeMoveBase)sliceMove)

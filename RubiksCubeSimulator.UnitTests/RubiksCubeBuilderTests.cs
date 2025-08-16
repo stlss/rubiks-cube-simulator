@@ -7,7 +7,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 namespace RubiksCubeSimulator.UnitTests;
 
 [TestFixture]
-public class RubiksCubeBuilderTests
+public sealed class RubiksCubeBuilderTests
 {
     private IRubiksCubeBuilder _builder = null!;
 
