@@ -12,8 +12,8 @@
     <ItemsControl ItemsSource="{Binding StickerViewModels}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Rows="{Binding Dimension}"
-                             Columns="{Binding Dimension}" />
+                <UniformGrid Rows="{Binding CubeDimension}"
+                             Columns="{Binding CubeDimension}" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 

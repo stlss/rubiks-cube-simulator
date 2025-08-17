@@ -6,5 +6,5 @@ public sealed class RubiksCubeControlViewModel
 
     public RubiksCubeFaceControlViewModel RightFaceViewModel { get; init; } = new();
 
-    public RubiksCubeFaceControlViewModel FrontFaceViewModel { get; init; } = new();
+    public RubiksCubeFaceControlViewModel LeftFaceViewModel { get; init; } = new();
 }

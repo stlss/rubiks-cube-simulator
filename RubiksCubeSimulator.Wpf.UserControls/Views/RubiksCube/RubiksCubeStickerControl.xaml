@@ -10,11 +10,11 @@
 
     <Grid Background="{Binding StickerColorBrush}">
         <Image Source="/RubiksCubeSimulator.Wpf.UserControls;component/Resources/Images/leftArrow.png"
-               Visibility="{Binding ArrowVisibility}"
+               Visibility="{Binding MoveArrowVisibility}"
                RenderTransformOrigin="0.5,0.5">
 
             <Image.RenderTransform>
-                <RotateTransform Angle="{Binding ArrowAngle}"/>
+                <RotateTransform Angle="{Binding MoveArrowAngle}"/>
             </Image.RenderTransform>
         </Image>
     </Grid>

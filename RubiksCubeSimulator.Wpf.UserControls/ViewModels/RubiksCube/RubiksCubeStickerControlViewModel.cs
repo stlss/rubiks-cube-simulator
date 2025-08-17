@@ -23,17 +23,17 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
         {
             if (SetProperty(ref _arrowDirection, value))
             {
-                OnPropertyChanged(nameof(ArrowVisibility));
-                OnPropertyChanged(nameof(ArrowAngle));
+                OnPropertyChanged(nameof(MoveArrowVisibility));
+                OnPropertyChanged(nameof(MoveArrowAngle));
             }
         }
     }
 
-    public Visibility ArrowVisibility => ArrowDirection == null
+    public Visibility MoveArrowVisibility => ArrowDirection == null
         ? Visibility.Hidden
         : Visibility.Visible;
 
-    public double ArrowAngle => ArrowDirection switch
+    public double MoveArrowAngle => ArrowDirection switch
     {
         RubiksCube.ArrowDirection.Left => 0,
         RubiksCube.ArrowDirection.Top => 90,

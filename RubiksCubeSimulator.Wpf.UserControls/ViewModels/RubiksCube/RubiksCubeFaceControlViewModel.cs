@@ -11,34 +11,34 @@ public sealed class RubiksCubeFaceControlViewModel
             .Select(_ => new RubiksCubeStickerControlViewModel())
             .ToList();
 
-    public int Dimension => (int)Math.Sqrt(StickerViewModels.Count);
+    public int CubeDimension => (int)Math.Sqrt(StickerViewModels.Count);
 
-    public Thickness BorderThickness => new(1.5 * DefaultDimension / Dimension);
+    public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
 
 
-    public void ClearArrows()
+    public void ClearMoveArrows()
     {
         foreach (var stickerViewModel in StickerViewModels) stickerViewModel.ArrowDirection = null;
     }
 
-    internal void SetArrows(ArrowDirection arrowDirection)
+    internal void SetMoveArrows(ArrowDirection arrowDirection)
     {
         foreach (var stickerViewModel in StickerViewModels) stickerViewModel.ArrowDirection = arrowDirection;
     }
 
-    internal void SetRowArrows(ArrowDirection arrowDirection, int row)
+    internal void SetRowMoveArrows(ArrowDirection arrowDirection, int row)
     {
-        var start = row * Dimension;
-        var end = start + Dimension;
+        var start = row * CubeDimension;
+        var end = start + CubeDimension;
 
         for (var i = start; i < end; i++) StickerViewModels[i].ArrowDirection = arrowDirection;
     }
 
-    internal void SetColumnArrows(ArrowDirection arrowDirection, int column)
+    internal void SetColumnMoveArrows(ArrowDirection arrowDirection, int column)
     {
         var start = column;
         var end = StickerViewModels.Count;
-        var step = Dimension;
+        var step = CubeDimension;
 
         for (var i = start; i < end; i += step) StickerViewModels[i].ArrowDirection = arrowDirection;
     }

@@ -16,13 +16,13 @@ internal sealed class RubiksCubeControlViewModelBuilder(
     {
         var upFaceViewModel = faceViewModelBuilder.Build(cube.UpFace);
         var rightFaceViewModel = faceViewModelBuilder.Build(cube.RightFace);
-        var frontFaceViewModel = faceViewModelBuilder.Build(cube.FrontFace);
+        var leftFaceViewModel = faceViewModelBuilder.Build(cube.FrontFace);
 
         var cubeViewModel = new RubiksCubeControlViewModel
         {
             UpFaceViewModel = upFaceViewModel,
             RightFaceViewModel = rightFaceViewModel,
-            FrontFaceViewModel = frontFaceViewModel,
+            LeftFaceViewModel = leftFaceViewModel,
         };
 
         return cubeViewModel;
