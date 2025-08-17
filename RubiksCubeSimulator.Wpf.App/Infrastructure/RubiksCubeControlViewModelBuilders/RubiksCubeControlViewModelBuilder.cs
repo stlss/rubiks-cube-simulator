@@ -14,12 +14,13 @@ internal sealed class RubiksCubeControlViewModelBuilder(
 {
     public RubiksCubeControlViewModel Build(RubiksCube cube)
     {
-        var upFaceViewModel = faceViewModelBuilder.Build(cube.UpFace);
-        var rightFaceViewModel = faceViewModelBuilder.Build(cube.RightFace);
-        var leftFaceViewModel = faceViewModelBuilder.Build(cube.FrontFace);
+        var upFaceViewModel = faceViewModelBuilder.Build(cube.Dimension, cube.UpFace);
+        var rightFaceViewModel = faceViewModelBuilder.Build(cube.Dimension, cube.RightFace);
+        var leftFaceViewModel = faceViewModelBuilder.Build(cube.Dimension, cube.FrontFace);
 
         var cubeViewModel = new RubiksCubeControlViewModel
         {
+            CubeDimension = cube.Dimension,
             UpFaceViewModel = upFaceViewModel,
             RightFaceViewModel = rightFaceViewModel,
             LeftFaceViewModel = leftFaceViewModel,

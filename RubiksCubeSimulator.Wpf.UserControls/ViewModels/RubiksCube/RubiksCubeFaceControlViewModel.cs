@@ -11,7 +11,7 @@ public sealed class RubiksCubeFaceControlViewModel
             .Select(_ => new RubiksCubeStickerControlViewModel())
             .ToList();
 
-    public int CubeDimension => (int)Math.Sqrt(StickerViewModels.Count);
+    public int CubeDimension { get; init; } = DefaultDimension;
 
     public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
 
