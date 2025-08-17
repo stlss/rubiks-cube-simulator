@@ -8,5 +8,14 @@
              d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="50" d:DesignWidth="50">
 
-    <Grid Background="{Binding StickerColorBrush}"/>
+    <Grid Background="{Binding StickerColorBrush}">
+        <Image Source="/RubiksCubeSimulator.Wpf.UserControls;component/Resources/Images/leftArrow.png"
+               Visibility="{Binding ArrowVisibility}"
+               RenderTransformOrigin="0.5,0.5">
+
+            <Image.RenderTransform>
+                <RotateTransform Angle="{Binding ArrowAngle}"/>
+            </Image.RenderTransform>
+        </Image>
+    </Grid>
 </UserControl>

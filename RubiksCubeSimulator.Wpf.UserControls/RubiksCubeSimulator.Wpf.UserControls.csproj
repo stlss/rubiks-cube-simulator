@@ -11,4 +11,8 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Resource Include="Resources\Images\leftArrow.png"/>
+    </ItemGroup>
+
 </Project>
