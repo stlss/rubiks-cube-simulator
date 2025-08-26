@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviors="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.Behaviors"
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
+             x:ClassModifier="internal"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="50" d:DesignWidth="50">
