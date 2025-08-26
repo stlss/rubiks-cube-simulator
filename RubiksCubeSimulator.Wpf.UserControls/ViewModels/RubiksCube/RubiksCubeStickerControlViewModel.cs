@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RubiksCubeSimulator.Wpf.UserControls.Views.Behaviors;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
@@ -14,7 +16,8 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
         set => SetProperty(ref _stickerColorBrush, value);
     }
 
-    private ArrowDirection? _arrowDirection = null;
+
+    private ArrowDirection? _arrowDirection;
 
     public ArrowDirection? ArrowDirection
     {
@@ -43,6 +46,26 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
 
         _ => throw new ArgumentOutOfRangeException()
     };
+
+
+    private Point? _relativeMousePosition;
+
+    public Point? RelativeMousePosition
+    {
+        get => _relativeMousePosition;
+        private set => SetProperty(ref _relativeMousePosition, value);
+    }
+
+    public IRelayCommand<RelativeMouseEventArgs> UpdateRelativeMousePositionCommand { get; }
+
+
+    public RubiksCubeStickerControlViewModel()
+    {
+        UpdateRelativeMousePositionCommand = new RelayCommand<RelativeMouseEventArgs>(eventArgs =>
+        {
+            RelativeMousePosition = eventArgs!.RelativeMousePosition;
+        });
+    }
 }
 
 public enum ArrowDirection

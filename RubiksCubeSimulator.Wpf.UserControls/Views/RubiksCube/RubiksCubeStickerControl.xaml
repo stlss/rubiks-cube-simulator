@@ -3,10 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.Behaviors"
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerControlViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="50" d:DesignWidth="50">
+
+    <i:Interaction.Behaviors>
+        <behaviors:RelativeMouseMoveBehavior x:Name="MouseBehavior" />
+    </i:Interaction.Behaviors>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger SourceObject="{Binding ElementName=MouseBehavior}" EventName="RelativeMouseMove">
+            <i:InvokeCommandAction Command="{Binding UpdateRelativeMousePositionCommand}"
+                                   PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Background="{Binding StickerColorBrush}">
         <Image Source="/RubiksCubeSimulator.Wpf.UserControls;component/Resources/Images/leftArrow.png"
@@ -14,7 +27,7 @@
                RenderTransformOrigin="0.5,0.5">
 
             <Image.RenderTransform>
-                <RotateTransform Angle="{Binding MoveArrowAngle}"/>
+                <RotateTransform Angle="{Binding MoveArrowAngle}" />
             </Image.RenderTransform>
         </Image>
     </Grid>
