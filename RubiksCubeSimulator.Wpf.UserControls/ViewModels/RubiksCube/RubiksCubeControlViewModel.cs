@@ -11,15 +11,10 @@ public sealed class RubiksCubeControlViewModel
     public RubiksCubeFaceControlViewModel LeftFaceViewModel { get; init; } = new();
 
 
-    public void ClearMoveArrows()
-    {
-        UpFaceViewModel.ClearMoveArrows();
-        RightFaceViewModel.ClearMoveArrows();
-        LeftFaceViewModel.ClearMoveArrows();
-    }
-
     public void SetWholeCubeMoveArrows(MoveDirection moveDirection)
     {
+        ClearMoveArrows();
+
         switch (moveDirection)
         {
             case MoveDirection.Left:
@@ -56,6 +51,8 @@ public sealed class RubiksCubeControlViewModel
 
     public void SetSliceMoveArrows(MoveDirection moveDirection, int sliceNumber)
     {
+        ClearMoveArrows();
+
         switch (moveDirection)
         {
             case MoveDirection.Left:
@@ -92,6 +89,13 @@ public sealed class RubiksCubeControlViewModel
         return;
 
         int GetReversedSliceNumber() => CubeDimension - sliceNumber - 1;
+    }
+
+    public void ClearMoveArrows()
+    {
+        UpFaceViewModel.ClearMoveArrows();
+        RightFaceViewModel.ClearMoveArrows();
+        LeftFaceViewModel.ClearMoveArrows();
     }
 }
 
