@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube.EventArgs;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers.EventArgs;
 
-internal sealed class MovedRubiksCubeEventArgs : System.EventArgs
+internal sealed class MovingRubiksCubeEventArgs : System.EventArgs
 {
     public required FaceName FaceName { get; init; }
 

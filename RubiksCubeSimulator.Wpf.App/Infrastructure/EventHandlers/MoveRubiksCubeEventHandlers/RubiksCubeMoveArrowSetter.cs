@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube.EventArgs;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers.EventArgs;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers;
 
 internal sealed class RubiksCubeMoveArrowSetter(RubiksCubeControlViewModel cubeViewModel)
     : IMoveRubiksCubeEventHandler

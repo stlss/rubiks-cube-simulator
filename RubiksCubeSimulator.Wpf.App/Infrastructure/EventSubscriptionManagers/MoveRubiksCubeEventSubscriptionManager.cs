@@ -1,5 +1,5 @@
 ﻿using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventSubscriptionManagers;
 

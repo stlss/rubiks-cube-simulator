@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube.EventArgs;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers.EventArgs;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers;
 

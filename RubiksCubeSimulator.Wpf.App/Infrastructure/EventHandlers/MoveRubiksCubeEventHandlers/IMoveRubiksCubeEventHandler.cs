@@ -1,6 +1,6 @@
-﻿using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube.EventArgs;
+﻿using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers.EventArgs;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.RubiksCube;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers;
 
 internal interface IMoveRubiksCubeEventHandler
 {
