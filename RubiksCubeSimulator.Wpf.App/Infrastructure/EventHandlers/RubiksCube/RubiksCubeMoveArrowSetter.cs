@@ -83,28 +83,28 @@ internal sealed class RubiksCubeMoveArrowSetter(RubiksCubeControlViewModel cubeV
             {
                 if (e.PressedMoveKey == Key.W || e.PressedMoveKey == Key.S)
                 {
-                    return e.StickerNumber % cubeViewModel.CubeDimension;
+                    return GetColumnIndex(e.StickerNumber);
                 }
 
-                return cubeViewModel.CubeDimension - e.StickerNumber / cubeViewModel.CubeDimension - 1;
+                return ReverseIndex(GetRowIndex(e.StickerNumber));
             }
 
             if (e.PressedMoveKey == Key.W || e.PressedMoveKey == Key.S)
             {
-                return cubeViewModel.CubeDimension - e.StickerNumber / cubeViewModel.CubeDimension - 1;
+                return ReverseIndex(GetRowIndex(e.StickerNumber));
             }
 
-            return e.StickerNumber % cubeViewModel.CubeDimension;
+            return GetColumnIndex(e.StickerNumber);
         }
 
         if (e.FaceName == FaceName.Right || e.FaceName == FaceName.Left)
         {
             if (e.PressedMoveKey == Key.W || e.PressedMoveKey == Key.S)
             {
-                return e.StickerNumber % cubeViewModel.CubeDimension;
+                return GetColumnIndex(e.StickerNumber);
             }
 
-            return e.StickerNumber / cubeViewModel.CubeDimension;
+            return GetRowIndex(e.StickerNumber);
         }
 
         throw new ArgumentOutOfRangeException(nameof(e.FaceName), e.FaceName, null);
@@ -118,6 +118,13 @@ internal sealed class RubiksCubeMoveArrowSetter(RubiksCubeControlViewModel cubeV
 
         return row > column || (row == column && relativeMousePosition.X <= relativeMousePosition.Y);
     }
+
+    private int GetRowIndex(int stickerNumber) => stickerNumber / cubeViewModel.CubeDimension;
+
+    private int GetColumnIndex(int stickerNumber) => stickerNumber % cubeViewModel.CubeDimension;
+
+    private int ReverseIndex(int index) => cubeViewModel.CubeDimension - index - 1;
+
 
     public void OnMovedRubiksCube(object? sender, MovedRubiksCubeEventArgs e)
     {
