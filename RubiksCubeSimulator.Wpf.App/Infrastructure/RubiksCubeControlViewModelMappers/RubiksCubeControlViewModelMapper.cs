@@ -16,9 +16,9 @@ internal sealed class RubiksCubeControlViewModelMapper(
 {
     public RubiksCubeControlViewModel Map(RubiksCube cube)
     {
-        var upFaceViewModel = faceViewModelMapper.Map(cube.Dimension, cube.UpFace);
-        var rightFaceViewModel = faceViewModelMapper.Map(cube.Dimension, cube.RightFace);
-        var leftFaceViewModel = faceViewModelMapper.Map(cube.Dimension, cube.FrontFace);
+        var upFaceViewModel = faceViewModelMapper.Map(cube.UpFace);
+        var rightFaceViewModel = faceViewModelMapper.Map(cube.RightFace);
+        var leftFaceViewModel = faceViewModelMapper.Map(cube.FrontFace);
 
         var cubeViewModel = new RubiksCubeControlViewModel
         {
