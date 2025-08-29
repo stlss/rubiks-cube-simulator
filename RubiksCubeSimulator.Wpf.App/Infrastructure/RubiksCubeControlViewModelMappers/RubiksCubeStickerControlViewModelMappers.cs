@@ -7,6 +7,8 @@ namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelM
 internal interface IRubiksCubeStickerControlViewModelMapper
 {
     public RubiksCubeStickerControlViewModel Map(RubiksCubeStickerColor stickerColor);
+
+    public void Map(RubiksCubeStickerColor stickerColor, RubiksCubeStickerControlViewModel stickerViewModel);
 }
 
 internal sealed class RubiksCubeStickerControlViewModelMappers : IRubiksCubeStickerControlViewModelMapper
@@ -36,5 +38,10 @@ internal sealed class RubiksCubeStickerControlViewModelMappers : IRubiksCubeStic
         };
 
         return viewModel;
+    }
+
+    public void Map(RubiksCubeStickerColor stickerColor, RubiksCubeStickerControlViewModel stickerViewModel)
+    {
+        stickerViewModel.StickerColorBrush = BrushByStickerColor[stickerColor];
     }
 }

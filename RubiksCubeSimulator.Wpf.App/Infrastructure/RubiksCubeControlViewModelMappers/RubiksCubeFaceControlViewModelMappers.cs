@@ -6,6 +6,8 @@ namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelM
 internal interface IRubiksCubeFaceControlViewModelMapper
 {
     public RubiksCubeFaceControlViewModel Map(int cubeDimension, RubiksCubeFace cubeFace);
+
+    public void Map(RubiksCubeFace cubeFace, RubiksCubeFaceControlViewModel cubeFaceViewModel);
 }
 
 internal sealed class RubiksCubeFaceControlViewModelMappers(
@@ -26,5 +28,18 @@ internal sealed class RubiksCubeFaceControlViewModelMappers(
         };
 
         return viewModel;
+    }
+
+    public void Map(RubiksCubeFace cubeFace, RubiksCubeFaceControlViewModel cubeFaceViewModel)
+    {
+        var stickersWithViewModels = cubeFace.StickerColors
+            .SelectMany(row => row)
+            .Zip(cubeFaceViewModel.StickerViewModels,
+                (sticker, stickerViewModel) => (Sticker: sticker, StickerViewModel: stickerViewModel));
+
+        foreach (var (sticker, stickerViewModel) in stickersWithViewModels)
+        {
+            stickerViewModelMapper.Map(sticker, stickerViewModel);
+        }
     }
 }
