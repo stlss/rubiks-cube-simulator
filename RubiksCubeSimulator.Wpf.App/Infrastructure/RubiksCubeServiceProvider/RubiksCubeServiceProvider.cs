@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelMappers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelEventLinker;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
@@ -10,7 +10,7 @@ internal interface IRubiksCubeServiceProvider
 {
     public IRubiksCubeBuilder GetCubeBuilder();
 
-    public IRubiksCubeControlViewModelBuilder GetCubeViewModelBuilder();
+    public IRubiksCubeControlViewModelMapper GetCubeViewModelMapper();
 
     public IViewModelEventLinker GetViewModelLinker();
 }
@@ -31,15 +31,15 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddRubiksCubeBuilder();
-        services.AddRubiksCubeControlViewModelBuilders();
+        services.AddRubiksCubeControlViewModelMappers();
         services.AddViewModelLinker();
     }
 
     public IRubiksCubeBuilder GetCubeBuilder() =>
         _serviceProvider.GetRequiredService<IRubiksCubeBuilder>();
 
-    public IRubiksCubeControlViewModelBuilder GetCubeViewModelBuilder() =>
-        _serviceProvider.GetRequiredService<IRubiksCubeControlViewModelBuilder>();
+    public IRubiksCubeControlViewModelMapper GetCubeViewModelMapper() =>
+        _serviceProvider.GetRequiredService<IRubiksCubeControlViewModelMapper>();
 
     public IViewModelEventLinker GetViewModelLinker() =>
         _serviceProvider.GetRequiredService<IViewModelEventLinker>();

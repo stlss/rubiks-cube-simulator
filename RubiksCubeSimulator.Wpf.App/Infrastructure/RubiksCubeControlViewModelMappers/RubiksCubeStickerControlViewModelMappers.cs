@@ -2,14 +2,14 @@
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
+namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelMappers;
 
-internal interface IRubiksCubeStickerControlViewModelBuilder
+internal interface IRubiksCubeStickerControlViewModelMapper
 {
-    public RubiksCubeStickerControlViewModel Build(RubiksCubeStickerColor stickerColor);
+    public RubiksCubeStickerControlViewModel Map(RubiksCubeStickerColor stickerColor);
 }
 
-internal sealed class RubiksCubeStickerControlViewModelBuilder : IRubiksCubeStickerControlViewModelBuilder
+internal sealed class RubiksCubeStickerControlViewModelMappers : IRubiksCubeStickerControlViewModelMapper
 {
     private static readonly Dictionary<RubiksCubeStickerColor, SolidColorBrush> BrushByStickerColor = new()
     {
@@ -26,7 +26,7 @@ internal sealed class RubiksCubeStickerControlViewModelBuilder : IRubiksCubeStic
         return new SolidColorBrush(Color.FromRgb(r, g, b));
     }
 
-    public RubiksCubeStickerControlViewModel Build(RubiksCubeStickerColor stickerColor)
+    public RubiksCubeStickerControlViewModel Map(RubiksCubeStickerColor stickerColor)
     {
         var brush = BrushByStickerColor[stickerColor];
 

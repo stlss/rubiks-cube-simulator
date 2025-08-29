@@ -2,18 +2,18 @@
 using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.EventHandlers.MoveRubiksCubeEventHandlers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.EventSubscriptionManagers;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
+using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelMappers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelEventLinker;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
 
 public static class RubiksCubeServiceCollectionExtensions
 {
-    public static IServiceCollection AddRubiksCubeControlViewModelBuilders(this IServiceCollection services)
+    public static IServiceCollection AddRubiksCubeControlViewModelMappers(this IServiceCollection services)
     {
-        services.AddSingleton<IRubiksCubeStickerControlViewModelBuilder, RubiksCubeStickerControlViewModelBuilder>();
-        services.AddSingleton<IRubiksCubeFaceControlViewModelBuilder, RubiksCubeFaceControlViewModelBuilder>();
-        services.AddSingleton<IRubiksCubeControlViewModelBuilder, RubiksCubeControlViewModelBuilder>();
+        services.AddSingleton<IRubiksCubeStickerControlViewModelMapper, RubiksCubeStickerControlViewModelMappers>();
+        services.AddSingleton<IRubiksCubeFaceControlViewModelMapper, RubiksCubeFaceControlViewModelMappers>();
+        services.AddSingleton<IRubiksCubeControlViewModelMapper, RubiksCubeControlViewModelMapper>();
 
         return services;
     }
