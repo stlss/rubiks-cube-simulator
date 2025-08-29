@@ -36,9 +36,9 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
         if (key == Key.LeftShift || key == Key.RightShift)
         {
             _pressedShift = true;
-            SetCubeEventHandlerProperties();
+            if (_pressedMoveKey == null) SetCubeEventHandlerProperties();
 
-            if (_pressedMoveKey != null && !IsCubeEventHandlerPropertiesNull())
+            if (_pressedMoveKey != null && !IsNullCubeEventHandlerProperties())
             {
                 var eventArgs = CreateMovingRubiksCubeEventArgs();
                 MovingRubiksCube?.Invoke(this, eventArgs);
@@ -50,7 +50,7 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
             _pressedMoveKey = key;
             SetCubeEventHandlerProperties();
 
-            if (!IsCubeEventHandlerPropertiesNull())
+            if (!IsNullCubeEventHandlerProperties())
             {
                 var eventArgs = CreateMovingRubiksCubeEventArgs();
                 MovingRubiksCube?.Invoke(this, eventArgs);
@@ -66,7 +66,7 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
         {
             _pressedShift = false;
 
-            if (_pressedMoveKey != null && !IsCubeEventHandlerPropertiesNull())
+            if (_pressedMoveKey != null && !IsNullCubeEventHandlerProperties())
             {
                 var eventArgs = CreateMovingRubiksCubeEventArgs();
                 MovingRubiksCube?.Invoke(this, eventArgs);
@@ -75,7 +75,7 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
 
         else if (key == _pressedMoveKey)
         {
-            if (!IsCubeEventHandlerPropertiesNull())
+            if (!IsNullCubeEventHandlerProperties())
             {
                 var eventArgs = CreateMovedRubiksCubeEventArgs();
                 MovedRubiksCube?.Invoke(this, eventArgs);
@@ -93,9 +93,9 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
         _relativeMousePosition = cubeEventHandler.RelativeMouserPosition;
     }
 
-    private bool IsCubeEventHandlerPropertiesNull()
+    private bool IsNullCubeEventHandlerProperties()
     {
-        return !(_faceName.HasValue && _stickerNumber.HasValue && _relativeMousePosition.HasValue);
+        return !_stickerNumber.HasValue;
     }
 
 
@@ -125,6 +125,7 @@ internal sealed class MainWindowEventHandler(IRubiksCubeControlEventHandler cube
             RelativeMousePosition = _relativeMousePosition!.Value,
             PressedMoveKey = _pressedMoveKey!.Value,
             PressedShift = _pressedShift,
+            MouseInsideCube = cubeEventHandler.StickerNumber.HasValue
         };
     }
 }

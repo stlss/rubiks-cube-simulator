@@ -15,4 +15,7 @@ internal sealed class MovedRubiksCubeEventArgs : System.EventArgs
     public required Key PressedMoveKey { get; init; }
 
     public required bool PressedShift { get; init; }
+
+
+    public required bool MouseInsideCube { get; init; }
 }
