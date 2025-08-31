@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.UserControls", "RubiksCubeSimulator.Wpf.UserControls\RubiksCubeSimulator.Wpf.UserControls.csproj", "{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.Contracts", "RubiksCubeSimulator.Wpf.Contracts\RubiksCubeSimulator.Wpf.Contracts.csproj", "{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +45,9 @@ Global
 		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
