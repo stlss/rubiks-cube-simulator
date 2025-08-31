@@ -34,12 +34,11 @@ public sealed class MovedRubiksCubePublisher :
 
         var cubeMovingEventArgs = new MovedRubiksCubeEventArgs
         {
-            FaceName = lastMouseMoveEventArgsSnapshot.FaceName!.Value,
-            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber!.Value,
-            RelativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition!.Value,
+            FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
+            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
+            RelativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition,
             MoveKey = keyUpEventArgs.MoveKey,
             ShiftPressed = keyUpEventArgs.ShiftPressed,
-            MouseInsideCube = !lastMouseMoveEventArgsSnapshot.MouseLeaved,
         };
 
         NotifySubscribers(cubeMovingEventArgs);

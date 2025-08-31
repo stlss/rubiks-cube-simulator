@@ -30,13 +30,16 @@ public sealed class MovingRubiksCubePublisher :
             lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
         }
 
-        if (lastMouseMoveEventArgsSnapshot == null || lastMouseMoveEventArgsSnapshot.MouseLeaved) return;
+        if (lastMouseMoveEventArgsSnapshot == null) return;
+
+        var relativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition;
+        if (relativeMousePosition == null) return;
 
         var cubeMovingEventArgs = new MovingRubiksCubeEventArgs
         {
-            FaceName = lastMouseMoveEventArgsSnapshot.FaceName!.Value,
-            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber!.Value,
-            RelativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition!.Value,
+            FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
+            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
+            RelativeMousePosition = relativeMousePosition.Value,
             MoveKey = keyDownEventArgs.MoveKey,
             ShiftPressed = keyDownEventArgs.ShiftPressed,
         };
