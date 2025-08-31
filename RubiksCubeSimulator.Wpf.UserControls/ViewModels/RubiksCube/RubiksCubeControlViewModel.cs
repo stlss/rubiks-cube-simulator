@@ -1,4 +1,6 @@
-﻿namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
+﻿using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube.Enums;
+
+namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 public sealed class RubiksCubeControlViewModel
 {
@@ -97,14 +99,4 @@ public sealed class RubiksCubeControlViewModel
         RightFaceViewModel.ClearMoveArrows();
         LeftFaceViewModel.ClearMoveArrows();
     }
-}
-
-public enum MoveDirection
-{
-    Left,
-    Right,
-    LeftTop,
-    LeftBottom,
-    RightTop,
-    RightBottom,
 }

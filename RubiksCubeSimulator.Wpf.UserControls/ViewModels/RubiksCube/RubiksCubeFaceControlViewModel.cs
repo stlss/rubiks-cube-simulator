@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using RubiksCubeSimulator.Wpf.Contracts.Events;
 using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.Enums;
 using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.MouseRubiksCubeEventArgs;
+using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube.Enums;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 

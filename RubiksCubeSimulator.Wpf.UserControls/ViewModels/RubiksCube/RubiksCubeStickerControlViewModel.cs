@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube.Enums;
 using RubiksCubeSimulator.Wpf.UserControls.Views.Behaviors;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
@@ -41,10 +42,10 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
 
     public double MoveArrowAngle => ArrowDirection switch
     {
-        RubiksCube.ArrowDirection.Left => 0,
-        RubiksCube.ArrowDirection.Top => 90,
-        RubiksCube.ArrowDirection.Right => 180,
-        RubiksCube.ArrowDirection.Bottom => 270,
+        Enums.ArrowDirection.Left => 0,
+        Enums.ArrowDirection.Top => 90,
+        Enums.ArrowDirection.Right => 180,
+        Enums.ArrowDirection.Bottom => 270,
         null => 0,
 
         _ => throw new ArgumentOutOfRangeException()
@@ -69,12 +70,4 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
             RelativeMousePosition = eventArgs!.RelativeMousePosition;
         });
     }
-}
-
-public enum ArrowDirection
-{
-    Left,
-    Top,
-    Right,
-    Bottom,
 }
