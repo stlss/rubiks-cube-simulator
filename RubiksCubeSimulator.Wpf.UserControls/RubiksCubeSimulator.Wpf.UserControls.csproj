@@ -16,4 +16,8 @@
         <Resource Include="Resources\Images\leftArrow.png"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\RubiksCubeSimulator.Wpf.Contracts\RubiksCubeSimulator.Wpf.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

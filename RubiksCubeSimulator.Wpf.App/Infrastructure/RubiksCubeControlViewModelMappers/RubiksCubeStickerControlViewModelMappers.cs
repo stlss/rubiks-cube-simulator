@@ -34,7 +34,7 @@ internal sealed class RubiksCubeStickerControlViewModelMappers : IRubiksCubeStic
 
         var viewModel = new RubiksCubeStickerControlViewModel
         {
-            Number = stickerNumber,
+            StickerNumber = stickerNumber,
             StickerColorBrush = brush,
         };
 

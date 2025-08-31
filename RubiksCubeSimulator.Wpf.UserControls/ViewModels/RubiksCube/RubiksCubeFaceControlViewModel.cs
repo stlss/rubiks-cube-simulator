@@ -1,11 +1,20 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
+using RubiksCubeSimulator.Wpf.Contracts.Events;
+using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.Enums;
+using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.MouseRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-public sealed class RubiksCubeFaceControlViewModel : ObservableObject, IDisposable
+public sealed class RubiksCubeFaceControlViewModel :
+    ObservableObject,
+    IPublisher<MouseMoveRubiksCubeEventArgs>,
+    IDisposable
 {
+    public FaceName FaceName { get; init; }
+
+
     private const int DefaultDimension = 3;
 
     public int CubeDimension { get; init; } = DefaultDimension;
@@ -64,23 +73,46 @@ public sealed class RubiksCubeFaceControlViewModel : ObservableObject, IDisposab
     }
 
 
-    public event EventHandler<RelativeMouseMoveRubiksCubeFaceEventArgs>? RelativeMouseMove;
+    private readonly List<ISubscriber<MouseMoveRubiksCubeEventArgs>> _mouseMoveSubscribers = [];
+
+    public void Subscribe(ISubscriber<MouseMoveRubiksCubeEventArgs> subscriber)
+    {
+        _mouseMoveSubscribers.Add(subscriber);
+    }
+
+    public void Unsubscribe(ISubscriber<MouseMoveRubiksCubeEventArgs> subscriber)
+    {
+        _mouseMoveSubscribers.Remove(subscriber);
+    }
+
+    private void NotifySubscribers(MouseMoveRubiksCubeEventArgs mouseMoveEventArgs)
+    {
+        foreach (var subscriber in _mouseMoveSubscribers) subscriber.OnEvent(this, mouseMoveEventArgs);
+    }
+
+
     private readonly List<PropertyChangedEventHandler> _relativeMousePositionPropertyChangedHandlers = new();
 
     private void SubscribeRelativeMousePositionPropertyChangedHandlers()
     {
         foreach (var stickerViewModel in _stickerViewModels)
         {
-            void OnRelativeMousePositionPropertyChanged(object? sender, PropertyChangedEventArgs e)
+            void OnRelativeMousePositionPropertyChanged(object? sender,
+                PropertyChangedEventArgs propertyChangedEventArgs)
             {
-                if (e.PropertyName != nameof(RubiksCubeStickerControlViewModel.RelativeMousePosition))
+                var propertyName = nameof(RubiksCubeStickerControlViewModel.RelativeMousePosition);
+
+                if (propertyChangedEventArgs.PropertyName != propertyName)
                     return;
 
-                RelativeMouseMove?.Invoke(this, new RelativeMouseMoveRubiksCubeFaceEventArgs
+                var mouseMoveEventArgs = new MouseMoveRubiksCubeEventArgs
                 {
-                    StickerNumber = stickerViewModel.RelativeMousePosition != null ? stickerViewModel.Number : null,
+                    FaceName = FaceName,
+                    StickerNumber = stickerViewModel.StickerNumber,
                     RelativeMousePosition = stickerViewModel.RelativeMousePosition
-                });
+                };
+
+                NotifySubscribers(mouseMoveEventArgs);
             }
 
             stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
@@ -107,11 +139,4 @@ public sealed class RubiksCubeFaceControlViewModel : ObservableObject, IDisposab
     {
         UnsubscribeRelativeMousePositionPropertyChangedHandlers();
     }
-}
-
-public sealed class RelativeMouseMoveRubiksCubeFaceEventArgs : EventArgs
-{
-    public required int? StickerNumber { get; init; }
-
-    public required Point? RelativeMousePosition { get; init; }
 }
