@@ -1,6 +1,8 @@
-﻿namespace RubiksCubeSimulator.Wpf.Contracts.Events;
+﻿using RubiksCubeSimulator.Wpf.Contracts.Events;
 
-public abstract class PublisherBase<T> where T : System.EventArgs
+namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
+
+public abstract class PublisherBase<T> : IPublisher<T> where T : EventArgs
 {
     private readonly List<ISubscriber<T>> _subscribers = [];
 
