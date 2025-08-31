@@ -8,6 +8,9 @@ namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 public sealed class RubiksCubeStickerControlViewModel : ObservableObject
 {
+    public int Number { get; init; }
+
+
     private SolidColorBrush _stickerColorBrush = new(Colors.DarkGray);
 
     public SolidColorBrush StickerColorBrush

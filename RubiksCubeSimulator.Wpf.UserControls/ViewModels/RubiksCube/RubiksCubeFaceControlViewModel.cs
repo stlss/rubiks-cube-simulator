@@ -69,12 +69,7 @@ public sealed class RubiksCubeFaceControlViewModel : ObservableObject, IDisposab
 
     private void SubscribeRelativeMousePositionPropertyChangedHandlers()
     {
-        var stickerNumbers = Enumerable.Range(0, _stickerViewModels.Count);
-
-        var stickerViewModelsWithNumbers = _stickerViewModels
-            .Zip(stickerNumbers, (viewModel, number) => (ViewModel: viewModel, Number: number));
-
-        foreach (var (viewModel, number) in stickerViewModelsWithNumbers)
+        foreach (var stickerViewModel in _stickerViewModels)
         {
             void OnRelativeMousePositionPropertyChanged(object? sender, PropertyChangedEventArgs e)
             {
@@ -83,12 +78,12 @@ public sealed class RubiksCubeFaceControlViewModel : ObservableObject, IDisposab
 
                 RelativeMouseMove?.Invoke(this, new RelativeMouseMoveRubiksCubeFaceEventArgs
                 {
-                    StickerNumber = viewModel.RelativeMousePosition != null ? number : null,
-                    RelativeMousePosition = viewModel.RelativeMousePosition
+                    StickerNumber = stickerViewModel.RelativeMousePosition != null ? stickerViewModel.Number : null,
+                    RelativeMousePosition = stickerViewModel.RelativeMousePosition
                 });
             }
 
-            viewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
+            stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
             _relativeMousePositionPropertyChangedHandlers.Add(OnRelativeMousePositionPropertyChanged);
         }
     }

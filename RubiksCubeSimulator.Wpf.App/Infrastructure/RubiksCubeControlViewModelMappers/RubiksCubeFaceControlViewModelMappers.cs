@@ -16,14 +16,19 @@ internal sealed class RubiksCubeFaceControlViewModelMappers(
 {
     public RubiksCubeFaceControlViewModel Map(RubiksCubeFace cubeFace)
     {
-        var stickerViewModels = cubeFace.StickerColors
-            .SelectMany(row => row)
-            .Select(stickerViewModelMapper.Map)
+        var cubeDimension = cubeFace.StickerColors.Length;
+
+        var stickerNumbers = Enumerable.Range(0, cubeDimension * cubeDimension);
+        var stickerColors = cubeFace.StickerColors.SelectMany(row => row);
+
+        var stickerViewModels = stickerNumbers
+            .Zip(stickerColors, (number, color) => (Number: number, Color: color))
+            .Select(pair => stickerViewModelMapper.Map(pair.Number, pair.Color))
             .ToList();
 
         var viewModel = new RubiksCubeFaceControlViewModel
         {
-            CubeDimension = cubeFace.StickerColors.Length,
+            CubeDimension = cubeDimension,
             StickerViewModels = stickerViewModels,
         };
 
