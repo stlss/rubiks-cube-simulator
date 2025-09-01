@@ -2,5 +2,5 @@
 
 public interface ISubscriber<in T> where T : System.EventArgs
 {
-    public void OnEvent(object sender, T mouseMoveEventArgs);
+    public void OnEvent(object sender, T eventArgs);
 }

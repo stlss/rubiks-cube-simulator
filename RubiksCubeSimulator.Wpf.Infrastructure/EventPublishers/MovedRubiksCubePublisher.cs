@@ -1,4 +1,5 @@
 ﻿using RubiksCubeSimulator.Wpf.Events;
+using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.MouseRubiksCubeEventArgs;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
@@ -8,7 +9,7 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 public interface IMovedRubiksCubePublisher :
     IPublisher<MovedRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,
-    ISubscriber<KeyUpRubiksCubeEventArgs>
+    ISubscriber<KeyRubiksCubeEventArgs>
 {
 }
 
@@ -19,16 +20,18 @@ internal sealed class MovedRubiksCubePublisher :
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs mouseMoveEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs keyEventArgs)
     {
         lock (_lock)
         {
-            _lastMouseMoveEventArgs = mouseMoveEventArgs;
+            _lastMouseMoveEventArgs = keyEventArgs;
         }
     }
 
-    public void OnEvent(object sender, KeyUpRubiksCubeEventArgs keyUpEventArgs)
+    public void OnEvent(object sender, KeyRubiksCubeEventArgs keyEventArgs)
     {
+        if (keyEventArgs.KeyAction != KeyAction.Up) return;
+
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
 
         lock (_lock)
@@ -43,8 +46,8 @@ internal sealed class MovedRubiksCubePublisher :
             FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
             StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
             RelativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition,
-            MoveKey = keyUpEventArgs.MoveKey,
-            ShiftPressed = keyUpEventArgs.ShiftPressed,
+            MoveKey = keyEventArgs.MoveKey,
+            ShiftPressed = keyEventArgs.ShiftPressed,
         };
 
         NotifySubscribers(cubeMovingEventArgs);
