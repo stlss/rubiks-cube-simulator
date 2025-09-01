@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
+using RubiksCubeSimulator.Wpf.App.Infrastructure;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
@@ -20,7 +20,7 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private MainWindowViewModel(IRubiksCubeServiceProvider serviceProvider)
     {
-        var cubeBuilderContextBuilder = serviceProvider.GetRubiksCubeContextBuilder();
+        var cubeBuilderContextBuilder = serviceProvider.RubiksCubeContextBuilder;
         _cubeContext = cubeBuilderContextBuilder.Build(3);
 
         KeyDownCommand = new RelayCommand<KeyEventArgs>(e => KeyDown?.Invoke(this, e));
