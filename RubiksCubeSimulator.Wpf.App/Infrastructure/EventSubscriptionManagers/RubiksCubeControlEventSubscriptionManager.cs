@@ -14,15 +14,15 @@ internal sealed class RubiksCubeControlEventSubscriptionManager : IRubiksCubeCon
 {
     public void Subscribe(RubiksCubeControlViewModel cubeViewModel, IRubiksCubeControlEventHandler cubeEventHandler)
     {
-        cubeViewModel.UpFaceViewModel.RelativeMouseMove += cubeEventHandler.OnRelativeMouseMoveUpFace;
-        cubeViewModel.RightFaceViewModel.RelativeMouseMove += cubeEventHandler.OnRelativeMouseMoveRightFace;
-        cubeViewModel.LeftFaceViewModel.RelativeMouseMove += cubeEventHandler.OnRelativeMouseMoveLeftFace;
+        // cubeViewModel.UpFaceViewModel.RMouseMove += cubeEventHandler.OnRMouseMoveUpFace;
+        // cubeViewModel.RightFaceViewModel.RMouseMove += cubeEventHandler.OnRMouseMoveRightFace;
+        // cubeViewModel.LeftFaceViewModel.RMouseMove += cubeEventHandler.OnRMouseMoveLeftFace;
     }
 
     public void Unsubscribe(RubiksCubeControlViewModel cubeViewModel, IRubiksCubeControlEventHandler cubeEventHandler)
     {
-        cubeViewModel.UpFaceViewModel.RelativeMouseMove -= cubeEventHandler.OnRelativeMouseMoveUpFace;
-        cubeViewModel.RightFaceViewModel.RelativeMouseMove -= cubeEventHandler.OnRelativeMouseMoveRightFace;
-        cubeViewModel.LeftFaceViewModel.RelativeMouseMove -= cubeEventHandler.OnRelativeMouseMoveLeftFace;
+        // cubeViewModel.UpFaceViewModel.RMouseMove -= cubeEventHandler.OnRMouseMoveUpFace;
+        // cubeViewModel.RightFaceViewModel.RMouseMove -= cubeEventHandler.OnRMouseMoveRightFace;
+        // cubeViewModel.LeftFaceViewModel.RMouseMove -= cubeEventHandler.OnRMouseMoveLeftFace;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.Enums;
+using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
-namespace RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.MoveRubiksCubeEventArgs;
+namespace RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
 
 public sealed class MovedRubiksCubeEventArgs : System.EventArgs
 {

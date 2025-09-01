@@ -1,7 +1,7 @@
-﻿using RubiksCubeSimulator.Wpf.Contracts.Events;
-using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.KeyRubiksCubeEventArgs;
-using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.MouseRubiksCubeEventArgs;
-using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.MoveRubiksCubeEventArgs;
+﻿using RubiksCubeSimulator.Wpf.Events;
+using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
+using RubiksCubeSimulator.Wpf.Events.EventArgs.MouseRubiksCubeEventArgs;
+using RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 

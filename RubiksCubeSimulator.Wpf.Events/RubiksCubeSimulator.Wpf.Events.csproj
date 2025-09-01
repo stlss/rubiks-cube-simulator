@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>RubiksCubeSimulator.Wpf.Events</AssemblyName>
+        <RootNamespace>RubiksCubeSimulator.Wpf.Events</RootNamespace>
     </PropertyGroup>
 
 </Project>

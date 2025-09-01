@@ -1,4 +1,4 @@
-﻿using RubiksCubeSimulator.Wpf.Contracts.Events;
+﻿using RubiksCubeSimulator.Wpf.Events;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 

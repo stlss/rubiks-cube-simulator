@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.UserControls", "RubiksCubeSimulator.Wpf.UserControls\RubiksCubeSimulator.Wpf.UserControls.csproj", "{DDAF01D2-2370-4F81-BCB0-85D49E2F07A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.Contracts", "RubiksCubeSimulator.Wpf.Contracts\RubiksCubeSimulator.Wpf.Contracts.csproj", "{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.Events", "RubiksCubeSimulator.Wpf.Events\RubiksCubeSimulator.Wpf.Events.csproj", "{D7FC1049-E3AB-427E-8DF2-E9E2416CC6F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCubeSimulator.Wpf.Infrastructure", "RubiksCubeSimulator.Wpf.Infrastructure\RubiksCubeSimulator.Wpf.Infrastructure.csproj", "{BB0DB91F-C2F9-4E25-B885-955A45E656E4}"
 EndProject

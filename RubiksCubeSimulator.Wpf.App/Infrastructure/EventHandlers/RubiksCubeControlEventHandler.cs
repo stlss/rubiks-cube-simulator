@@ -12,11 +12,11 @@ internal interface IRubiksCubeControlEventHandler
     public Point? RelativeMouserPosition { get; }
 
 
-    public void OnRelativeMouseMoveUpFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
-
-    public void OnRelativeMouseMoveRightFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
-
-    public void OnRelativeMouseMoveLeftFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
+    // public void OnRMouseMoveUpFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
+    //
+    // public void OnRMouseMoveRightFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
+    //
+    // public void OnRMouseMoveLeftFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e);
 }
 
 internal sealed class RubiksCubeControlEventHandler : IRubiksCubeControlEventHandler
@@ -28,26 +28,26 @@ internal sealed class RubiksCubeControlEventHandler : IRubiksCubeControlEventHan
     public Point? RelativeMouserPosition { get; private set; }
 
 
-    public void OnRelativeMouseMoveUpFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
-    {
-        FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Up : null;
-        StickerNumber = e.StickerNumber;
-        RelativeMouserPosition = e.RelativeMousePosition;
-    }
-
-    public void OnRelativeMouseMoveRightFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
-    {
-        FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Right : null;
-        StickerNumber = e.StickerNumber;
-        RelativeMouserPosition = e.RelativeMousePosition;
-    }
-
-    public void OnRelativeMouseMoveLeftFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
-    {
-        FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Left : null;
-        StickerNumber = e.StickerNumber;
-        RelativeMouserPosition = e.RelativeMousePosition;
-    }
+    // public void OnRMouseMoveUpFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
+    // {
+    //     FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Up : null;
+    //     StickerNumber = e.StickerNumber;
+    //     RelativeMouserPosition = e.RelativeMousePosition;
+    // }
+    //
+    // public void OnRMouseMoveRightFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
+    // {
+    //     FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Right : null;
+    //     StickerNumber = e.StickerNumber;
+    //     RelativeMouserPosition = e.RelativeMousePosition;
+    // }
+    //
+    // public void OnRMouseMoveLeftFace(object? sender, RelativeMouseMoveRubiksCubeFaceEventArgs e)
+    // {
+    //     FaceName = e.RelativeMousePosition != null ? EventHandlers.FaceName.Left : null;
+    //     StickerNumber = e.StickerNumber;
+    //     RelativeMouserPosition = e.RelativeMousePosition;
+    // }
 }
 
 internal enum FaceName

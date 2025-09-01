@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RubiksCubeSimulator.Wpf.Contracts\RubiksCubeSimulator.Wpf.Contracts.csproj" />
+      <ProjectReference Include="..\RubiksCubeSimulator.Wpf.Events\RubiksCubeSimulator.Wpf.Events.csproj" />
     </ItemGroup>
 
 </Project>

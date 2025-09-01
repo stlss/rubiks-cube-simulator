@@ -1,6 +1,6 @@
-﻿using RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.Enums;
+﻿using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
-namespace RubiksCubeSimulator.Wpf.Contracts.Events.EventArgs.KeyRubiksCubeEventArgs;
+namespace RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
 
 public sealed class KeyDownRubiksCubeEventArgs : System.EventArgs
 {

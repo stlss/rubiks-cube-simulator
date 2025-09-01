@@ -1,4 +1,4 @@
-﻿namespace RubiksCubeSimulator.Wpf.Contracts.Events;
+﻿namespace RubiksCubeSimulator.Wpf.Events;
 
 public interface ISubscriber<in T> where T : System.EventArgs
 {
