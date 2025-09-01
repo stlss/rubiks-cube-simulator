@@ -5,10 +5,16 @@ using RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
-public sealed class MovedRubiksCubePublisher :
-    PublisherBase<MovedRubiksCubeEventArgs>,
+public interface IMovedRubiksCubePublisher :
+    IPublisher<MovedRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,
     ISubscriber<KeyUpRubiksCubeEventArgs>
+{
+}
+
+internal sealed class MovedRubiksCubePublisher :
+    PublisherBase<MovedRubiksCubeEventArgs>,
+    IMovedRubiksCubePublisher
 {
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
