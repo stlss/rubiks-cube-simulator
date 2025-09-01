@@ -3,6 +3,8 @@ using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelMappers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelEventLinker;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Extensions;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
 
@@ -13,6 +15,8 @@ internal interface IRubiksCubeServiceProvider
     public IRubiksCubeControlViewModelMapper GetCubeViewModelMapper();
 
     public IViewModelEventLinker GetViewModelLinker();
+
+    public IRubiksCubeContextBuilder GetRubiksCubeContextBuilder();
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -33,6 +37,8 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
         services.AddRubiksCubeBuilder();
         services.AddRubiksCubeControlViewModelMappers();
         services.AddViewModelLinker();
+
+        services.AddRubiksCubeContextBuilder();
     }
 
     public IRubiksCubeBuilder GetCubeBuilder() =>
@@ -43,4 +49,7 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
 
     public IViewModelEventLinker GetViewModelLinker() =>
         _serviceProvider.GetRequiredService<IViewModelEventLinker>();
+
+    public IRubiksCubeContextBuilder GetRubiksCubeContextBuilder() =>
+        _serviceProvider.GetRequiredService<IRubiksCubeContextBuilder>();
 }

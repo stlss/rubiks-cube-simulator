@@ -1,27 +1,17 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelMappers;
 using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.ViewModelEventLinker;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 
 internal sealed class MainWindowViewModel : ObservableObject
 {
-    private readonly IRubiksCubeBuilder _cubeBuilder;
-    private readonly IRubiksCubeControlViewModelMapper _cubeViewModelMapper;
-    private readonly IViewModelEventLinker _viewModelEventLinker;
+    private readonly IRubiksCubeContext _cubeContext;
 
-    private RubiksCubeControlViewModel _cubeControlViewModel = new();
-
-    public RubiksCubeControlViewModel CubeControlViewModel
-    {
-        get => _cubeControlViewModel;
-        private set => SetProperty(ref _cubeControlViewModel, value);
-    }
+    public RubiksCubeControlViewModel CubeViewModel => _cubeContext.CubeViewModel;
 
 
     public MainWindowViewModel() : this(new RubiksCubeServiceProvider())
@@ -30,27 +20,11 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private MainWindowViewModel(IRubiksCubeServiceProvider serviceProvider)
     {
-        _cubeBuilder = serviceProvider.GetCubeBuilder();
-        _cubeViewModelMapper = serviceProvider.GetCubeViewModelMapper();
-        _viewModelEventLinker = serviceProvider.GetViewModelLinker();
+        var cubeBuilderContextBuilder = serviceProvider.GetRubiksCubeContextBuilder();
+        _cubeContext = cubeBuilderContextBuilder.Build(3);
 
         KeyDownCommand = new RelayCommand<KeyEventArgs>(e => KeyDown?.Invoke(this, e));
         KeyUpCommand = new RelayCommand<KeyEventArgs>(e => KeyUp?.Invoke(this, e));
-
-        SetCubeViewModel();
-        LinkViewModels();
-    }
-
-
-    private void SetCubeViewModel()
-    {
-        var cube = _cubeBuilder.BuildSolvedRubiksCube(3);
-        CubeControlViewModel = _cubeViewModelMapper.Map(cube);
-    }
-
-    private void LinkViewModels()
-    {
-        _viewModelEventLinker.Link(this, CubeControlViewModel);
     }
 
 

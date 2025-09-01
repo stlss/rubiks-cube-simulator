@@ -35,7 +35,7 @@
         </Grid.ColumnDefinitions>
 
         <Viewbox Grid.Column="1">
-            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeControlViewModel}"
+            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeViewModel}"
                                                   Margin="25"/>
         </Viewbox>
     </Grid>
