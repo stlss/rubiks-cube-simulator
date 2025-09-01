@@ -8,7 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\RubiksCubeSimulator.Application\RubiksCubeSimulator.Application.csproj" />
+      <ProjectReference Include="..\RubiksCubeSimulator.Domain\RubiksCubeSimulator.Domain.csproj" />
       <ProjectReference Include="..\RubiksCubeSimulator.Wpf.Events\RubiksCubeSimulator.Wpf.Events.csproj" />
+      <ProjectReference Include="..\RubiksCubeSimulator.Wpf.UserControls\RubiksCubeSimulator.Wpf.UserControls.csproj" />
     </ItemGroup>
 
 </Project>
