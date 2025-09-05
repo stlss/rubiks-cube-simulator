@@ -5,14 +5,15 @@ using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
-public interface IKeyRubiksCubePublisher : IPublisher<KeyRubiksCubeEventArgs>
+public interface IKeyRubiksCubePublisher :
+    IPublisher<KeyRubiksCubeEventArgs>,
+    ISubscriber<KeyEventArgs>
 {
 }
 
 internal class KeyRubiksCubePublisher :
     PublisherBase<KeyRubiksCubeEventArgs>,
-    IKeyRubiksCubePublisher,
-    ISubscriber<KeyEventArgs>
+    IKeyRubiksCubePublisher
 {
     private MoveKey? _moveKey;
     private bool _shiftPressed;
