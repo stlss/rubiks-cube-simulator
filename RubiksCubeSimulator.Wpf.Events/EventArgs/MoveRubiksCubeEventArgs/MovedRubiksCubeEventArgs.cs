@@ -12,4 +12,6 @@ public sealed class MovedRubiksCubeEventArgs : System.EventArgs
     public required Point? RelativeMousePosition { get; init; }
 
     public required MoveKey MoveKey { get; init; }
+
+    public required bool MoveCanceled { get; init; }
 }

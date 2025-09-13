@@ -38,6 +38,8 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
         _cubeContext.CubeViewModel.RightFaceViewModel.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
         _cubeContext.CubeViewModel.LeftFaceViewModel.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
 
+        ServiceProvider.MovingRubiksCubePublisher.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
+
         var arrowSetter = ServiceProvider.ArrowSetterBuilder.Build(_cubeContext);
 
         ServiceProvider.MovingRubiksCubePublisher.Subscribe(arrowSetter);

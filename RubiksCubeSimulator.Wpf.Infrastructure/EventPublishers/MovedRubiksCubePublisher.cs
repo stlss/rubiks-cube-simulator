@@ -8,6 +8,7 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
 public interface IMovedRubiksCubePublisher :
     IPublisher<MovedRubiksCubeEventArgs>,
+    ISubscriber<MovingRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,
     ISubscriber<KeyRubiksCubeEventArgs>
 {
@@ -17,8 +18,14 @@ internal sealed class MovedRubiksCubePublisher :
     PublisherBase<MovedRubiksCubeEventArgs>,
     IMovedRubiksCubePublisher
 {
+    private MovingRubiksCubeEventArgs _lastMovingRubiksCubeEventArgs = null!;
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
+
+    public void OnEvent(object sender, MovingRubiksCubeEventArgs movingCubeEventArgs)
+    {
+        _lastMovingRubiksCubeEventArgs = movingCubeEventArgs;
+    }
 
     public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs mouseMoveCubeEventArgs)
     {
@@ -35,10 +42,11 @@ internal sealed class MovedRubiksCubePublisher :
 
         var cubeMovedEventArgs = new MovedRubiksCubeEventArgs
         {
-            FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
-            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
-            RelativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition,
+            FaceName = _lastMovingRubiksCubeEventArgs.FaceName,
+            StickerNumber = _lastMovingRubiksCubeEventArgs.StickerNumber,
+            RelativeMousePosition = _lastMovingRubiksCubeEventArgs.RelativeMousePosition,
             MoveKey = keyCubeEventArgs.MoveKey,
+            MoveCanceled = lastMouseMoveEventArgsSnapshot.RelativeMousePosition == null,
         };
 
         NotifySubscribers(cubeMovedEventArgs);
