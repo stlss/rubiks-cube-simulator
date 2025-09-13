@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers.Extensions;
+using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
+using RubiksCubeSimulator.Wpf.Infrastructure.Extensions;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
-using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Extensions;
 
 namespace RubiksCubeSimulator.Wpf.App.Infrastructure;
 
@@ -10,11 +10,15 @@ internal interface IRubiksCubeServiceProvider
 {
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder { get; }
 
+
     public IKeyRubiksCubePublisher KeyRubiksCubePublisher { get; }
 
     public IMovedRubiksCubePublisher MovedRubiksCubePublisher { get; }
 
     public IMovingRubiksCubePublisher MovingRubiksCubePublisher { get; }
+
+
+    public IMoveArrowSetterBuilder ArrowSetterBuilder { get; }
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -34,10 +38,13 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
     {
         services.AddRubiksCubeContextBuilder();
         services.AddEventPublishers();
+        services.AddEventSubscribersBuilders();
     }
+
 
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder =>
         _serviceProvider.GetRequiredService<IRubiksCubeContextBuilder>();
+
 
     public IKeyRubiksCubePublisher KeyRubiksCubePublisher =>
         _serviceProvider.GetRequiredService<IKeyRubiksCubePublisher>();
@@ -47,4 +54,8 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
 
     public IMovingRubiksCubePublisher MovingRubiksCubePublisher =>
         _serviceProvider.GetRequiredService<IMovingRubiksCubePublisher>();
+
+
+    public IMoveArrowSetterBuilder ArrowSetterBuilder =>
+        _serviceProvider.GetRequiredService<IMoveArrowSetterBuilder>();
 }
