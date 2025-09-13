@@ -16,8 +16,6 @@ internal class KeyRubiksCubePublisher :
     IKeyRubiksCubePublisher
 {
     private MoveKey? _moveKey;
-    private bool _shiftPressed;
-
 
     public void OnEvent(object sender, KeyEventArgs keyEventArgs)
     {
@@ -27,72 +25,23 @@ internal class KeyRubiksCubePublisher :
 
     private void OnKeyDown(KeyEventArgs keyEventArgs)
     {
-        if (IsShift(keyEventArgs.Key))
-        {
-            _shiftPressed = true;
-
-            if (_moveKey != null) NotifySubscribers(CreateKeyRubiksEventArgs());
-
-            return;
-        }
-
         var moveKey = ConvertToMoveKey(keyEventArgs.Key);
+        if (moveKey == null || _moveKey != null) return;
 
-        if (moveKey != null && _moveKey == null)
-        {
-            _moveKey = moveKey;
-            NotifySubscribers(CreateKeyRubiksEventArgs());
-        }
-
-        return;
-
-        KeyRubiksCubeEventArgs CreateKeyRubiksEventArgs()
-        {
-            return new KeyRubiksCubeEventArgs
-            {
-                MoveKey = _moveKey!.Value,
-                ShiftPressed = _shiftPressed,
-                KeyAction = KeyAction.Down,
-            };
-        }
+        _moveKey = moveKey;
+        NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Down));
     }
 
     private void OnKeyUp(KeyEventArgs keyEventArgs)
     {
-        if (IsShift(keyEventArgs.Key))
-        {
-            _shiftPressed = false;
-
-            if (_moveKey != null) NotifySubscribers(CreateKeyRubiksEventArgs());
-
-            return;
-        }
-
         var moveKey = ConvertToMoveKey(keyEventArgs.Key);
+        if (moveKey == null || moveKey != _moveKey) return;
 
-        if (moveKey != null && moveKey == _moveKey)
-        {
-            NotifySubscribers(CreateKeyRubiksEventArgs());
-            _moveKey = null;
-        }
-
-        return;
-
-        KeyRubiksCubeEventArgs CreateKeyRubiksEventArgs()
-        {
-            return new KeyRubiksCubeEventArgs
-            {
-                MoveKey = _moveKey!.Value,
-                ShiftPressed = _shiftPressed,
-                KeyAction = KeyAction.Up,
-            };
-        }
+        NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Up));
+        _moveKey = null;
     }
 
-
-    private static bool IsShift(Key key) => key == Key.LeftShift;
-
-    private MoveKey? ConvertToMoveKey(Key key)
+    private static MoveKey? ConvertToMoveKey(Key key)
     {
         return key switch
         {
@@ -101,6 +50,15 @@ internal class KeyRubiksCubePublisher :
             Key.S => MoveKey.S,
             Key.D => MoveKey.D,
             _ => null,
+        };
+    }
+
+    private KeyRubiksCubeEventArgs CreateKeyCubeEventArgs(KeyAction keyAction)
+    {
+        return new KeyRubiksCubeEventArgs
+        {
+            MoveKey = _moveKey!.Value,
+            KeyAction = keyAction,
         };
     }
 }

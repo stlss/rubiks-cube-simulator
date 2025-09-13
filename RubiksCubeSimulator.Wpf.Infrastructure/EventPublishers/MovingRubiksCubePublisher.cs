@@ -20,25 +20,17 @@ internal sealed class MovingRubiksCubePublisher :
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs keyEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs keyCubeEventArgs)
     {
-        lock (_lock)
-        {
-            _lastMouseMoveEventArgs = keyEventArgs;
-        }
+        lock (_lock) _lastMouseMoveEventArgs = keyCubeEventArgs;
     }
 
-    public void OnEvent(object sender, KeyRubiksCubeEventArgs keyEventArgs)
+    public void OnEvent(object sender, KeyRubiksCubeEventArgs keyCubeEventArgs)
     {
-        if (keyEventArgs.KeyAction != KeyAction.Down) return;
+        if (keyCubeEventArgs.KeyAction != KeyAction.Down) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
-
-        lock (_lock)
-        {
-            lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
-        }
-
+        lock (_lock) lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
         if (lastMouseMoveEventArgsSnapshot == null) return;
 
         var relativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition;
@@ -49,8 +41,7 @@ internal sealed class MovingRubiksCubePublisher :
             FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
             StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
             RelativeMousePosition = relativeMousePosition.Value,
-            MoveKey = keyEventArgs.MoveKey,
-            ShiftPressed = keyEventArgs.ShiftPressed,
+            MoveKey = keyCubeEventArgs.MoveKey,
         };
 
         NotifySubscribers(cubeMovingEventArgs);
