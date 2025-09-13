@@ -1,53 +1,46 @@
-﻿using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using RubiksCubeSimulator.Wpf.App.Infrastructure;
-using RubiksCubeSimulator.Wpf.Events;
-using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+﻿using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 
-internal sealed class MainWindowViewModel : ObservableObject, IPublisher<KeyEventArgs>
+internal sealed class MainWindowViewModel : MainWindowViewModelBase
 {
     private readonly IRubiksCubeContext _cubeContext;
 
     public RubiksCubeControlViewModel CubeViewModel => _cubeContext.CubeViewModel;
 
 
-    public MainWindowViewModel() : this(new RubiksCubeServiceProvider())
+    public MainWindowViewModel()
     {
-    }
-
-    private MainWindowViewModel(IRubiksCubeServiceProvider serviceProvider)
-    {
-        var cubeBuilderContextBuilder = serviceProvider.RubiksCubeContextBuilder;
-        _cubeContext = cubeBuilderContextBuilder.Build(3);
-
-        KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => NotifySubscribers(keyEventArgs!));
-        KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => NotifySubscribers(keyEventArgs!));
+        _cubeContext = CreateCubeContext();
+        Subscribe();
     }
 
 
-    public IRelayCommand<KeyEventArgs>? KeyDownCommand { get; private init; }
-
-    public IRelayCommand<KeyEventArgs>? KeyUpCommand { get; private init; }
-
-
-    private readonly List<ISubscriber<KeyEventArgs>> _keyEventSubscribers = [];
-
-    public void Subscribe(ISubscriber<KeyEventArgs> subscriber)
+    private IRubiksCubeContext CreateCubeContext()
     {
-        _keyEventSubscribers.Add(subscriber);
+        return ServiceProvider.RubiksCubeContextBuilder.Build(3);
     }
 
-    public void Unsubscribe(ISubscriber<KeyEventArgs> subscriber)
+    private void Subscribe()
     {
-        _keyEventSubscribers.Remove(subscriber);
-    }
+        Subscribe(ServiceProvider.KeyRubiksCubePublisher);
 
-    private void NotifySubscribers(KeyEventArgs keyEventArgs)
-    {
-        foreach (var subscriber in _keyEventSubscribers) subscriber.OnEvent(this, keyEventArgs);
+        ServiceProvider.KeyRubiksCubePublisher.Subscribe(ServiceProvider.MovingRubiksCubePublisher);
+
+        _cubeContext.CubeViewModel.UpFaceViewModel.Subscribe(ServiceProvider.MovingRubiksCubePublisher);
+        _cubeContext.CubeViewModel.RightFaceViewModel.Subscribe(ServiceProvider.MovingRubiksCubePublisher);
+        _cubeContext.CubeViewModel.LeftFaceViewModel.Subscribe(ServiceProvider.MovingRubiksCubePublisher);
+
+        ServiceProvider.KeyRubiksCubePublisher.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
+
+        _cubeContext.CubeViewModel.UpFaceViewModel.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
+        _cubeContext.CubeViewModel.RightFaceViewModel.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
+        _cubeContext.CubeViewModel.LeftFaceViewModel.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
+
+        var arrowSetter = ServiceProvider.ArrowSetterBuilder.Build(_cubeContext);
+
+        ServiceProvider.MovingRubiksCubePublisher.Subscribe(arrowSetter);
+        ServiceProvider.MovedRubiksCubePublisher.Subscribe(arrowSetter);
     }
 }
