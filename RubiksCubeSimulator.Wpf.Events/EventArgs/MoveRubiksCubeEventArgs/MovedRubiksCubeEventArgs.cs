@@ -13,5 +13,7 @@ public sealed class MovedRubiksCubeEventArgs : System.EventArgs
 
     public required MoveKey MoveKey { get; init; }
 
+    public required bool ShiftPressed { get; init; }
+
     public required bool MoveCanceled { get; init; }
 }

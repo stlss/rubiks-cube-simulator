@@ -6,58 +6,73 @@ using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
 public interface IKeyRubiksCubePublisher :
-    IPublisher<KeyRubiksCubeEventArgs>,
+    IPublisher<InputKeyRubiksCubeEventArgs>,
     ISubscriber<KeyEventArgs>
 {
 }
 
 internal class KeyRubiksCubePublisher :
-    PublisherBase<KeyRubiksCubeEventArgs>,
+    PublisherBase<InputKeyRubiksCubeEventArgs>,
     IKeyRubiksCubePublisher
 {
-    private MoveKey? _moveKey;
+    private InputKey? _inputMoveKey;
 
-    public void OnEvent(object sender, KeyEventArgs keyEventArgs)
+    public void OnEvent(object sender, KeyEventArgs inputKeyCubeEventArgs)
     {
-        if (keyEventArgs.IsDown) OnKeyDown(keyEventArgs);
-        else if (keyEventArgs.IsUp) OnKeyUp(keyEventArgs);
+        if (inputKeyCubeEventArgs.IsDown) OnKeyDown(inputKeyCubeEventArgs);
+        else if (inputKeyCubeEventArgs.IsUp) OnKeyUp(inputKeyCubeEventArgs);
     }
 
     private void OnKeyDown(KeyEventArgs keyEventArgs)
     {
-        var moveKey = ConvertToMoveKey(keyEventArgs.Key);
-        if (moveKey == null || _moveKey != null) return;
+        var inputKey = ConvertToInputKey(keyEventArgs.Key);
+        if (inputKey == null) return;
 
-        _moveKey = moveKey;
-        NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Down));
+        if (inputKey == InputKey.Shift)
+        {
+            NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Down, InputKey.Shift));
+        }
+        else if (_inputMoveKey == null)
+        {
+            NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Down, inputKey.Value));
+            _inputMoveKey = inputKey;
+        }
     }
 
     private void OnKeyUp(KeyEventArgs keyEventArgs)
     {
-        var moveKey = ConvertToMoveKey(keyEventArgs.Key);
-        if (moveKey == null || moveKey != _moveKey) return;
+        var inputKey = ConvertToInputKey(keyEventArgs.Key);
+        if (inputKey == null) return;
 
-        NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Up));
-        _moveKey = null;
+        if (inputKey == InputKey.Shift)
+        {
+            NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Up, InputKey.Shift));
+        }
+        else if (inputKey == _inputMoveKey)
+        {
+            NotifySubscribers(CreateKeyCubeEventArgs(KeyAction.Up, inputKey.Value));
+            _inputMoveKey = null;
+        }
     }
 
-    private static MoveKey? ConvertToMoveKey(Key key)
+    private static InputKey? ConvertToInputKey(Key key)
     {
         return key switch
         {
-            Key.W => MoveKey.W,
-            Key.A => MoveKey.A,
-            Key.S => MoveKey.S,
-            Key.D => MoveKey.D,
+            Key.W => InputKey.W,
+            Key.A => InputKey.A,
+            Key.S => InputKey.S,
+            Key.D => InputKey.D,
+            Key.LeftShift => InputKey.Shift,
             _ => null,
         };
     }
 
-    private KeyRubiksCubeEventArgs CreateKeyCubeEventArgs(KeyAction keyAction)
+    private static InputKeyRubiksCubeEventArgs CreateKeyCubeEventArgs(KeyAction keyAction, InputKey inputKey)
     {
-        return new KeyRubiksCubeEventArgs
+        return new InputKeyRubiksCubeEventArgs
         {
-            MoveKey = _moveKey!.Value,
+            InputKey = inputKey,
             KeyAction = keyAction,
         };
     }

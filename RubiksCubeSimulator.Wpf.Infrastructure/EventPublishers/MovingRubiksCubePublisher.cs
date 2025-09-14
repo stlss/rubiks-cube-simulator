@@ -8,8 +8,9 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
 public interface IMovingRubiksCubePublisher :
     IPublisher<MovingRubiksCubeEventArgs>,
+    ISubscriber<MovedRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,
-    ISubscriber<KeyRubiksCubeEventArgs>
+    ISubscriber<InputKeyRubiksCubeEventArgs>
 {
 }
 
@@ -17,17 +18,42 @@ internal sealed class MovingRubiksCubePublisher :
     PublisherBase<MovingRubiksCubeEventArgs>,
     IMovingRubiksCubePublisher
 {
+    private MovingRubiksCubeEventArgs? _lastMovingCubeEventArgs;
+    private bool _shiftPressed;
+
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs keyCubeEventArgs)
+    public void OnEvent(object sender, MovedRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        lock (_lock) _lastMouseMoveEventArgs = keyCubeEventArgs;
+        _lastMovingCubeEventArgs = null;
     }
 
-    public void OnEvent(object sender, KeyRubiksCubeEventArgs keyCubeEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        if (keyCubeEventArgs.KeyAction != KeyAction.Down) return;
+        lock (_lock) _lastMouseMoveEventArgs = inputKeyCubeEventArgs;
+    }
+
+    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs inputKeyCubeEventArgs)
+    {
+        if (inputKeyCubeEventArgs.InputKey == InputKey.Shift)
+        {
+            _shiftPressed = inputKeyCubeEventArgs.KeyAction switch
+            {
+                KeyAction.Down => true,
+                KeyAction.Up => false,
+                _ => _shiftPressed
+            };
+
+            if (_lastMovingCubeEventArgs == null) return;
+
+            _lastMovingCubeEventArgs = CreateMovingCubeEventArgs();
+            NotifySubscribers(_lastMovingCubeEventArgs);
+
+            return;
+        }
+
+        if (inputKeyCubeEventArgs.KeyAction != KeyAction.Down) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
         lock (_lock) lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
@@ -36,14 +62,33 @@ internal sealed class MovingRubiksCubePublisher :
         var relativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition;
         if (relativeMousePosition == null) return;
 
-        var cubeMovingEventArgs = new MovingRubiksCubeEventArgs
-        {
-            FaceName = lastMouseMoveEventArgsSnapshot.FaceName,
-            StickerNumber = lastMouseMoveEventArgsSnapshot.StickerNumber,
-            RelativeMousePosition = relativeMousePosition.Value,
-            MoveKey = keyCubeEventArgs.MoveKey,
-        };
+        _lastMovingCubeEventArgs = CreateMovingCubeEventArgs(lastMouseMoveEventArgsSnapshot, inputKeyCubeEventArgs);
+        NotifySubscribers(_lastMovingCubeEventArgs );
+    }
 
-        NotifySubscribers(cubeMovingEventArgs);
+    private MovingRubiksCubeEventArgs CreateMovingCubeEventArgs()
+    {
+        return new MovingRubiksCubeEventArgs
+        {
+            FaceName = _lastMovingCubeEventArgs!.FaceName,
+            StickerNumber = _lastMovingCubeEventArgs.StickerNumber,
+            RelativeMousePosition = _lastMovingCubeEventArgs.RelativeMousePosition,
+            MoveKey = _lastMovingCubeEventArgs.MoveKey,
+            ShiftPressed = _shiftPressed,
+        };
+    }
+
+    private MovingRubiksCubeEventArgs CreateMovingCubeEventArgs(
+        MouseMoveRubiksCubeEventArgs mouseMoveCubeEventArgs,
+        InputKeyRubiksCubeEventArgs inputKeyCubeEventArgs)
+    {
+        return new MovingRubiksCubeEventArgs
+        {
+            FaceName = mouseMoveCubeEventArgs.FaceName,
+            StickerNumber = mouseMoveCubeEventArgs.StickerNumber,
+            RelativeMousePosition = mouseMoveCubeEventArgs.RelativeMousePosition!.Value,
+            MoveKey = (MoveKey)inputKeyCubeEventArgs.InputKey,
+            ShiftPressed = _shiftPressed,
+        };
     }
 }

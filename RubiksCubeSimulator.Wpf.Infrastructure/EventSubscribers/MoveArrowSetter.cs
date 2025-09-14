@@ -15,12 +15,19 @@ public interface IMoveArrowSetter :
 
 internal sealed class MoveArrowSetter(IRubiksCubeContext cubeContext) : IMoveArrowSetter
 {
-    public void OnEvent(object sender, MovingRubiksCubeEventArgs keyCubeEventArgs)
+    public void OnEvent(object sender, MovingRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        var moveDirection = GetMoveDirection(keyCubeEventArgs);
+        var moveDirection = GetMoveDirection(inputKeyCubeEventArgs);
 
-        var sliceNumber = GetSliceNumber(keyCubeEventArgs);
-        cubeContext.CubeViewModel.SetSliceMoveArrows(moveDirection, sliceNumber);
+        if (inputKeyCubeEventArgs.ShiftPressed)
+        {
+            cubeContext.CubeViewModel.SetWholeCubeMoveArrows(moveDirection);
+        }
+        else
+        {
+            var sliceNumber = GetSliceNumber(inputKeyCubeEventArgs);
+            cubeContext.CubeViewModel.SetSliceMoveArrows(moveDirection, sliceNumber);
+        }
     }
 
     private MoveDirection GetMoveDirection(MovingRubiksCubeEventArgs movingEventArgs)
@@ -127,7 +134,7 @@ internal sealed class MoveArrowSetter(IRubiksCubeContext cubeContext) : IMoveArr
     private int ReverseIndex(int index) => cubeContext.CubeViewModel.CubeDimension - index - 1;
 
 
-    public void OnEvent(object sender, MovedRubiksCubeEventArgs keyCubeEventArgs)
+    public void OnEvent(object sender, MovedRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
         cubeContext.CubeViewModel.ClearMoveArrows();
     }

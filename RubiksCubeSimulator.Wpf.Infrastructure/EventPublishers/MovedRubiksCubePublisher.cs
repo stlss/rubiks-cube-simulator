@@ -10,7 +10,7 @@ public interface IMovedRubiksCubePublisher :
     IPublisher<MovedRubiksCubeEventArgs>,
     ISubscriber<MovingRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,
-    ISubscriber<KeyRubiksCubeEventArgs>
+    ISubscriber<InputKeyRubiksCubeEventArgs>
 {
 }
 
@@ -22,19 +22,19 @@ internal sealed class MovedRubiksCubePublisher :
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MovingRubiksCubeEventArgs movingCubeEventArgs)
+    public void OnEvent(object sender, MovingRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        _lastMovingRubiksCubeEventArgs = movingCubeEventArgs;
+        _lastMovingRubiksCubeEventArgs = inputKeyCubeEventArgs;
     }
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs mouseMoveCubeEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        lock (_lock) _lastMouseMoveEventArgs = mouseMoveCubeEventArgs;
+        lock (_lock) _lastMouseMoveEventArgs = inputKeyCubeEventArgs;
     }
 
-    public void OnEvent(object sender, KeyRubiksCubeEventArgs keyCubeEventArgs)
+    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs inputKeyCubeEventArgs)
     {
-        if (keyCubeEventArgs.KeyAction != KeyAction.Up) return;
+        if (inputKeyCubeEventArgs.KeyAction != KeyAction.Up || inputKeyCubeEventArgs.InputKey == InputKey.Shift) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
         lock (_lock) lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
@@ -45,7 +45,8 @@ internal sealed class MovedRubiksCubePublisher :
             FaceName = _lastMovingRubiksCubeEventArgs.FaceName,
             StickerNumber = _lastMovingRubiksCubeEventArgs.StickerNumber,
             RelativeMousePosition = _lastMovingRubiksCubeEventArgs.RelativeMousePosition,
-            MoveKey = keyCubeEventArgs.MoveKey,
+            MoveKey = _lastMovingRubiksCubeEventArgs.MoveKey,
+            ShiftPressed = _lastMovingRubiksCubeEventArgs.ShiftPressed,
             MoveCanceled = lastMouseMoveEventArgsSnapshot.RelativeMousePosition == null,
         };
 
