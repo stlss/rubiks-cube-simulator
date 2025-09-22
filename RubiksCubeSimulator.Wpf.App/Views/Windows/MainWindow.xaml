@@ -27,7 +27,7 @@
         <viewModels:MainWindowViewModel />
     </Window.DataContext>
 
-    <Grid Background="GhostWhite" ShowGridLines="True">
+    <Grid Background="GhostWhite">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="4*"/>

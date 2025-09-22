@@ -1,4 +1,6 @@
-﻿using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+﻿using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
+using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves.Enums;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
@@ -41,9 +43,11 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
         ServiceProvider.MovingRubiksCubePublisher.Subscribe(ServiceProvider.MovedRubiksCubePublisher);
         ServiceProvider.MovedRubiksCubePublisher.Subscribe(ServiceProvider.MovingRubiksCubePublisher);
 
-        var arrowSetter = ServiceProvider.ArrowSetterBuilder.Build(_cubeContext);
+        var moveArrowSetter = ServiceProvider.MoveArrowSetterBuilder.Build(_cubeContext);
+        var moveApplier = ServiceProvider.MoveApplierBuilder.Build(_cubeContext);
 
-        ServiceProvider.MovingRubiksCubePublisher.Subscribe(arrowSetter);
-        ServiceProvider.MovedRubiksCubePublisher.Subscribe(arrowSetter);
+        ServiceProvider.MovingRubiksCubePublisher.Subscribe(moveArrowSetter);
+        ServiceProvider.MovedRubiksCubePublisher.Subscribe(moveArrowSetter);
+        ServiceProvider.MovedRubiksCubePublisher.Subscribe(moveApplier);
     }
 }

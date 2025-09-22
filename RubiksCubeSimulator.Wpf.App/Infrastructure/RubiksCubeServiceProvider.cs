@@ -18,7 +18,9 @@ internal interface IRubiksCubeServiceProvider
     public IMovingRubiksCubePublisher MovingRubiksCubePublisher { get; }
 
 
-    public IMoveArrowSetterBuilder ArrowSetterBuilder { get; }
+    public IMoveArrowSetterBuilder MoveArrowSetterBuilder { get; }
+
+    public IMoveApplierBuilder MoveApplierBuilder { get; }
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -56,6 +58,9 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
         _serviceProvider.GetRequiredService<IMovingRubiksCubePublisher>();
 
 
-    public IMoveArrowSetterBuilder ArrowSetterBuilder =>
+    public IMoveArrowSetterBuilder MoveArrowSetterBuilder =>
         _serviceProvider.GetRequiredService<IMoveArrowSetterBuilder>();
+
+    public IMoveApplierBuilder MoveApplierBuilder =>
+        _serviceProvider.GetRequiredService<IMoveApplierBuilder>();
 }

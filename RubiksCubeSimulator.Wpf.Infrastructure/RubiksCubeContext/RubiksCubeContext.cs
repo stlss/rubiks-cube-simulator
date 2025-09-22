@@ -25,6 +25,6 @@ internal sealed class RubiksCubeContext(
     public void Move(RubiksCubeMoveBase moveBase)
     {
         _domainCube = cubeMover.MoveRubiksCube(_domainCube, moveBase);
-        CubeViewModel = cubeMapper.Map(_domainCube);
+        cubeMapper.Map(_domainCube, CubeViewModel);
     }
 }

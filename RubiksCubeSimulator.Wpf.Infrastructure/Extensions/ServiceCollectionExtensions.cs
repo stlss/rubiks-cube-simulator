@@ -2,6 +2,7 @@
 using RubiksCubeSimulator.Application.Infrastructure.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
+using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Mappers;
@@ -50,6 +51,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddEventSubscribersBuilders(this IServiceCollection services)
     {
         services.AddSingleton<IMoveArrowSetterBuilder>(_ => new MoveArrowSetterBuilder());
+        services.AddSingleton<IMoveApplierBuilder>(_ => new MoveApplierBuilder());
 
         return services;
     }
