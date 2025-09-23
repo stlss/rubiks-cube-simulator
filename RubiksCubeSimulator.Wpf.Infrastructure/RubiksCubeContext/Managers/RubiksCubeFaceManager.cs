@@ -2,20 +2,20 @@
 using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Mappers;
+namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
-internal interface IRubiksCubeFaceMapper
+internal interface IRubiksCubeFaceManager
 {
-    public RubiksCubeFaceControlViewModel Map(FaceName faceName, RubiksCubeFace cubeFace);
+    public RubiksCubeFaceControlViewModel Create(FaceName faceName, RubiksCubeFace cubeFace);
 
-    public void Map(RubiksCubeFace cubeFace, RubiksCubeFaceControlViewModel cubeFaceViewModel);
+    public void Update(RubiksCubeFaceControlViewModel cubeFaceViewModel, RubiksCubeFace cubeFace);
 }
 
-internal sealed class RubiksCubeFaceMapper(
-    IRubiksCubeStickerColorMapper stickerViewModelMapper)
-    : IRubiksCubeFaceMapper
+internal sealed class RubiksCubeFaceManager(
+    IRubiksCubeStickerColorManager stickerViewModelManager)
+    : IRubiksCubeFaceManager
 {
-    public RubiksCubeFaceControlViewModel Map(FaceName faceName, RubiksCubeFace cubeFace)
+    public RubiksCubeFaceControlViewModel Create(FaceName faceName, RubiksCubeFace cubeFace)
     {
         var cubeDimension = cubeFace.StickerColors.Length;
 
@@ -24,7 +24,7 @@ internal sealed class RubiksCubeFaceMapper(
 
         var stickerViewModels = stickerNumbers
             .Zip(stickerColors, (number, color) => (Number: number, Color: color))
-            .Select(pair => stickerViewModelMapper.Map(pair.Number, pair.Color))
+            .Select(pair => stickerViewModelManager.Create(pair.Number, pair.Color))
             .ToList();
 
         var viewModel = new RubiksCubeFaceControlViewModel
@@ -37,7 +37,7 @@ internal sealed class RubiksCubeFaceMapper(
         return viewModel;
     }
 
-    public void Map(RubiksCubeFace cubeFace, RubiksCubeFaceControlViewModel cubeFaceViewModel)
+    public void Update(RubiksCubeFaceControlViewModel cubeFaceViewModel, RubiksCubeFace cubeFace)
     {
         var stickersWithViewModels = cubeFace.StickerColors
             .SelectMany(row => row)
@@ -46,7 +46,7 @@ internal sealed class RubiksCubeFaceMapper(
 
         foreach (var (sticker, stickerViewModel) in stickersWithViewModels)
         {
-            stickerViewModelMapper.Map(sticker, stickerViewModel);
+            stickerViewModelManager.Update(stickerViewModel, sticker);
         }
     }
 }

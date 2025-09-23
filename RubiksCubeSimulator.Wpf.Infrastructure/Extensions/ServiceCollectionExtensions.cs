@@ -2,10 +2,9 @@
 using RubiksCubeSimulator.Application.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
-using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Mappers;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.Extensions;
 
@@ -16,12 +15,12 @@ public static class ServiceCollectionExtensions
         services.AddRubiksCubeBuilder();
         services.AddRubiksCubeMover();
 
-        AddRubiksCubeMappers(services);
+        AddRubiksCubeManagers(services);
 
         services.AddSingleton<IRubiksCubeContextBuilder>(sp =>
         {
             var cubeBuilder = sp.GetRequiredService<IRubiksCubeBuilder>();
-            var cubeMapper = sp.GetRequiredService<IRubiksCubeMapper>();
+            var cubeMapper = sp.GetRequiredService<IRubiksCubeManager>();
             var cubeMover = sp.GetRequiredService<IRubiksCubeMover>();
 
             return new RubiksCubeContextBuilder(cubeBuilder, cubeMapper, cubeMover);
@@ -30,11 +29,11 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddRubiksCubeMappers(this IServiceCollection services)
+    private static IServiceCollection AddRubiksCubeManagers(this IServiceCollection services)
     {
-        services.AddSingleton<IRubiksCubeMapper, RubiksCubeMapper>();
-        services.AddSingleton<IRubiksCubeFaceMapper, RubiksCubeFaceMapper>();
-        services.AddSingleton<IRubiksCubeStickerColorMapper, RubiksCubeStickerColorMapper>();
+        services.AddSingleton<IRubiksCubeManager, RubiksCubeManager>();
+        services.AddSingleton<IRubiksCubeFaceManager, RubiksCubeFaceManager>();
+        services.AddSingleton<IRubiksCubeStickerColorManager, RubiksCubeStickerColorManager>();
 
         return services;
     }

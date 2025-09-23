@@ -1,7 +1,7 @@
 ﻿using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
-using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Mappers;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
@@ -14,17 +14,17 @@ public interface IRubiksCubeContext
 }
 
 internal sealed class RubiksCubeContext(
-    RubiksCube domainCube,
-    IRubiksCubeMapper cubeMapper,
+    RubiksCube cube,
+    IRubiksCubeManager cubeManager,
     IRubiksCubeMover cubeMover) : IRubiksCubeContext
 {
-    private RubiksCube _domainCube = domainCube;
+    private RubiksCube _cube = cube;
 
-    public RubiksCubeControlViewModel CubeViewModel { get; private set; } = cubeMapper.Map(domainCube);
+    public RubiksCubeControlViewModel CubeViewModel { get; } = cubeManager.Create(cube);
 
     public void Move(RubiksCubeMoveBase moveBase)
     {
-        _domainCube = cubeMover.MoveRubiksCube(_domainCube, moveBase);
-        cubeMapper.Map(_domainCube, CubeViewModel);
+        _cube = cubeMover.MoveRubiksCube(_cube, moveBase);
+        cubeManager.Update(CubeViewModel, _cube);
     }
 }
