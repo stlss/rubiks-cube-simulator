@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RubiksCubeSimulator.Application.Infrastructure.Extensions;
+using RubiksCubeSimulator.Application.Extensions;
 using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;

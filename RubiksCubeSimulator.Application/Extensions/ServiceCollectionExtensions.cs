@@ -6,9 +6,9 @@ using RubiksCubeSimulator.Application.RubiksCubeMover.Mappers;
 using RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 using RubiksCubeSimulator.Domain.Services;
 
-namespace RubiksCubeSimulator.Application.Infrastructure.Extensions;
+namespace RubiksCubeSimulator.Application.Extensions;
 
-public static class RubiksCubeServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddRubiksCubeBuilder(this IServiceCollection services)
     {

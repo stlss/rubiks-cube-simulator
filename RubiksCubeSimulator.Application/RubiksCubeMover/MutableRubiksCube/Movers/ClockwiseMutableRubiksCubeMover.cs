@@ -1,4 +1,4 @@
-﻿using RubiksCubeSimulator.Application.Infrastructure.Extensions;
+﻿using RubiksCubeSimulator.Application.Extensions;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 
