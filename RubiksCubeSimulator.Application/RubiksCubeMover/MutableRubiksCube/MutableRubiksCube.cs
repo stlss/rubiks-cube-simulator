@@ -1,6 +1,6 @@
 ﻿namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube;
 
-public sealed record MutableRubiksCube(
+internal sealed record MutableRubiksCube(
     int Dimension,
     MutableRubiksCubeFace UpFace,
     MutableRubiksCubeFace RightFace,

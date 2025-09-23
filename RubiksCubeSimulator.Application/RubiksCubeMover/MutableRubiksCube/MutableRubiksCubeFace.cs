@@ -2,4 +2,4 @@
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube;
 
-public sealed record MutableRubiksCubeFace(RubiksCubeStickerColor[,] StickerColors);
+internal sealed record MutableRubiksCubeFace(RubiksCubeStickerColor[,] StickerColors);

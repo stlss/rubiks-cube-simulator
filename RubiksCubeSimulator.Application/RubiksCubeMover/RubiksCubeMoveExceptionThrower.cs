@@ -4,7 +4,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover;
 
-public interface IRubiksCubeMoveExceptionThrower
+internal interface IRubiksCubeMoveExceptionThrower
 {
     public void ThrowExceptionIfRubiksCubeIsNotCorrect(RubiksCube cube);
 

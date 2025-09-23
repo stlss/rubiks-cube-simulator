@@ -13,7 +13,9 @@ public static class RubiksCubeServiceCollectionExtensions
     public static IServiceCollection AddRubiksCubeBuilder(this IServiceCollection services)
     {
         services.AddSingleton<IRubiksCubeBuildExceptionThrower, RubiksCubeBuildExceptionThrower>();
-        services.AddSingleton<IRubiksCubeBuilder, RubiksCubeBuilder.RubiksCubeBuilder>();
+
+        services.AddSingleton<IRubiksCubeBuilder>(sp => new RubiksCubeBuilder.RubiksCubeBuilder(
+            cubeBuildExceptionThrower: sp.GetRequiredService<IRubiksCubeBuildExceptionThrower>()));
 
         return services;
     }
@@ -31,7 +33,12 @@ public static class RubiksCubeServiceCollectionExtensions
         services.AddSingleton<IClockwiseMutableRubiksCubeMover, ClockwiseMutableRubiksCubeMover>();
         services.AddSingleton<ICounterclockwiseMutableRubiksCubeMover, CounterclockwiseMutableRubiksCubeMover>();
 
-        services.AddSingleton<IRubiksCubeMover, RubiksCubeMover.RubiksCubeMover>();
+        services.AddSingleton<IRubiksCubeMover>(sp => new RubiksCubeMover.RubiksCubeMover(
+            cubeMoveExceptionThrower: sp.GetRequiredService<IRubiksCubeMoveExceptionThrower>(),
+            cubeMapper: sp.GetRequiredService<IRubiksCubeMapper>(),
+            cubeMoveMapper: sp.GetRequiredService<IRubiksCubeMoveMapper>(),
+            clockwiseMutableCubeMover: sp.GetRequiredService<IClockwiseMutableRubiksCubeMover>(),
+            counterclockwiseMutableCubeMover: sp.GetRequiredService<ICounterclockwiseMutableRubiksCubeMover>()));
 
         return services;
     }

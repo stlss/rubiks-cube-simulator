@@ -1,6 +1,6 @@
 ﻿namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 
-public interface IMutableRubiksCubeMover
+internal interface IMutableRubiksCubeMover
 {
     public void MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber);
 

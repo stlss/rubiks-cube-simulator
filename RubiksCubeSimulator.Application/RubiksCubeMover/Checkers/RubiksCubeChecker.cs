@@ -2,7 +2,7 @@
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.Checkers;
 
-public interface IRubiksCubeChecker
+internal interface IRubiksCubeChecker
 {
     public bool IsCorrectRubiksCube(RubiksCube cube);
 }

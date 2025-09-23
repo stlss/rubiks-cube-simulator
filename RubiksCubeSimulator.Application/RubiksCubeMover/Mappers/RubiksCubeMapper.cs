@@ -4,7 +4,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.Mappers;
 
-public interface IRubiksCubeMapper
+internal interface IRubiksCubeMapper
 {
     public MutableRubiksCube.MutableRubiksCube Map(RubiksCube cube);
 

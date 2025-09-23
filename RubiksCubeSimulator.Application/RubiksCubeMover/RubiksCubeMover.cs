@@ -7,7 +7,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves.Enums;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover;
 
-public sealed class RubiksCubeMover(
+internal sealed class RubiksCubeMover(
     IRubiksCubeMoveExceptionThrower cubeMoveExceptionThrower,
     IRubiksCubeMapper cubeMapper,
     IRubiksCubeMoveMapper cubeMoveMapper,
@@ -96,7 +96,9 @@ public sealed class RubiksCubeMover(
         };
 
 
-    private void MoveMutableRubiksCubeCounterclockwise(MutableRubiksCube.MutableRubiksCube cube, MoveFace moveFace,
+    private void MoveMutableRubiksCubeCounterclockwise(
+        MutableRubiksCube.MutableRubiksCube cube,
+        MoveFace moveFace,
         int sliceNumber)
     {
         var counterclockwiseMove = _counterclockwiseMoveByFaceMove[moveFace];

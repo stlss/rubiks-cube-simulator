@@ -2,7 +2,7 @@
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.MutableRubiksCube.Movers;
 
-public interface IClockwiseMutableRubiksCubeMover : IMutableRubiksCubeMover
+internal interface IClockwiseMutableRubiksCubeMover : IMutableRubiksCubeMover
 {
 }
 

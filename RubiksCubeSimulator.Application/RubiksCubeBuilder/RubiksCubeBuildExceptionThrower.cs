@@ -1,6 +1,6 @@
 ﻿namespace RubiksCubeSimulator.Application.RubiksCubeBuilder;
 
-public interface IRubiksCubeBuildExceptionThrower
+internal interface IRubiksCubeBuildExceptionThrower
 {
     public void ThrowExceptionIfRubiksCubeDimensionIsNotCorrect(int cubeDimension);
 }

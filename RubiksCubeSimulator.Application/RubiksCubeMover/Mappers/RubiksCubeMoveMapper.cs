@@ -3,7 +3,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves.Enums;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeMover.Mappers;
 
-public interface IRubiksCubeMoveMapper
+internal interface IRubiksCubeMoveMapper
 {
     public IReadOnlyList<RubiksCubeSliceMove> Map(WholeRubiksCubeMove move, int cubeDimension);
 }

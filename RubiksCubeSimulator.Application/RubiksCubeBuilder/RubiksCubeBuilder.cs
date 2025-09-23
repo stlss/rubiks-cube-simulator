@@ -4,7 +4,7 @@ using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 
 namespace RubiksCubeSimulator.Application.RubiksCubeBuilder;
 
-public sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuildExceptionThrower) : IRubiksCubeBuilder
+internal sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuildExceptionThrower) : IRubiksCubeBuilder
 {
     public RubiksCube BuildSolvedRubiksCube(int cubeDimension)
     {
@@ -27,7 +27,8 @@ public sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuild
         var stickerColors = Enumerable
             .Repeat(
                 Enumerable.Repeat(stickerColor, dimension).ToImmutableArray(),
-                dimension)
+                dimension
+            )
             .ToImmutableArray();
 
         var face = new RubiksCubeFace(stickerColors);
