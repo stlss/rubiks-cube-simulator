@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using RubiksCubeSimulator.Wpf.Events;
+using RubiksCubeSimulator.Wpf.Events.EventArgs;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube.Enums;
 

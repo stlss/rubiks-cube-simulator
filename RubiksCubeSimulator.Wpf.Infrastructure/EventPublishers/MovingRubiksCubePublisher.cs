@@ -1,8 +1,6 @@
 ﻿using RubiksCubeSimulator.Wpf.Events;
+using RubiksCubeSimulator.Wpf.Events.EventArgs;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.MouseRubiksCubeEventArgs;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.MoveRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 

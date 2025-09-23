@@ -1,6 +1,6 @@
 ﻿using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
-namespace RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
+namespace RubiksCubeSimulator.Wpf.Events.EventArgs;
 
 public sealed class InputKeyRubiksCubeEventArgs : System.EventArgs
 {

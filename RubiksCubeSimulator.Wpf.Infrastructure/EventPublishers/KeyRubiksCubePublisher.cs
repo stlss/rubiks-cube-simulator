@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using RubiksCubeSimulator.Wpf.Events;
+using RubiksCubeSimulator.Wpf.Events.EventArgs;
 using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.KeyRubiksCubeEventArgs;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
