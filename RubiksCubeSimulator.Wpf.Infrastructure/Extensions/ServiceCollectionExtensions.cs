@@ -17,14 +17,10 @@ public static class ServiceCollectionExtensions
 
         AddRubiksCubeManagers(services);
 
-        services.AddSingleton<IRubiksCubeContextBuilder>(sp =>
-        {
-            var cubeBuilder = sp.GetRequiredService<IRubiksCubeBuilder>();
-            var cubeMapper = sp.GetRequiredService<IRubiksCubeManager>();
-            var cubeMover = sp.GetRequiredService<IRubiksCubeMover>();
-
-            return new RubiksCubeContextBuilder(cubeBuilder, cubeMapper, cubeMover);
-        });
+        services.AddSingleton<IRubiksCubeContextBuilder>(sp => new RubiksCubeContextBuilder(
+            cubeBuilder: sp.GetRequiredService<IRubiksCubeBuilder>(),
+            cubeManager: sp.GetRequiredService<IRubiksCubeManager>(),
+            cubeMover: sp.GetRequiredService<IRubiksCubeMover>()));
 
         return services;
     }
