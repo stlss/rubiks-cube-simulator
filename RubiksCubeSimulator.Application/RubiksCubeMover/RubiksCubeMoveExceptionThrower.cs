@@ -20,7 +20,7 @@ internal sealed class RubiksCubeMoveExceptionThrower(
 {
     public void ThrowExceptionIfRubiksCubeIsNotCorrect(RubiksCube cube)
     {
-        if (cubeChecker.IsCorrectRubiksCube(cube)) return;
+        if (cubeChecker.Check(cube)) return;
 
         const string message = "Rubik's cube is not correct. " +
                                "Rubik's cube dimension must be greater or equal '2' and every cube face dimension must equal cube dimension.";
@@ -50,8 +50,8 @@ internal sealed class RubiksCubeMoveExceptionThrower(
     {
         var correct = move switch
         {
-            SliceMove cubeSliceMove => cubeMoveChecker.IsCorrectRubiksCubeSliceMove(cubeSliceMove, cubeDimension),
-            WholeMove wholeCubeMove => cubeMoveChecker.IsCorrectWholeRubiksCubeMove(wholeCubeMove),
+            SliceMove cubeSliceMove => cubeMoveChecker.Check(cubeSliceMove, cubeDimension),
+            WholeMove wholeCubeMove => cubeMoveChecker.Check(wholeCubeMove),
             _ => false,
         };
 

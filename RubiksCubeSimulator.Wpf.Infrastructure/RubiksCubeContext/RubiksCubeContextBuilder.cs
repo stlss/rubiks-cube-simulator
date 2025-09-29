@@ -15,7 +15,7 @@ internal sealed class RubiksCubeContextBuilder(
 {
     public IRubiksCubeContext Build(int cubeDimension)
     {
-        var cube = cubeBuilder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = cubeBuilder.BuildSolvedCube(cubeDimension);
         return new RubiksCubeContext(cube, cubeManager, cubeMover);
     }
 }

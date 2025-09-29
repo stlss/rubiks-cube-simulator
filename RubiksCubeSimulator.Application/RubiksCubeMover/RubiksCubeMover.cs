@@ -15,19 +15,19 @@ internal sealed class RubiksCubeMover(
     ICounterclockwiseMutableRubiksCubeMover counterclockwiseMutableCubeMover)
     : IRubiksCubeMover
 {
-    public RubiksCube MoveRubiksCube(RubiksCube cube, MoveBase move)
+    public RubiksCube Move(RubiksCube cube, MoveBase move)
     {
         cubeMoveExceptionThrower.ThrowExceptionIfRubiksCubeIsNotCorrect(cube);
         cubeMoveExceptionThrower.ThrowExceptionIfRubiksCubeMoveIsNotCorrect(move, cube.Dimension);
 
         var mutableCube = cubeMapper.Map(cube);
-        MoveMutableRubiksCube(mutableCube, move);
+        Move(mutableCube, move);
 
         var movedCube = cubeMapper.Map(mutableCube);
         return movedCube;
     }
 
-    public RubiksCube MoveRubiksCube(RubiksCube cube, IEnumerable<MoveBase> moves)
+    public RubiksCube Move(RubiksCube cube, IEnumerable<MoveBase> moves)
     {
         var moveArray = moves.ToArray();
 
@@ -35,84 +35,84 @@ internal sealed class RubiksCubeMover(
         cubeMoveExceptionThrower.ThrowExceptionIfRubiksCubeMovesIsNotCorrect(moveArray, cube.Dimension);
 
         var mutableCube = cubeMapper.Map(cube);
-        foreach (var move in moveArray) MoveMutableRubiksCube(mutableCube, move);
+        foreach (var move in moveArray) Move(mutableCube, move);
 
         var movedCube = cubeMapper.Map(mutableCube);
         return movedCube;
     }
 
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, MoveBase move)
+    private void Move(MutableRubiksCube.MutableRubiksCube mutableCube, MoveBase move)
     {
         switch (move)
         {
             case WholeMove wholeCubeMove:
-                MoveMutableRubiksCube(cube, wholeCubeMove);
+                Move(mutableCube, wholeCubeMove);
                 break;
 
             case SliceMove cubeSliceMove:
-                MoveMutableRubiksCube(cube, cubeSliceMove);
+                Move(mutableCube, cubeSliceMove);
                 break;
         }
     }
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, WholeMove move)
+    private void Move(MutableRubiksCube.MutableRubiksCube mutableCube, WholeMove move)
     {
-        var sliceMoves = cubeMoveMapper.Map(move, cube.Dimension);
-        foreach (var sliceMove in sliceMoves) MoveMutableRubiksCube(cube, sliceMove);
+        var sliceMoves = cubeMoveMapper.Map(move, mutableCube.Dimension);
+        foreach (var sliceMove in sliceMoves) Move(mutableCube, sliceMove);
     }
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, SliceMove move)
+    private void Move(MutableRubiksCube.MutableRubiksCube mutableCube, SliceMove move)
     {
         switch (move.Direction)
         {
             case MoveDirection.Clockwise:
-                MoveMutableRubiksCubeClockwise(cube, move.Face, move.Slice);
+                MoveClockwise(mutableCube, move.Face, move.Slice);
                 break;
 
             case MoveDirection.Counterclockwise:
-                MoveMutableRubiksCubeCounterclockwise(cube, move.Face, move.Slice);
+                MoveCounterclockwise(mutableCube, move.Face, move.Slice);
                 break;
         }
     }
 
 
-    private void MoveMutableRubiksCubeClockwise(MutableRubiksCube.MutableRubiksCube cube,
+    private void MoveClockwise(MutableRubiksCube.MutableRubiksCube mutableCube,
         MoveFace moveFace, int sliceNumber)
     {
         var clockwiseMove = _clockwiseMoveByFaceMove[moveFace];
-        clockwiseMove(cube, sliceNumber);
+        clockwiseMove(mutableCube, sliceNumber);
     }
 
     private readonly Dictionary<MoveFace, Action<MutableRubiksCube.MutableRubiksCube, int>>
         _clockwiseMoveByFaceMove = new()
         {
-            [MoveFace.Up] = clockwiseMutableCubeMover.MoveMutableRubiksCubeUp,
-            [MoveFace.Right] = clockwiseMutableCubeMover.MoveMutableRubiksCubeRight,
-            [MoveFace.Front] = clockwiseMutableCubeMover.MoveMutableRubiksCubeFront,
-            [MoveFace.Down] = clockwiseMutableCubeMover.MoveMutableRubiksCubeDown,
-            [MoveFace.Left] = clockwiseMutableCubeMover.MoveMutableRubiksCubeLeft,
-            [MoveFace.Back] = clockwiseMutableCubeMover.MoveMutableRubiksCubeBack,
+            [MoveFace.Up] = clockwiseMutableCubeMover.MoveUp,
+            [MoveFace.Right] = clockwiseMutableCubeMover.MoveRight,
+            [MoveFace.Front] = clockwiseMutableCubeMover.MoveFront,
+            [MoveFace.Down] = clockwiseMutableCubeMover.MoveDown,
+            [MoveFace.Left] = clockwiseMutableCubeMover.MoveLeft,
+            [MoveFace.Back] = clockwiseMutableCubeMover.MoveBack,
         };
 
 
-    private void MoveMutableRubiksCubeCounterclockwise(
-        MutableRubiksCube.MutableRubiksCube cube,
+    private void MoveCounterclockwise(
+        MutableRubiksCube.MutableRubiksCube mutableCube,
         MoveFace moveFace,
         int sliceNumber)
     {
         var counterclockwiseMove = _counterclockwiseMoveByFaceMove[moveFace];
-        counterclockwiseMove(cube, sliceNumber);
+        counterclockwiseMove(mutableCube, sliceNumber);
     }
 
     private readonly Dictionary<MoveFace, Action<MutableRubiksCube.MutableRubiksCube, int>>
         _counterclockwiseMoveByFaceMove = new()
         {
-            [MoveFace.Up] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeUp,
-            [MoveFace.Right] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeRight,
-            [MoveFace.Front] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeFront,
-            [MoveFace.Down] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeDown,
-            [MoveFace.Left] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeLeft,
-            [MoveFace.Back] = counterclockwiseMutableCubeMover.MoveMutableRubiksCubeBack,
+            [MoveFace.Up] = counterclockwiseMutableCubeMover.MoveUp,
+            [MoveFace.Right] = counterclockwiseMutableCubeMover.MoveRight,
+            [MoveFace.Front] = counterclockwiseMutableCubeMover.MoveFront,
+            [MoveFace.Down] = counterclockwiseMutableCubeMover.MoveDown,
+            [MoveFace.Left] = counterclockwiseMutableCubeMover.MoveLeft,
+            [MoveFace.Back] = counterclockwiseMutableCubeMover.MoveBack,
         };
 }

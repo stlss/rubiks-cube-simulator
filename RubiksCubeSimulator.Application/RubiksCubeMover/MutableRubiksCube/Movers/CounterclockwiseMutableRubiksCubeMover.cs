@@ -8,41 +8,41 @@ internal sealed class CounterclockwiseMutableRubiksCubeMover(
     IClockwiseMutableRubiksCubeMover clockwiseMutableCubeMover)
     : ICounterclockwiseMutableRubiksCubeMover
 {
-    public void MoveMutableRubiksCubeUp(MutableRubiksCube cube, int sliceNumber)
+    public void MoveUp(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeDown(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveDown(cube, reversedSliceNumber);
     }
 
-    public void MoveMutableRubiksCubeRight(MutableRubiksCube cube, int sliceNumber)
+    public void MoveRight(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeLeft(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveLeft(cube, reversedSliceNumber);
     }
 
-    public void MoveMutableRubiksCubeFront(MutableRubiksCube cube, int sliceNumber)
+    public void MoveFront(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeBack(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveBack(cube, reversedSliceNumber);
     }
 
 
-    public void MoveMutableRubiksCubeDown(MutableRubiksCube cube, int sliceNumber)
+    public void MoveDown(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeUp(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveUp(cube, reversedSliceNumber);
     }
 
-    public void MoveMutableRubiksCubeLeft(MutableRubiksCube cube, int sliceNumber)
+    public void MoveLeft(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeRight(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveRight(cube, reversedSliceNumber);
     }
 
-    public void MoveMutableRubiksCubeBack(MutableRubiksCube cube, int sliceNumber)
+    public void MoveBack(MutableRubiksCube cube, int sliceNumber)
     {
         var reversedSliceNumber = ReverseSliceNumber(sliceNumber, cube.Dimension);
-        clockwiseMutableCubeMover.MoveMutableRubiksCubeFront(cube, reversedSliceNumber);
+        clockwiseMutableCubeMover.MoveFront(cube, reversedSliceNumber);
     }
 
 

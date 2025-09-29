@@ -5,7 +5,7 @@ namespace RubiksCubeSimulator.Domain.Services;
 
 public interface IRubiksCubeMover
 {
-    public RubiksCube MoveRubiksCube(RubiksCube cube, MoveBase move);
+    public RubiksCube Move(RubiksCube cube, MoveBase move);
 
-    public RubiksCube MoveRubiksCube(RubiksCube cube, IEnumerable<MoveBase> move);
+    public RubiksCube Move(RubiksCube cube, IEnumerable<MoveBase> move);
 }

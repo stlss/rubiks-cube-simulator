@@ -4,12 +4,12 @@ namespace RubiksCubeSimulator.Application.RubiksCubeMover.Checkers;
 
 internal interface IRubiksCubeChecker
 {
-    public bool IsCorrectRubiksCube(RubiksCube cube);
+    public bool Check(RubiksCube cube);
 }
 
 internal sealed class RubiksCubeChecker : IRubiksCubeChecker
 {
-    public bool IsCorrectRubiksCube(RubiksCube cube)
+    public bool Check(RubiksCube cube)
     {
         if (cube.Dimension < 2) return false;
 

@@ -23,7 +23,7 @@ public sealed class RubiksCubeBuilderTests
     {
         const int cubeDimension = 5;
 
-        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = _builder.BuildSolvedCube(cubeDimension);
 
         var faces = new List<RubiksCubeFace>
         {
@@ -65,7 +65,7 @@ public sealed class RubiksCubeBuilderTests
     {
         const int cubeDimension = -3;
 
-        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.BuildSolvedRubiksCube(cubeDimension));
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.BuildSolvedCube(cubeDimension));
 
         const string expectedParamName = nameof(cubeDimension);
 

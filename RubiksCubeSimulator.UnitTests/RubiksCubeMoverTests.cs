@@ -43,9 +43,9 @@ public sealed class RubiksCubeMoverTests
     public void SliceMove_When_RepeatedFourTimesMove_Should_SolvedCube(int cubeDimension,
         IEnumerable<MoveBase> moves)
     {
-        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = _builder.BuildSolvedCube(cubeDimension);
 
-        var movedCube = _mover.MoveRubiksCube(cube, moves);
+        var movedCube = _mover.Move(cube, moves);
 
         Assert.That(_cubeEqualityComparer.Equals(cube, movedCube), Is.True);
     }
@@ -80,9 +80,9 @@ public sealed class RubiksCubeMoverTests
     public void WholeCubeMove_When_RepeatedFourTimesMove_Should_SolvedCube(int cubeDimension,
         IEnumerable<MoveBase> moves)
     {
-        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = _builder.BuildSolvedCube(cubeDimension);
 
-        var movedCube = _mover.MoveRubiksCube(cube, moves);
+        var movedCube = _mover.Move(cube, moves);
 
         Assert.That(_cubeEqualityComparer.Equals(cube, movedCube), Is.True);
     }
@@ -113,7 +113,7 @@ public sealed class RubiksCubeMoverTests
     [TestCaseSource(nameof(Get_WholeCubeMove_Should_YellowUpOrangeRightGreenFrontCube_TestCases))]
     public void WholeCubeMove_Should_YellowUpOrangeRightGreenFrontCube(int cubeDimension)
     {
-        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = _builder.BuildSolvedCube(cubeDimension);
 
         var moves = new List<MoveBase>
         {
@@ -122,7 +122,7 @@ public sealed class RubiksCubeMoverTests
             new WholeMove(AxisName.Y, MoveDirection.Counterclockwise),
         };
 
-        var movedCube = _mover.MoveRubiksCube(cube, moves);
+        var movedCube = _mover.Move(cube, moves);
 
         Assert.Multiple(() =>
         {
@@ -148,9 +148,9 @@ public sealed class RubiksCubeMoverTests
     [TestCaseSource(nameof(Get_SliceMove_When_RepeatedSixTimesBangBang_Should_SolvedCube_TestCases))]
     public void SliceMove_When_RepeatedSixTimesBangBang_Should_SolvedCube(IEnumerable<MoveBase> moves)
     {
-        var cube = _builder.BuildSolvedRubiksCube(3);
+        var cube = _builder.BuildSolvedCube(3);
 
-        var movedCube = _mover.MoveRubiksCube(cube, moves);
+        var movedCube = _mover.Move(cube, moves);
 
         Assert.That(_cubeEqualityComparer.Equals(cube, movedCube), Is.True);
     }
@@ -197,10 +197,10 @@ public sealed class RubiksCubeMoverTests
     [TestCaseSource(nameof(Get_MoveSingle_Should_ChessPattern_TestCases))]
     public void MoveSingle_Should_ChessPattern(int cubeDimension, IEnumerable<MoveBase> moves)
     {
-        var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
-        var movedCube = _builder.BuildSolvedRubiksCube(cubeDimension);
+        var cube = _builder.BuildSolvedCube(cubeDimension);
+        var movedCube = _builder.BuildSolvedCube(cubeDimension);
 
-        movedCube = moves.Aggregate(movedCube, _mover.MoveRubiksCube);
+        movedCube = moves.Aggregate(movedCube, _mover.Move);
 
         Assert.Multiple(() =>
         {
