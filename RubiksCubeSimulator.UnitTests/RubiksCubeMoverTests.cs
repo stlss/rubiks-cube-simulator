@@ -41,7 +41,7 @@ public sealed class RubiksCubeMoverTests
 
     [TestCaseSource(nameof(Get_SliceMove_When_RepeatedFourTimesMove_Should_SolvedCube_TestCases))]
     public void SliceMove_When_RepeatedFourTimesMove_Should_SolvedCube(int cubeDimension,
-        IEnumerable<RubiksCubeMoveBase> moves)
+        IEnumerable<MoveBase> moves)
     {
         var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
 
@@ -62,7 +62,7 @@ public sealed class RubiksCubeMoverTests
                     {
                         var testCase = new TestCaseData(
                             cubeDimension,
-                            Enumerable.Repeat(new RubiksCubeSliceMove(moveFace, moveDirection, sliceNumber), 4));
+                            Enumerable.Repeat(new SliceMove(moveFace, moveDirection, sliceNumber), 4));
 
                         testCase.SetName($"{nameof(SliceMove_When_RepeatedFourTimesMove_Should_SolvedCube)}" +
                                          $"(cubeDimension: {cubeDimension}, moveFace: {moveFace}, " +
@@ -78,7 +78,7 @@ public sealed class RubiksCubeMoverTests
 
     [TestCaseSource(nameof(Get_WholeCubeMove_When_RepeatedFourTimesMove_Should_SolvedCube_TestCases))]
     public void WholeCubeMove_When_RepeatedFourTimesMove_Should_SolvedCube(int cubeDimension,
-        IEnumerable<RubiksCubeMoveBase> moves)
+        IEnumerable<MoveBase> moves)
     {
         var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
 
@@ -97,7 +97,7 @@ public sealed class RubiksCubeMoverTests
                 {
                     var testCase = new TestCaseData(
                         cubeDimension,
-                        Enumerable.Repeat(new WholeRubiksCubeMove(axisName, moveDirection), 4));
+                        Enumerable.Repeat(new WholeMove(axisName, moveDirection), 4));
 
                     testCase.SetName($"{nameof(WholeCubeMove_When_RepeatedFourTimesMove_Should_SolvedCube)}" +
                                      $"(cubeDimension: {cubeDimension}, axisName: {axisName}, " +
@@ -115,11 +115,11 @@ public sealed class RubiksCubeMoverTests
     {
         var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
 
-        var moves = new List<RubiksCubeMoveBase>
+        var moves = new List<MoveBase>
         {
-            new WholeRubiksCubeMove(AxisName.X, MoveDirection.Clockwise),
-            new WholeRubiksCubeMove(AxisName.X, MoveDirection.Clockwise),
-            new WholeRubiksCubeMove(AxisName.Y, MoveDirection.Counterclockwise),
+            new WholeMove(AxisName.X, MoveDirection.Clockwise),
+            new WholeMove(AxisName.X, MoveDirection.Clockwise),
+            new WholeMove(AxisName.Y, MoveDirection.Counterclockwise),
         };
 
         var movedCube = _mover.MoveRubiksCube(cube, moves);
@@ -146,7 +146,7 @@ public sealed class RubiksCubeMoverTests
 
 
     [TestCaseSource(nameof(Get_SliceMove_When_RepeatedSixTimesBangBang_Should_SolvedCube_TestCases))]
-    public void SliceMove_When_RepeatedSixTimesBangBang_Should_SolvedCube(IEnumerable<RubiksCubeMoveBase> moves)
+    public void SliceMove_When_RepeatedSixTimesBangBang_Should_SolvedCube(IEnumerable<MoveBase> moves)
     {
         var cube = _builder.BuildSolvedRubiksCube(3);
 
@@ -169,10 +169,10 @@ public sealed class RubiksCubeMoverTests
             moveDirectionPairs.Select(moveDirectionPair =>
                 new[]
                 {
-                    new RubiksCubeSliceMove(moveFacePair.MoveFace1, moveDirectionPair.MoveDirection1, 0),
-                    new RubiksCubeSliceMove(moveFacePair.MoveFace2, moveDirectionPair.MoveDirection2, 0),
-                    new RubiksCubeSliceMove(moveFacePair.MoveFace1, OppositeMoveDirectionProvider.GetOppositeMoveDirection(moveDirectionPair.MoveDirection1), 0),
-                    new RubiksCubeSliceMove(moveFacePair.MoveFace2, OppositeMoveDirectionProvider.GetOppositeMoveDirection(moveDirectionPair.MoveDirection2), 0),
+                    new SliceMove(moveFacePair.MoveFace1, moveDirectionPair.MoveDirection1, 0),
+                    new SliceMove(moveFacePair.MoveFace2, moveDirectionPair.MoveDirection2, 0),
+                    new SliceMove(moveFacePair.MoveFace1, OppositeMoveDirectionProvider.GetOppositeMoveDirection(moveDirectionPair.MoveDirection1), 0),
+                    new SliceMove(moveFacePair.MoveFace2, OppositeMoveDirectionProvider.GetOppositeMoveDirection(moveDirectionPair.MoveDirection2), 0),
                 }));
 
         var repeatedSixTimesBangBangsWithName = bangBangs.Select(bangBang =>
@@ -195,7 +195,7 @@ public sealed class RubiksCubeMoverTests
 
 
     [TestCaseSource(nameof(Get_MoveSingle_Should_ChessPattern_TestCases))]
-    public void MoveSingle_Should_ChessPattern(int cubeDimension, IEnumerable<RubiksCubeMoveBase> moves)
+    public void MoveSingle_Should_ChessPattern(int cubeDimension, IEnumerable<MoveBase> moves)
     {
         var cube = _builder.BuildSolvedRubiksCube(cubeDimension);
         var movedCube = _builder.BuildSolvedRubiksCube(cubeDimension);
@@ -242,13 +242,13 @@ public sealed class RubiksCubeMoverTests
             var sliceNumbers = Enumerable.Range(0, cubeDimension).Where(x => x % 2 == 1).ToList();
 
             var rightMoves = sliceNumbers.Select(sliceNumber =>
-                new RubiksCubeSliceMove(MoveFace.Right, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(MoveFace.Right, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var frontMoves = sliceNumbers .Select(sliceNumber =>
-                new RubiksCubeSliceMove(MoveFace.Front, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(MoveFace.Front, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var upMoves = sliceNumbers .Select(sliceNumber =>
-                new RubiksCubeSliceMove(MoveFace.Up, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(MoveFace.Up, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var sliceMoves = rightMoves.Concat(rightMoves)
                 .Concat(frontMoves).Concat(frontMoves)
@@ -256,11 +256,11 @@ public sealed class RubiksCubeMoverTests
 
             var wholeCubeMoves = AxisNames.SelectMany(axis => new[]
             {
-                new WholeRubiksCubeMove(axis, MoveDirection.Counterclockwise),
-                new WholeRubiksCubeMove(axis, MoveDirection.Counterclockwise),
+                new WholeMove(axis, MoveDirection.Counterclockwise),
+                new WholeMove(axis, MoveDirection.Counterclockwise),
             });
 
-            var moves = sliceMoves.Select(sliceMove => (RubiksCubeMoveBase)sliceMove)
+            var moves = sliceMoves.Select(sliceMove => (MoveBase)sliceMove)
                 .Concat(wholeCubeMoves);
 
             var testCase = new TestCaseData(cubeDimension, moves);

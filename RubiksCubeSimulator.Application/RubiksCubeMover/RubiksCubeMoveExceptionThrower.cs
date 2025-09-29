@@ -8,9 +8,9 @@ internal interface IRubiksCubeMoveExceptionThrower
 {
     public void ThrowExceptionIfRubiksCubeIsNotCorrect(RubiksCube cube);
 
-    public void ThrowExceptionIfRubiksCubeMoveIsNotCorrect(RubiksCubeMoveBase move, int cubeDimension);
+    public void ThrowExceptionIfRubiksCubeMoveIsNotCorrect(MoveBase move, int cubeDimension);
 
-    public void ThrowExceptionIfRubiksCubeMovesIsNotCorrect(IEnumerable<RubiksCubeMoveBase> moves, int cubeDimension);
+    public void ThrowExceptionIfRubiksCubeMovesIsNotCorrect(IEnumerable<MoveBase> moves, int cubeDimension);
 }
 
 internal sealed class RubiksCubeMoveExceptionThrower(
@@ -28,7 +28,7 @@ internal sealed class RubiksCubeMoveExceptionThrower(
         throw new ArgumentException(message);
     }
 
-    public void ThrowExceptionIfRubiksCubeMoveIsNotCorrect(RubiksCubeMoveBase move, int cubeDimension)
+    public void ThrowExceptionIfRubiksCubeMoveIsNotCorrect(MoveBase move, int cubeDimension)
     {
         var correct = IsCorrectRubiksCubeMove(move, cubeDimension);
 
@@ -37,7 +37,7 @@ internal sealed class RubiksCubeMoveExceptionThrower(
         ThrowRubiksCubeMoveException(move);
     }
 
-    public void ThrowExceptionIfRubiksCubeMovesIsNotCorrect(IEnumerable<RubiksCubeMoveBase> moves, int cubeDimension)
+    public void ThrowExceptionIfRubiksCubeMovesIsNotCorrect(IEnumerable<MoveBase> moves, int cubeDimension)
     {
         var incorrectMoves = moves.Count(move => !IsCorrectRubiksCubeMove(move, cubeDimension));
 
@@ -46,27 +46,27 @@ internal sealed class RubiksCubeMoveExceptionThrower(
         ThrowRubiksCubeMovesException(incorrectMoves);
     }
 
-    private bool IsCorrectRubiksCubeMove(RubiksCubeMoveBase move, int cubeDimension)
+    private bool IsCorrectRubiksCubeMove(MoveBase move, int cubeDimension)
     {
         var correct = move switch
         {
-            RubiksCubeSliceMove cubeSliceMove => cubeMoveChecker.IsCorrectRubiksCubeSliceMove(cubeSliceMove, cubeDimension),
-            WholeRubiksCubeMove wholeCubeMove => cubeMoveChecker.IsCorrectWholeRubiksCubeMove(wholeCubeMove),
+            SliceMove cubeSliceMove => cubeMoveChecker.IsCorrectRubiksCubeSliceMove(cubeSliceMove, cubeDimension),
+            WholeMove wholeCubeMove => cubeMoveChecker.IsCorrectWholeRubiksCubeMove(wholeCubeMove),
             _ => false,
         };
 
         return correct;
     }
 
-    private static void ThrowRubiksCubeMoveException(RubiksCubeMoveBase move)
+    private static void ThrowRubiksCubeMoveException(MoveBase move)
     {
         switch (move)
         {
-            case RubiksCubeSliceMove:
+            case SliceMove:
                 ThrowRubiksCubeSliceMoveException();
                 break;
 
-            case WholeRubiksCubeMove:
+            case WholeMove:
                 ThrowExceptionWholeRubiksCubeMoveException();
                 break;
 
@@ -92,7 +92,7 @@ internal sealed class RubiksCubeMoveExceptionThrower(
         throw new ArgumentException(message);
     }
 
-    private static void ThrowUnsupportedRubiksCubeMoveException(RubiksCubeMoveBase move)
+    private static void ThrowUnsupportedRubiksCubeMoveException(MoveBase move)
     {
         var message = $"Unsupported Rubik's cube move type: '{move.GetType().Name}'. " +
                       $"Support only RubiksCubeSliceMove and WholeRubiksCubeMove.";

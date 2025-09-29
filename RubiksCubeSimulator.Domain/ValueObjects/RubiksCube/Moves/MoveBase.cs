@@ -1,3 +1,3 @@
 ﻿namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
 
-public abstract record RubiksCubeMoveBase;
+public abstract record MoveBase;

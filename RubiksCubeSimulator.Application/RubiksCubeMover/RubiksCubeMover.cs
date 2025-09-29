@@ -15,7 +15,7 @@ internal sealed class RubiksCubeMover(
     ICounterclockwiseMutableRubiksCubeMover counterclockwiseMutableCubeMover)
     : IRubiksCubeMover
 {
-    public RubiksCube MoveRubiksCube(RubiksCube cube, RubiksCubeMoveBase move)
+    public RubiksCube MoveRubiksCube(RubiksCube cube, MoveBase move)
     {
         cubeMoveExceptionThrower.ThrowExceptionIfRubiksCubeIsNotCorrect(cube);
         cubeMoveExceptionThrower.ThrowExceptionIfRubiksCubeMoveIsNotCorrect(move, cube.Dimension);
@@ -27,7 +27,7 @@ internal sealed class RubiksCubeMover(
         return movedCube;
     }
 
-    public RubiksCube MoveRubiksCube(RubiksCube cube, IEnumerable<RubiksCubeMoveBase> moves)
+    public RubiksCube MoveRubiksCube(RubiksCube cube, IEnumerable<MoveBase> moves)
     {
         var moveArray = moves.ToArray();
 
@@ -42,27 +42,27 @@ internal sealed class RubiksCubeMover(
     }
 
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, RubiksCubeMoveBase move)
+    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, MoveBase move)
     {
         switch (move)
         {
-            case WholeRubiksCubeMove wholeCubeMove:
+            case WholeMove wholeCubeMove:
                 MoveMutableRubiksCube(cube, wholeCubeMove);
                 break;
 
-            case RubiksCubeSliceMove cubeSliceMove:
+            case SliceMove cubeSliceMove:
                 MoveMutableRubiksCube(cube, cubeSliceMove);
                 break;
         }
     }
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, WholeRubiksCubeMove move)
+    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, WholeMove move)
     {
         var sliceMoves = cubeMoveMapper.Map(move, cube.Dimension);
         foreach (var sliceMove in sliceMoves) MoveMutableRubiksCube(cube, sliceMove);
     }
 
-    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, RubiksCubeSliceMove move)
+    private void MoveMutableRubiksCube(MutableRubiksCube.MutableRubiksCube cube, SliceMove move)
     {
         switch (move.Direction)
         {

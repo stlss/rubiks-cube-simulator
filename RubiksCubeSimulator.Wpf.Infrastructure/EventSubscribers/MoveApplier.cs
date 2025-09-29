@@ -26,7 +26,7 @@ internal sealed class MoveApplier(IRubiksCubeContext cubeContext) : IMoveApplier
         cubeContext.Move(moveBase);
     }
 
-    private RubiksCubeMoveBase GetMove(MovedRubiksCubeEventArgs movedCubeEventArgs)
+    private MoveBase GetMove(MovedRubiksCubeEventArgs movedCubeEventArgs)
     {
         var moveFace = GetMoveFace(movedCubeEventArgs);
         var moveDirection = GetDomainMoveDirection(movedCubeEventArgs);
@@ -34,11 +34,11 @@ internal sealed class MoveApplier(IRubiksCubeContext cubeContext) : IMoveApplier
         if (movedCubeEventArgs.ShiftPressed)
         {
             var axis = GetAxis(moveFace);
-            return new WholeRubiksCubeMove(axis, moveDirection);
+            return new WholeMove(axis, moveDirection);
         }
 
         var sliceNumber = GetSliceNumber(movedCubeEventArgs);
-        return new RubiksCubeSliceMove(moveFace, moveDirection, sliceNumber);
+        return new SliceMove(moveFace, moveDirection, sliceNumber);
     }
 
     private MoveFace GetMoveFace(MovedRubiksCubeEventArgs movedCubeEventArgs)

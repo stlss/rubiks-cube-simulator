@@ -6,24 +6,24 @@ namespace RubiksCubeSimulator.UnitTests.Infrastructure.RubiksCubeConverters;
 
 internal static class RubiksCubeMovesConverter
 {
-    public static string RubiksCubeMovesToString(IEnumerable<RubiksCubeMoveBase> moves)
+    public static string RubiksCubeMovesToString(IEnumerable<MoveBase> moves)
     {
         return $"[{string.Join(", ", moves.Select(RubiksCubeMoveToString))}]";
     }
 
-    private static string RubiksCubeMoveToString(RubiksCubeMoveBase move)
+    private static string RubiksCubeMoveToString(MoveBase move)
     {
         var result = move switch
         {
-            WholeRubiksCubeMove wholeCubeMove => WholeRubiksCubeMoveToString(wholeCubeMove),
-            RubiksCubeSliceMove sliceMove => RubiksCubeSliceMoveToString(sliceMove),
+            WholeMove wholeCubeMove => WholeRubiksCubeMoveToString(wholeCubeMove),
+            SliceMove sliceMove => RubiksCubeSliceMoveToString(sliceMove),
             _ => throw new NotSupportedException(),
         };
 
         return result;
     }
 
-    private static string WholeRubiksCubeMoveToString(WholeRubiksCubeMove move)
+    private static string WholeRubiksCubeMoveToString(WholeMove move)
     {
         var result = move.Axis switch
         {
@@ -37,7 +37,7 @@ internal static class RubiksCubeMovesConverter
         return result;
     }
 
-    private static string RubiksCubeSliceMoveToString(RubiksCubeSliceMove move)
+    private static string RubiksCubeSliceMoveToString(SliceMove move)
     {
         var result = move.Face switch
         {

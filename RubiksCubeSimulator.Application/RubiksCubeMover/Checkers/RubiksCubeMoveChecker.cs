@@ -4,14 +4,14 @@ namespace RubiksCubeSimulator.Application.RubiksCubeMover.Checkers;
 
 internal interface IRubiksCubeMoveChecker
 {
-    public bool IsCorrectRubiksCubeSliceMove(RubiksCubeSliceMove move, int cubeDimension);
+    public bool IsCorrectRubiksCubeSliceMove(SliceMove move, int cubeDimension);
 
-    public bool IsCorrectWholeRubiksCubeMove(WholeRubiksCubeMove move);
+    public bool IsCorrectWholeRubiksCubeMove(WholeMove move);
 }
 
 internal sealed class RubiksCubeMoveChecker : IRubiksCubeMoveChecker
 {
-    public bool IsCorrectRubiksCubeSliceMove(RubiksCubeSliceMove move, int cubeDimension)
+    public bool IsCorrectRubiksCubeSliceMove(SliceMove move, int cubeDimension)
     {
         var isCorrectFace = Enum.IsDefined(move.Face);
         var isCorrectDirection = Enum.IsDefined(move.Direction);
@@ -20,7 +20,7 @@ internal sealed class RubiksCubeMoveChecker : IRubiksCubeMoveChecker
         return isCorrectFace && isCorrectDirection && isCorrectSlice;
     }
 
-    public bool IsCorrectWholeRubiksCubeMove(WholeRubiksCubeMove move)
+    public bool IsCorrectWholeRubiksCubeMove(WholeMove move)
     {
         var isCorrectAxis = Enum.IsDefined(move.Axis);
         var isCorrectDirection = Enum.IsDefined(move.Direction);
