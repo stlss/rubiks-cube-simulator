@@ -1,4 +1,5 @@
 ﻿using RubiksCubeSimulator.Domain.Services;
+using RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
@@ -11,11 +12,12 @@ public interface IRubiksCubeContextBuilder
 internal sealed class RubiksCubeContextBuilder(
     IRubiksCubeBuilder cubeBuilder,
     IRubiksCubeManager cubeManager,
-    IRubiksCubeMover cubeMover) : IRubiksCubeContextBuilder
+    IRubiksCubeMover cubeMover,
+    IMoveShower moveShower) : IRubiksCubeContextBuilder
 {
     public IRubiksCubeContext Build(int cubeDimension)
     {
         var cube = cubeBuilder.BuildSolvedCube(cubeDimension);
-        return new RubiksCubeContext(cube, cubeManager, cubeMover);
+        return new RubiksCubeContext(cube, cubeManager, cubeMover, moveShower);
     }
 }
