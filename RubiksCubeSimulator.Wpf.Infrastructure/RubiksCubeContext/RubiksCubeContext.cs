@@ -22,7 +22,7 @@ internal sealed class RubiksCubeContext(
     RubiksCube cube,
     IRubiksCubeManager cubeManager,
     IRubiksCubeMover cubeMover,
-    IMoveShower moveShower) : IRubiksCubeContext
+    ICubeMoveSetter cubeMoveSetter) : IRubiksCubeContext
 {
     private RubiksCube _cube = cube;
 
@@ -36,11 +36,11 @@ internal sealed class RubiksCubeContext(
 
     public void ShowMoveArrows(MoveBase move)
     {
-        moveShower.ShowMoveArrows(CubeViewModel, move);
+        cubeMoveSetter.ShowMoveArrows(CubeViewModel, move);
     }
 
     public void ClearMoveArrows()
     {
-        moveShower.ClearMoveArrows(CubeViewModel);
+        cubeMoveSetter.ClearMoveArrows(CubeViewModel);
     }
 }

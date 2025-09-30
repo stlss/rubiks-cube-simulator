@@ -26,7 +26,7 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
     public ArrowDirection? ArrowDirection
     {
         get => _arrowDirection;
-        internal set
+        set
         {
             if (SetProperty(ref _arrowDirection, value))
             {

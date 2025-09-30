@@ -4,6 +4,7 @@ using RubiksCubeSimulator.Domain.Services;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
+using RubiksCubeSimulator.Wpf.Infrastructure.MoveServices.Mappers;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
@@ -17,14 +18,13 @@ public static class ServiceCollectionExtensions
         services.AddRubiksCubeMover();
 
         AddRubiksCubeManagers(services);
-
-        services.AddSingleton<IMoveShower, MoveShower>();
+        AddMoveSetters(services);
 
         services.AddSingleton<IRubiksCubeContextBuilder>(sp => new RubiksCubeContextBuilder(
             cubeBuilder: sp.GetRequiredService<IRubiksCubeBuilder>(),
             cubeManager: sp.GetRequiredService<IRubiksCubeManager>(),
             cubeMover: sp.GetRequiredService<IRubiksCubeMover>(),
-            moveShower: sp.GetRequiredService<IMoveShower>()));
+            cubeMoveSetter: sp.GetRequiredService<ICubeMoveSetter>()));
 
         return services;
     }
@@ -34,6 +34,17 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRubiksCubeManager, RubiksCubeManager>();
         services.AddSingleton<IRubiksCubeFaceManager, RubiksCubeFaceManager>();
         services.AddSingleton<IRubiksCubeStickerColorManager, RubiksCubeStickerColorManager>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddMoveSetters(this IServiceCollection services)
+    {
+        services.AddSingleton<IMoveDirectionMapper, MoveDirectionMapper>();
+        services.AddSingleton<ISliceNumberMapper, SliceNumberMapper>();
+
+        services.AddSingleton<IFaceMoveSetter, FaceMoveSetter>();
+        services.AddSingleton<ICubeMoveSetter, CubeCubeMoveSetter>();
 
         return services;
     }
@@ -51,7 +62,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IMoveBuilder, MoveBuilder>();
 
-        services.AddSingleton<IMoveArrowSetterBuilder>(_ => new MoveArrowSetterBuilder());
+        services.AddSingleton<IMoveArrowSetterBuilder>(sp => new MoveArrowSetterBuilder(
+            moveBuilder: sp.GetRequiredService<IMoveBuilder>()));
 
         services.AddSingleton<IMoveApplierBuilder>(sp => new MoveApplierBuilder(
             moveBuilder: sp.GetRequiredService<IMoveBuilder>()));

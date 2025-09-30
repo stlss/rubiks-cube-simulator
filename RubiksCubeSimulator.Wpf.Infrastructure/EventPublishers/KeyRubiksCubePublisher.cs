@@ -17,10 +17,10 @@ internal class KeyRubiksCubePublisher :
 {
     private InputKey? _inputMoveKey;
 
-    public void OnEvent(object sender, KeyEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, KeyEventArgs movingCubeEventArgs)
     {
-        if (inputKeyCubeEventArgs.IsDown) OnKeyDown(inputKeyCubeEventArgs);
-        else if (inputKeyCubeEventArgs.IsUp) OnKeyUp(inputKeyCubeEventArgs);
+        if (movingCubeEventArgs.IsDown) OnKeyDown(movingCubeEventArgs);
+        else if (movingCubeEventArgs.IsUp) OnKeyUp(movingCubeEventArgs);
     }
 
     private void OnKeyDown(KeyEventArgs keyEventArgs)

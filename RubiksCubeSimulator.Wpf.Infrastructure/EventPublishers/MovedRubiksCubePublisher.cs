@@ -20,19 +20,19 @@ internal sealed class MovedRubiksCubePublisher :
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MovingRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, MovingRubiksCubeEventArgs movingCubeEventArgs)
     {
-        _lastMovingRubiksCubeEventArgs = inputKeyCubeEventArgs;
+        _lastMovingRubiksCubeEventArgs = movingCubeEventArgs;
     }
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs movingCubeEventArgs)
     {
-        lock (_lock) _lastMouseMoveEventArgs = inputKeyCubeEventArgs;
+        lock (_lock) _lastMouseMoveEventArgs = movingCubeEventArgs;
     }
 
-    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs movingCubeEventArgs)
     {
-        if (inputKeyCubeEventArgs.KeyAction != KeyAction.Up || inputKeyCubeEventArgs.InputKey == InputKey.Shift) return;
+        if (movingCubeEventArgs.KeyAction != KeyAction.Up || movingCubeEventArgs.InputKey == InputKey.Shift) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
         lock (_lock) lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;

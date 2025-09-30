@@ -22,21 +22,21 @@ internal sealed class MovingRubiksCubePublisher :
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
-    public void OnEvent(object sender, MovedRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, MovedRubiksCubeEventArgs movingCubeEventArgs)
     {
         _lastMovingCubeEventArgs = null;
     }
 
-    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, MouseMoveRubiksCubeEventArgs movingCubeEventArgs)
     {
-        lock (_lock) _lastMouseMoveEventArgs = inputKeyCubeEventArgs;
+        lock (_lock) _lastMouseMoveEventArgs = movingCubeEventArgs;
     }
 
-    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs inputKeyCubeEventArgs)
+    public void OnEvent(object sender, InputKeyRubiksCubeEventArgs movingCubeEventArgs)
     {
-        if (inputKeyCubeEventArgs.InputKey == InputKey.Shift)
+        if (movingCubeEventArgs.InputKey == InputKey.Shift)
         {
-            _shiftPressed = inputKeyCubeEventArgs.KeyAction switch
+            _shiftPressed = movingCubeEventArgs.KeyAction switch
             {
                 KeyAction.Down => true,
                 KeyAction.Up => false,
@@ -51,7 +51,7 @@ internal sealed class MovingRubiksCubePublisher :
             return;
         }
 
-        if (inputKeyCubeEventArgs.KeyAction != KeyAction.Down) return;
+        if (movingCubeEventArgs.KeyAction != KeyAction.Down) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
         lock (_lock) lastMouseMoveEventArgsSnapshot = _lastMouseMoveEventArgs;
@@ -60,7 +60,7 @@ internal sealed class MovingRubiksCubePublisher :
         var relativeMousePosition = lastMouseMoveEventArgsSnapshot.RelativeMousePosition;
         if (relativeMousePosition == null) return;
 
-        _lastMovingCubeEventArgs = CreateMovingCubeEventArgs(lastMouseMoveEventArgsSnapshot, inputKeyCubeEventArgs);
+        _lastMovingCubeEventArgs = CreateMovingCubeEventArgs(lastMouseMoveEventArgsSnapshot, movingCubeEventArgs);
         NotifySubscribers(_lastMovingCubeEventArgs );
     }
 
