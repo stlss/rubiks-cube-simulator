@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              xmlns:cubeViews="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube"
+             x:ClassModifier="internal"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeFaceControlViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeFaceViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="150" d:DesignWidth="150">
 
     <ItemsControl ItemsSource="{Binding StickerViewModels}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Rows="{Binding Dimension}"
-                             Columns="{Binding Dimension}" />
+                <UniformGrid Rows="{Binding CubeDimension}"
+                             Columns="{Binding CubeDimension}" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 

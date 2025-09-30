@@ -1,0 +1,46 @@
+﻿using RubiksCubeSimulator.Domain.Services;
+using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
+using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
+using RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
+using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
+using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
+
+namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+
+public interface IRubiksCubeContext
+{
+    public RubiksCubeViewModel CubeViewModel { get; }
+
+    public void Move(MoveBase move);
+
+    public void ShowMoveArrows(MoveBase move);
+
+    public void ClearMoveArrows();
+}
+
+internal sealed class RubiksCubeContext(
+    RubiksCube cube,
+    IRubiksCubeManager cubeManager,
+    IRubiksCubeMover cubeMover,
+    ICubeMoveSetter cubeMoveSetter) : IRubiksCubeContext
+{
+    private RubiksCube _cube = cube;
+
+    public RubiksCubeViewModel CubeViewModel { get; } = cubeManager.Create(cube);
+
+    public void Move(MoveBase move)
+    {
+        _cube = cubeMover.Move(_cube, move);
+        cubeManager.Update(CubeViewModel, _cube);
+    }
+
+    public void ShowMoveArrows(MoveBase move)
+    {
+        cubeMoveSetter.ShowMoveArrows(CubeViewModel, move);
+    }
+
+    public void ClearMoveArrows()
+    {
+        cubeMoveSetter.ClearMoveArrows(CubeViewModel);
+    }
+}

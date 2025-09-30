@@ -1,39 +1,17 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeControlViewModelBuilders;
-using RubiksCubeSimulator.Wpf.App.Infrastructure.RubiksCubeServiceProvider;
+﻿using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 
-internal sealed class MainWindowViewModel : ObservableObject
+internal sealed class MainWindowViewModel : MainWindowViewModelBase
 {
-    private readonly IRubiksCubeBuilder _cubeBuilder;
-    private readonly IRubiksCubeControlViewModelBuilder _cubeViewModelBuilder;
+    private readonly IRubiksCubeContext _cubeContext;
 
-    private RubiksCubeControlViewModel _cubeControlViewModel = new();
+    public RubiksCubeViewModel CubeViewModel => _cubeContext.CubeViewModel;
 
-    public RubiksCubeControlViewModel CubeControlViewModel
+    public MainWindowViewModel()
     {
-        get => _cubeControlViewModel;
-        private set => SetProperty(ref _cubeControlViewModel, value);
-    }
-
-    public MainWindowViewModel() : this(new RubiksCubeServiceProvider())
-    {
-    }
-
-    private MainWindowViewModel(IRubiksCubeServiceProvider serviceProvider)
-    {
-        _cubeBuilder = serviceProvider.GetCubeBuilder();
-        _cubeViewModelBuilder = serviceProvider.GetCubeViewModelBuilder();
-
-        SetCubeViewModel();
-    }
-
-    private void SetCubeViewModel()
-    {
-        var cube = _cubeBuilder.BuildSolvedRubiksCube(3);
-        CubeControlViewModel = _cubeViewModelBuilder.Build(cube);
+        _cubeContext = ServiceProvider.RubiksCubeContextBuilder.Build(3);
+        ServiceProvider.RubiksCubeContextLinker.Link(_cubeContext, this);
     }
 }

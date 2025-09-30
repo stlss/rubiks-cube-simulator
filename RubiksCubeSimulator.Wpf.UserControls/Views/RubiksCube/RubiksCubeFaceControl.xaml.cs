@@ -2,7 +2,7 @@
 
 namespace RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube;
 
-public partial class RubiksCubeFaceControl : UserControl
+internal partial class RubiksCubeFaceControl : UserControl
 {
     public RubiksCubeFaceControl()
     {
