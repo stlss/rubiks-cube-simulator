@@ -11,7 +11,7 @@ public interface IRubiksCubeContext
 {
     public RubiksCubeControlViewModel CubeViewModel { get; }
 
-    public void Move(MoveBase moveBase);
+    public void Move(MoveBase move);
 
     public void ShowMoveArrows(MoveBase move);
 
@@ -28,9 +28,9 @@ internal sealed class RubiksCubeContext(
 
     public RubiksCubeControlViewModel CubeViewModel { get; } = cubeManager.Create(cube);
 
-    public void Move(MoveBase moveBase)
+    public void Move(MoveBase move)
     {
-        _cube = cubeMover.Move(_cube, moveBase);
+        _cube = cubeMover.Move(_cube, move);
         cubeManager.Update(CubeViewModel, _cube);
     }
 

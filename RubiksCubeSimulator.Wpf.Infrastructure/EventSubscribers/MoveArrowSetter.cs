@@ -5,7 +5,7 @@ using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;
 
-public interface IMoveArrowSetter :
+internal interface IMoveArrowSetter :
     ISubscriber<MovingRubiksCubeEventArgs>,
     ISubscriber<MovedRubiksCubeEventArgs>
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
+using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.Extensions;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
@@ -10,17 +11,7 @@ internal interface IRubiksCubeServiceProvider
 {
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder { get; }
 
-
-    public IKeyRubiksCubePublisher KeyRubiksCubePublisher { get; }
-
-    public IMovedRubiksCubePublisher MovedRubiksCubePublisher { get; }
-
-    public IMovingRubiksCubePublisher MovingRubiksCubePublisher { get; }
-
-
-    public IMoveArrowSetterBuilder MoveArrowSetterBuilder { get; }
-
-    public IMoveApplierBuilder MoveApplierBuilder { get; }
+    public IRubiksCubeContextLinker RubiksCubeContextLinker { get;  }
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -39,28 +30,13 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddRubiksCubeContextBuilder();
-        services.AddEventPublishers();
-        services.AddEventSubscribersBuilders();
+        services.AddRubiksCubeContextLinker();
     }
 
 
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder =>
         _serviceProvider.GetRequiredService<IRubiksCubeContextBuilder>();
 
-
-    public IKeyRubiksCubePublisher KeyRubiksCubePublisher =>
-        _serviceProvider.GetRequiredService<IKeyRubiksCubePublisher>();
-
-    public IMovedRubiksCubePublisher MovedRubiksCubePublisher =>
-        _serviceProvider.GetRequiredService<IMovedRubiksCubePublisher>();
-
-    public IMovingRubiksCubePublisher MovingRubiksCubePublisher =>
-        _serviceProvider.GetRequiredService<IMovingRubiksCubePublisher>();
-
-
-    public IMoveArrowSetterBuilder MoveArrowSetterBuilder =>
-        _serviceProvider.GetRequiredService<IMoveArrowSetterBuilder>();
-
-    public IMoveApplierBuilder MoveApplierBuilder =>
-        _serviceProvider.GetRequiredService<IMoveApplierBuilder>();
+    public IRubiksCubeContextLinker RubiksCubeContextLinker =>
+        _serviceProvider.GetRequiredService<IRubiksCubeContextLinker>();
 }

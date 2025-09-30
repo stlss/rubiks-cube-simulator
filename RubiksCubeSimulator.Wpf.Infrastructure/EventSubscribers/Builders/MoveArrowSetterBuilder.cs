@@ -3,7 +3,7 @@ using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 
-public interface IMoveArrowSetterBuilder
+internal interface IMoveArrowSetterBuilder
 {
     public IMoveArrowSetter Build(IRubiksCubeContext cubeContext);
 }
