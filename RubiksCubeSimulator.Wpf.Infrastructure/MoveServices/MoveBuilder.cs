@@ -195,7 +195,7 @@ internal sealed class MoveBuilder : IMoveBuilder
                 return ReverseIndex(cubeDimension, GetRowIndex(cubeDimension, stickerNumber));
             }
 
-            return GetColumnIndex(cubeDimension, stickerNumber);
+            return ReverseIndex(cubeDimension, GetColumnIndex(cubeDimension, stickerNumber));
         }
 
         if (faceName == FaceName.Right)
