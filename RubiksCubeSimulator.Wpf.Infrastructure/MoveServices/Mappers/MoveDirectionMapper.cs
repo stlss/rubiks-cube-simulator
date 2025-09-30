@@ -7,29 +7,29 @@ internal interface IMoveDirectionMapper
 {
     public ViewModelEnums.MoveDirection Map(DomainEnums.AxisName axisName, DomainEnums.MoveDirection moveDirection);
 
-    public ViewModelEnums.MoveDirection Map(DomainEnums.MoveFace moveFace, DomainEnums.MoveDirection moveDirection);
+    public ViewModelEnums.MoveDirection Map(DomainEnums.FaceName faceName, DomainEnums.MoveDirection moveDirection);
 }
 
 internal sealed class MoveDirectionMapper : IMoveDirectionMapper
 {
-    public ViewModelEnums.MoveDirection Map(DomainEnums.MoveFace moveFace, DomainEnums.MoveDirection moveDirection)
+    public ViewModelEnums.MoveDirection Map(DomainEnums.FaceName faceName, DomainEnums.MoveDirection moveDirection)
     {
-        var axisName = Map(moveFace);
+        var axisName = Map(faceName);
         var viewModelMoveDirection = Map(axisName, moveDirection);
         return viewModelMoveDirection;
     }
 
-    private static DomainEnums.AxisName Map(DomainEnums.MoveFace moveFace)
+    private static DomainEnums.AxisName Map(DomainEnums.FaceName faceName)
     {
-        return moveFace switch
+        return faceName switch
         {
-            DomainEnums.MoveFace.Up => DomainEnums.AxisName.Y,
-            DomainEnums.MoveFace.Right => DomainEnums.AxisName.X,
-            DomainEnums.MoveFace.Front => DomainEnums.AxisName.Z,
-            DomainEnums.MoveFace.Down => DomainEnums.AxisName.Y,
-            DomainEnums.MoveFace.Left => DomainEnums.AxisName.X,
-            DomainEnums.MoveFace.Back => DomainEnums.AxisName.Z,
-            _ => throw new ArgumentOutOfRangeException(nameof(moveFace), moveFace, null),
+            DomainEnums.FaceName.Up => DomainEnums.AxisName.Y,
+            DomainEnums.FaceName.Right => DomainEnums.AxisName.X,
+            DomainEnums.FaceName.Front => DomainEnums.AxisName.Z,
+            DomainEnums.FaceName.Down => DomainEnums.AxisName.Y,
+            DomainEnums.FaceName.Left => DomainEnums.AxisName.X,
+            DomainEnums.FaceName.Back => DomainEnums.AxisName.Z,
+            _ => throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null),
         };
     }
 

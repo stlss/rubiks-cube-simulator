@@ -10,18 +10,18 @@ internal interface IRubiksCubeMoveMapper
 
 internal sealed class RubiksCubeMoveMapper : IRubiksCubeMoveMapper
 {
-    private static readonly Dictionary<AxisName, MoveFace> FaceMoveByAxisName = new()
+    private static readonly Dictionary<AxisName, FaceName> FaceMoveByAxisName = new()
     {
-        [AxisName.X] = MoveFace.Right,
-        [AxisName.Y] = MoveFace.Up,
-        [AxisName.Z] = MoveFace.Front
+        [AxisName.X] = FaceName.Right,
+        [AxisName.Y] = FaceName.Up,
+        [AxisName.Z] = FaceName.Front
     };
 
     public IReadOnlyList<SliceMove> Map(WholeMove move, int cubeDimension)
     {
         var sliceMoves = new List<SliceMove>(cubeDimension);
 
-        var faceMove = FaceMoveByAxisName[move.Axis];
+        var faceMove = FaceMoveByAxisName[move.AxisName];
         var directionMove = move.Direction;
 
         for (var sliceNumber = 0; sliceNumber < cubeDimension; sliceNumber++)

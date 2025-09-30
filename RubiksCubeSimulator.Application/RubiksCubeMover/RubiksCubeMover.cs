@@ -67,52 +67,52 @@ internal sealed class RubiksCubeMover(
         switch (move.Direction)
         {
             case MoveDirection.Clockwise:
-                MoveClockwise(mutableCube, move.Face, move.Slice);
+                MoveClockwise(mutableCube, move.FaceName, move.Slice);
                 break;
 
             case MoveDirection.Counterclockwise:
-                MoveCounterclockwise(mutableCube, move.Face, move.Slice);
+                MoveCounterclockwise(mutableCube, move.FaceName, move.Slice);
                 break;
         }
     }
 
 
     private void MoveClockwise(MutableRubiksCube.MutableRubiksCube mutableCube,
-        MoveFace moveFace, int sliceNumber)
+        FaceName faceName, int sliceNumber)
     {
-        var clockwiseMove = _clockwiseMoveByFaceMove[moveFace];
+        var clockwiseMove = _clockwiseMoveByFaceMove[faceName];
         clockwiseMove(mutableCube, sliceNumber);
     }
 
-    private readonly Dictionary<MoveFace, Action<MutableRubiksCube.MutableRubiksCube, int>>
+    private readonly Dictionary<FaceName, Action<MutableRubiksCube.MutableRubiksCube, int>>
         _clockwiseMoveByFaceMove = new()
         {
-            [MoveFace.Up] = clockwiseMutableCubeMover.MoveUp,
-            [MoveFace.Right] = clockwiseMutableCubeMover.MoveRight,
-            [MoveFace.Front] = clockwiseMutableCubeMover.MoveFront,
-            [MoveFace.Down] = clockwiseMutableCubeMover.MoveDown,
-            [MoveFace.Left] = clockwiseMutableCubeMover.MoveLeft,
-            [MoveFace.Back] = clockwiseMutableCubeMover.MoveBack,
+            [FaceName.Up] = clockwiseMutableCubeMover.MoveUp,
+            [FaceName.Right] = clockwiseMutableCubeMover.MoveRight,
+            [FaceName.Front] = clockwiseMutableCubeMover.MoveFront,
+            [FaceName.Down] = clockwiseMutableCubeMover.MoveDown,
+            [FaceName.Left] = clockwiseMutableCubeMover.MoveLeft,
+            [FaceName.Back] = clockwiseMutableCubeMover.MoveBack,
         };
 
 
     private void MoveCounterclockwise(
         MutableRubiksCube.MutableRubiksCube mutableCube,
-        MoveFace moveFace,
+        FaceName faceName,
         int sliceNumber)
     {
-        var counterclockwiseMove = _counterclockwiseMoveByFaceMove[moveFace];
+        var counterclockwiseMove = _counterclockwiseMoveByFaceMove[faceName];
         counterclockwiseMove(mutableCube, sliceNumber);
     }
 
-    private readonly Dictionary<MoveFace, Action<MutableRubiksCube.MutableRubiksCube, int>>
+    private readonly Dictionary<FaceName, Action<MutableRubiksCube.MutableRubiksCube, int>>
         _counterclockwiseMoveByFaceMove = new()
         {
-            [MoveFace.Up] = counterclockwiseMutableCubeMover.MoveUp,
-            [MoveFace.Right] = counterclockwiseMutableCubeMover.MoveRight,
-            [MoveFace.Front] = counterclockwiseMutableCubeMover.MoveFront,
-            [MoveFace.Down] = counterclockwiseMutableCubeMover.MoveDown,
-            [MoveFace.Left] = counterclockwiseMutableCubeMover.MoveLeft,
-            [MoveFace.Back] = counterclockwiseMutableCubeMover.MoveBack,
+            [FaceName.Up] = counterclockwiseMutableCubeMover.MoveUp,
+            [FaceName.Right] = counterclockwiseMutableCubeMover.MoveRight,
+            [FaceName.Front] = counterclockwiseMutableCubeMover.MoveFront,
+            [FaceName.Down] = counterclockwiseMutableCubeMover.MoveDown,
+            [FaceName.Left] = counterclockwiseMutableCubeMover.MoveLeft,
+            [FaceName.Back] = counterclockwiseMutableCubeMover.MoveBack,
         };
 }

@@ -13,7 +13,7 @@ internal sealed class RubiksCubeMoveChecker : IRubiksCubeMoveChecker
 {
     public bool Check(SliceMove move, int cubeDimension)
     {
-        var isCorrectFace = Enum.IsDefined(move.Face);
+        var isCorrectFace = Enum.IsDefined(move.FaceName);
         var isCorrectDirection = Enum.IsDefined(move.Direction);
         var isCorrectSlice = 0 <= move.Slice && move.Slice < cubeDimension;
 
@@ -22,7 +22,7 @@ internal sealed class RubiksCubeMoveChecker : IRubiksCubeMoveChecker
 
     public bool Check(WholeMove move)
     {
-        var isCorrectAxis = Enum.IsDefined(move.Axis);
+        var isCorrectAxis = Enum.IsDefined(move.AxisName);
         var isCorrectDirection = Enum.IsDefined(move.Direction);
 
         return isCorrectAxis && isCorrectDirection;

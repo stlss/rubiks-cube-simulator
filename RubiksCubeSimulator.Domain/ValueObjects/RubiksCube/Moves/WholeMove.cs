@@ -2,4 +2,4 @@
 
 namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
 
-public sealed record WholeMove(AxisName Axis, MoveDirection Direction) : MoveBase;
+public sealed record WholeMove(AxisName AxisName, MoveDirection Direction) : MoveBase;

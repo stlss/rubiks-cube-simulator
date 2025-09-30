@@ -2,4 +2,4 @@
 
 namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
 
-public sealed record SliceMove(MoveFace Face, MoveDirection Direction, int Slice) : MoveBase;
+public sealed record SliceMove(FaceName FaceName, MoveDirection Direction, int Slice) : MoveBase;

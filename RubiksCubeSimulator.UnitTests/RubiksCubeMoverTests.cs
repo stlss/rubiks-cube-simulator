@@ -17,7 +17,7 @@ public sealed class RubiksCubeMoverTests
 
     private static readonly AxisName[] AxisNames = (AxisName[])Enum.GetValues(typeof(AxisName));
     private static readonly MoveDirection[] MoveDirections = (MoveDirection[])Enum.GetValues(typeof(MoveDirection));
-    private static readonly MoveFace[] MoveFaces = (MoveFace[])Enum.GetValues(typeof(MoveFace));
+    private static readonly FaceName[] MoveFaces = (FaceName[])Enum.GetValues(typeof(FaceName));
 
     private readonly RubiksCubeFaceEqualityComparer _cubeFaceEqualityComparer = new();
     private readonly RubiksCubeEqualityComparer _cubeEqualityComparer = new();
@@ -242,13 +242,13 @@ public sealed class RubiksCubeMoverTests
             var sliceNumbers = Enumerable.Range(0, cubeDimension).Where(x => x % 2 == 1).ToList();
 
             var rightMoves = sliceNumbers.Select(sliceNumber =>
-                new SliceMove(MoveFace.Right, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(FaceName.Right, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var frontMoves = sliceNumbers .Select(sliceNumber =>
-                new SliceMove(MoveFace.Front, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(FaceName.Front, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var upMoves = sliceNumbers .Select(sliceNumber =>
-                new SliceMove(MoveFace.Up, MoveDirection.Clockwise, sliceNumber)).ToList();
+                new SliceMove(FaceName.Up, MoveDirection.Clockwise, sliceNumber)).ToList();
 
             var sliceMoves = rightMoves.Concat(rightMoves)
                 .Concat(frontMoves).Concat(frontMoves)

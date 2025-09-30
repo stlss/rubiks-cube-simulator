@@ -35,14 +35,14 @@ internal sealed class CubeCubeMoveSetter(
 
     private void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, WholeMove move)
     {
-        var moveDirection = moveDirectionMapper.Map(move.Axis, move.Direction);
+        var moveDirection = moveDirectionMapper.Map(move.AxisName, move.Direction);
         SetMoveArrows(cubeViewModel, moveDirection);
     }
 
     private void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, SliceMove move)
     {
-        var moveDirection = moveDirectionMapper.Map(move.Face, move.Direction);
-        var sliceNumber = sliceNumberMapper.Map(cubeViewModel.CubeDimension, move.Face, move.Slice);
+        var moveDirection = moveDirectionMapper.Map(move.FaceName, move.Direction);
+        var sliceNumber = sliceNumberMapper.Map(cubeViewModel.CubeDimension, move.FaceName, move.Slice);
         SetMoveArrows(cubeViewModel, moveDirection, sliceNumber);
     }
 

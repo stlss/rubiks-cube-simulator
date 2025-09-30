@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves.Enums;
-using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
+using EventEnums = RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
 
@@ -9,10 +9,10 @@ internal interface IMoveBuilder
 {
     public MoveBase Build(
         int cubeDimension,
-        FaceName faceName,
+        EventEnums.FaceName faceName,
         int stickerNumber,
         Point relativeMousePosition,
-        MoveKey moveKey,
+        EventEnums.MoveKey moveKey,
         bool shiftPressed);
 }
 
@@ -20,10 +20,10 @@ internal sealed class MoveBuilder : IMoveBuilder
 {
     public MoveBase Build(
         int cubeDimension,
-        FaceName faceName,
+        EventEnums.FaceName faceName,
         int stickerNumber,
         Point relativeMousePosition,
-        MoveKey moveKey,
+        EventEnums.MoveKey moveKey,
         bool shiftPressed)
     {
         var moveFace = GetMoveFace(cubeDimension, faceName, stickerNumber, relativeMousePosition, moveKey);
@@ -41,115 +41,122 @@ internal sealed class MoveBuilder : IMoveBuilder
         return sliceMove;
     }
 
-    private static MoveFace GetMoveFace(
+    private static FaceName GetMoveFace(
         int cubeDimension,
-        FaceName faceName,
+        EventEnums.FaceName faceName,
         int stickerNumber,
         Point relativeMousePosition,
-        MoveKey moveKey)
+        EventEnums.MoveKey moveKey)
     {
-        if (faceName == FaceName.Up)
+        return faceName switch
         {
-            if (IsMousePointedLowerLeftFacePart(cubeDimension, stickerNumber, relativeMousePosition))
-            {
-                return moveKey switch
-                {
-                    MoveKey.W => MoveFace.Right,
-                    MoveKey.A => MoveFace.Front,
-                    MoveKey.S => MoveFace.Right,
-                    MoveKey.D => MoveFace.Front,
-                    _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
-                };
-            }
+            EventEnums.FaceName.Up => GetMoveFaceWhenUpFaceName(
+                cubeDimension,
+                stickerNumber,
+                relativeMousePosition,
+                moveKey),
 
-            return moveKey switch
+            EventEnums.FaceName.Right => moveKey switch
             {
-                MoveKey.W => MoveFace.Front,
-                MoveKey.A => MoveFace.Right,
-                MoveKey.S => MoveFace.Front,
-                MoveKey.D => MoveFace.Right,
+                EventEnums.MoveKey.W => FaceName.Front,
+                EventEnums.MoveKey.A => FaceName.Up,
+                EventEnums.MoveKey.S => FaceName.Front,
+                EventEnums.MoveKey.D => FaceName.Up,
                 _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
-            };
-        }
+            },
 
-        if (faceName == FaceName.Right)
-        {
-            return moveKey switch
+            EventEnums.FaceName.Left => moveKey switch
             {
-                MoveKey.W => MoveFace.Front,
-                MoveKey.A => MoveFace.Up,
-                MoveKey.S => MoveFace.Front,
-                MoveKey.D => MoveFace.Up,
+                EventEnums.MoveKey.W => FaceName.Right,
+                EventEnums.MoveKey.A => FaceName.Up,
+                EventEnums.MoveKey.S => FaceName.Right,
+                EventEnums.MoveKey.D => FaceName.Up,
                 _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
-            };
-        }
+            },
 
-        if (faceName == FaceName.Left)
-        {
-            return moveKey switch
-            {
-                MoveKey.W => MoveFace.Right,
-                MoveKey.A => MoveFace.Up,
-                MoveKey.S => MoveFace.Right,
-                MoveKey.D => MoveFace.Up,
-                _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
-            };
-        }
-
-        throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null);
+            _ => throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null)
+        };
     }
-    
+
+    private static FaceName GetMoveFaceWhenUpFaceName(
+        int cubeDimension,
+        int stickerNumber,
+        Point relativeMousePosition,
+        EventEnums.MoveKey moveKey)
+    {
+        if (IsMousePointedLowerLeftFacePart(cubeDimension, stickerNumber, relativeMousePosition))
+        {
+            return moveKey switch
+            {
+                EventEnums.MoveKey.W => FaceName.Right,
+                EventEnums.MoveKey.A => FaceName.Front,
+                EventEnums.MoveKey.S => FaceName.Right,
+                EventEnums.MoveKey.D => FaceName.Front,
+                _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
+            };
+        }
+
+        return moveKey switch
+        {
+            EventEnums.MoveKey.W => FaceName.Front,
+            EventEnums.MoveKey.A => FaceName.Right,
+            EventEnums.MoveKey.S => FaceName.Front,
+            EventEnums.MoveKey.D => FaceName.Right,
+            _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
+        };
+    }
+
     private static MoveDirection GetMoveDirection(
         int cubeDimension,
-        FaceName faceName,
+        EventEnums.FaceName faceName,
         int stickerNumber,
         Point relativeMousePosition,
-        MoveKey moveKey)
+        EventEnums.MoveKey moveKey)
     {
-        if (faceName == FaceName.Up)
+        if (faceName == EventEnums.FaceName.Up)
         {
             if (IsMousePointedLowerLeftFacePart(cubeDimension, stickerNumber, relativeMousePosition))
             {
                 return moveKey switch
                 {
-                    MoveKey.W => MoveDirection.Clockwise,
-                    MoveKey.A => MoveDirection.Counterclockwise,
-                    MoveKey.S => MoveDirection.Counterclockwise,
-                    MoveKey.D => MoveDirection.Clockwise,
+                    EventEnums.MoveKey.W => MoveDirection.Clockwise,
+                    EventEnums.MoveKey.A => MoveDirection.Counterclockwise,
+                    EventEnums.MoveKey.S => MoveDirection.Counterclockwise,
+                    EventEnums.MoveKey.D => MoveDirection.Clockwise,
                     _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
                 };
             }
 
             return moveKey switch
             {
-                MoveKey.W => MoveDirection.Counterclockwise,
-                MoveKey.A => MoveDirection.Counterclockwise,
-                MoveKey.S => MoveDirection.Clockwise,
-                MoveKey.D => MoveDirection.Clockwise,
+                EventEnums.MoveKey.W => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.A => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.S => MoveDirection.Clockwise,
+                EventEnums.MoveKey.D => MoveDirection.Clockwise,
                 _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
             };
         }
 
-        if (faceName == FaceName.Right)
+        if (faceName == EventEnums.FaceName.Right)
         {
             return moveKey switch
             {
-                MoveKey.W => MoveDirection.Counterclockwise,
-                MoveKey.A => MoveDirection.Clockwise,
-                MoveKey.S => MoveDirection.Clockwise,
-                MoveKey.D => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.W => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.A => MoveDirection.Clockwise,
+                EventEnums.MoveKey.S => MoveDirection.Clockwise,
+                EventEnums.MoveKey.D => MoveDirection.Counterclockwise,
                 _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
             };
         }
 
-        if (faceName == FaceName.Left)
+        if (faceName == EventEnums.FaceName.Left)
         {
             return moveKey switch
             {
-                MoveKey.W => MoveDirection.Clockwise,
-                MoveKey.A => MoveDirection.Clockwise,
-                MoveKey.S => MoveDirection.Counterclockwise,
-                MoveKey.D => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.W => MoveDirection.Clockwise,
+                EventEnums.MoveKey.A => MoveDirection.Clockwise,
+                EventEnums.MoveKey.S => MoveDirection.Counterclockwise,
+                EventEnums.MoveKey.D => MoveDirection.Counterclockwise,
                 _ => throw new ArgumentOutOfRangeException(nameof(moveKey), moveKey, null)
             };
         }
@@ -157,32 +164,32 @@ internal sealed class MoveBuilder : IMoveBuilder
         throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null);
     }
 
-    private static AxisName GetAxisName(MoveFace moveFace)
+    private static AxisName GetAxisName(FaceName faceName)
     {
-        return moveFace switch
+        return faceName switch
         {
-            MoveFace.Up => AxisName.Y,
-            MoveFace.Right => AxisName.X,
-            MoveFace.Front => AxisName.Z,
-            MoveFace.Down => AxisName.Y,
-            MoveFace.Left => AxisName.X,
-            MoveFace.Back => AxisName.Z,
-            _ => throw new ArgumentOutOfRangeException(nameof(moveFace), moveFace, null)
+            FaceName.Up => AxisName.Y,
+            FaceName.Right => AxisName.X,
+            FaceName.Front => AxisName.Z,
+            FaceName.Down => AxisName.Y,
+            FaceName.Left => AxisName.X,
+            FaceName.Back => AxisName.Z,
+            _ => throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null)
         };
     }
 
     private static int GetSliceNumber(
         int cubeDimension,
-        FaceName faceName,
+        EventEnums.FaceName faceName,
         int stickerNumber,
         Point relativeMousePosition,
-        MoveKey moveKey)
+        EventEnums.MoveKey moveKey)
     {
-        if (faceName == FaceName.Up)
+        if (faceName == EventEnums.FaceName.Up)
         {
             if (IsMousePointedLowerLeftFacePart(cubeDimension, stickerNumber, relativeMousePosition))
             {
-                if (moveKey is MoveKey.W or MoveKey.S)
+                if (moveKey is EventEnums.MoveKey.W or EventEnums.MoveKey.S)
                 {
                     return ReverseIndex(cubeDimension, GetColumnIndex(cubeDimension, stickerNumber));
                 }
@@ -190,7 +197,7 @@ internal sealed class MoveBuilder : IMoveBuilder
                 return ReverseIndex(cubeDimension, GetRowIndex(cubeDimension, stickerNumber));
             }
 
-            if (moveKey is MoveKey.W or MoveKey.S)
+            if (moveKey is EventEnums.MoveKey.W or EventEnums.MoveKey.S)
             {
                 return ReverseIndex(cubeDimension, GetRowIndex(cubeDimension, stickerNumber));
             }
@@ -198,9 +205,9 @@ internal sealed class MoveBuilder : IMoveBuilder
             return ReverseIndex(cubeDimension, GetColumnIndex(cubeDimension, stickerNumber));
         }
 
-        if (faceName == FaceName.Right)
+        if (faceName == EventEnums.FaceName.Right)
         {
-            if (moveKey is MoveKey.W or MoveKey.S)
+            if (moveKey is EventEnums.MoveKey.W or EventEnums.MoveKey.S)
             {
                 return GetColumnIndex(cubeDimension, stickerNumber);
             }
@@ -208,9 +215,9 @@ internal sealed class MoveBuilder : IMoveBuilder
             return GetRowIndex(cubeDimension, stickerNumber);
         }
 
-        if (faceName == FaceName.Left)
+        if (faceName == EventEnums.FaceName.Left)
         {
-            if (moveKey is MoveKey.W or MoveKey.S)
+            if (moveKey is EventEnums.MoveKey.W or EventEnums.MoveKey.S)
             {
                 return ReverseIndex(cubeDimension, GetColumnIndex(cubeDimension, stickerNumber));
             }
@@ -221,7 +228,8 @@ internal sealed class MoveBuilder : IMoveBuilder
         throw new ArgumentOutOfRangeException(nameof(faceName), faceName, null);
     }
 
-    private static bool IsMousePointedLowerLeftFacePart(int cubeDimension, int stickerNumber, Point relativeMousePosition)
+    private static bool IsMousePointedLowerLeftFacePart(int cubeDimension, int stickerNumber,
+        Point relativeMousePosition)
     {
         var row = stickerNumber / cubeDimension;
         var column = stickerNumber % cubeDimension;

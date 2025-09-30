@@ -1,6 +1,6 @@
 ﻿namespace RubiksCubeSimulator.Domain.ValueObjects.RubiksCube.Moves.Enums;
 
-public enum MoveFace
+public enum FaceName
 {
     Up,
     Right,

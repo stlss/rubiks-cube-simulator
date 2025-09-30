@@ -25,12 +25,12 @@ internal static class RubiksCubeMovesConverter
 
     private static string WholeRubiksCubeMoveToString(WholeMove move)
     {
-        var result = move.Axis switch
+        var result = move.AxisName switch
         {
             AxisName.X => "X",
             AxisName.Y => "Y",
             AxisName.Z => "Z",
-            _ => throw new InvalidEnumArgumentException(nameof(move.Axis), (int)move.Axis, typeof(AxisName)),
+            _ => throw new InvalidEnumArgumentException(nameof(move.AxisName), (int)move.AxisName, typeof(AxisName)),
         };
 
         if (move.Direction == MoveDirection.Counterclockwise) result += "'";
@@ -39,15 +39,15 @@ internal static class RubiksCubeMovesConverter
 
     private static string RubiksCubeSliceMoveToString(SliceMove move)
     {
-        var result = move.Face switch
+        var result = move.FaceName switch
         {
-            MoveFace.Up => "U",
-            MoveFace.Right => "R",
-            MoveFace.Front => "F",
-            MoveFace.Down => "D",
-            MoveFace.Left => "L",
-            MoveFace.Back => "B",
-            _ => throw new InvalidEnumArgumentException(nameof(move.Face), (int)move.Face, typeof(MoveFace)),
+            FaceName.Up => "U",
+            FaceName.Right => "R",
+            FaceName.Front => "F",
+            FaceName.Down => "D",
+            FaceName.Left => "L",
+            FaceName.Back => "B",
+            _ => throw new InvalidEnumArgumentException(nameof(move.FaceName), (int)move.FaceName, typeof(FaceName)),
         };
 
         if (move.Direction == MoveDirection.Counterclockwise) result += "'";
