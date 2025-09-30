@@ -7,9 +7,9 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
 
 internal interface ICubeMoveSetter
 {
-    public void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, MoveBase move);
+    public void ShowMoveArrows(RubiksCubeViewModel cubeViewModel, MoveBase move);
 
-    public void ClearMoveArrows(RubiksCubeControlViewModel cubeViewModel);
+    public void ClearMoveArrows(RubiksCubeViewModel cubeViewModel);
 }
 
 internal sealed class CubeCubeMoveSetter(
@@ -17,7 +17,7 @@ internal sealed class CubeCubeMoveSetter(
     IMoveDirectionMapper moveDirectionMapper,
     ISliceNumberMapper sliceNumberMapper) : ICubeMoveSetter
 {
-    public void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, MoveBase move)
+    public void ShowMoveArrows(RubiksCubeViewModel cubeViewModel, MoveBase move)
     {
         ClearMoveArrows(cubeViewModel);
 
@@ -33,13 +33,13 @@ internal sealed class CubeCubeMoveSetter(
         }
     }
 
-    private void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, WholeMove move)
+    private void ShowMoveArrows(RubiksCubeViewModel cubeViewModel, WholeMove move)
     {
         var moveDirection = moveDirectionMapper.Map(move.AxisName, move.Direction);
         SetMoveArrows(cubeViewModel, moveDirection);
     }
 
-    private void ShowMoveArrows(RubiksCubeControlViewModel cubeViewModel, SliceMove move)
+    private void ShowMoveArrows(RubiksCubeViewModel cubeViewModel, SliceMove move)
     {
         var moveDirection = moveDirectionMapper.Map(move.FaceName, move.Direction);
         var sliceNumber = sliceNumberMapper.Map(cubeViewModel.CubeDimension, move.FaceName, move.Slice);
@@ -47,7 +47,7 @@ internal sealed class CubeCubeMoveSetter(
     }
 
     private void SetMoveArrows(
-        RubiksCubeControlViewModel cubeViewModel,
+        RubiksCubeViewModel cubeViewModel,
         MoveDirection moveDirection)
     {
         switch (moveDirection)
@@ -88,7 +88,7 @@ internal sealed class CubeCubeMoveSetter(
     }
 
     private void SetMoveArrows(
-        RubiksCubeControlViewModel cubeViewModel,
+        RubiksCubeViewModel cubeViewModel,
         MoveDirection moveDirection,
         int sliceNumber)
     {
@@ -146,7 +146,7 @@ internal sealed class CubeCubeMoveSetter(
         int GetReversedSliceNumber() => cubeViewModel.CubeDimension - sliceNumber - 1;
     }
 
-    public void ClearMoveArrows(RubiksCubeControlViewModel cubeViewModel)
+    public void ClearMoveArrows(RubiksCubeViewModel cubeViewModel)
     {
         faceMoveSetter.ClearMoveArrows(cubeViewModel.UpFaceViewModel);
         faceMoveSetter.ClearMoveArrows(cubeViewModel.RightFaceViewModel);

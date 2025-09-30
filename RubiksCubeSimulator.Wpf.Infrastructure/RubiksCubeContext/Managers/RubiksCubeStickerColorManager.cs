@@ -6,9 +6,9 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 internal interface IRubiksCubeStickerColorManager
 {
-    public RubiksCubeStickerControlViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor);
+    public RubiksCubeStickerViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor);
 
-    public void Update(RubiksCubeStickerControlViewModel stickerViewModel, RubiksCubeStickerColor stickerColor);
+    public void Update(RubiksCubeStickerViewModel stickerViewModel, RubiksCubeStickerColor stickerColor);
 }
 
 internal sealed class RubiksCubeStickerColorManager : IRubiksCubeStickerColorManager
@@ -28,11 +28,11 @@ internal sealed class RubiksCubeStickerColorManager : IRubiksCubeStickerColorMan
         return new SolidColorBrush(Color.FromRgb(r, g, b));
     }
 
-    public RubiksCubeStickerControlViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor)
+    public RubiksCubeStickerViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor)
     {
         var brush = BrushByStickerColor[stickerColor];
 
-        var viewModel = new RubiksCubeStickerControlViewModel
+        var viewModel = new RubiksCubeStickerViewModel
         {
             StickerNumber = stickerNumber,
             StickerColorBrush = brush,
@@ -41,7 +41,7 @@ internal sealed class RubiksCubeStickerColorManager : IRubiksCubeStickerColorMan
         return viewModel;
     }
 
-    public void Update(RubiksCubeStickerControlViewModel stickerViewModel, RubiksCubeStickerColor stickerColor)
+    public void Update(RubiksCubeStickerViewModel stickerViewModel, RubiksCubeStickerColor stickerColor)
     {
         stickerViewModel.StickerColorBrush = BrushByStickerColor[stickerColor];
     }

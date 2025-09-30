@@ -8,7 +8,7 @@
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              x:ClassModifier="internal"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerControlViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeStickerViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="50" d:DesignWidth="50">
 
     <i:Interaction.Behaviors>

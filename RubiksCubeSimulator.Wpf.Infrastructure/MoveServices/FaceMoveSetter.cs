@@ -5,24 +5,24 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
 
 internal interface IFaceMoveSetter
 {
-    public void SetMoveArrows(RubiksCubeFaceControlViewModel faceViewModel, ArrowDirection arrowDirection);
+    public void SetMoveArrows(RubiksCubeFaceViewModel faceViewModel, ArrowDirection arrowDirection);
 
     public void SetRowMoveArrows(
-        RubiksCubeFaceControlViewModel faceViewModel,
+        RubiksCubeFaceViewModel faceViewModel,
         ArrowDirection arrowDirection,
         int row);
 
     public void SetColumnMoveArrows(
-        RubiksCubeFaceControlViewModel faceViewModel,
+        RubiksCubeFaceViewModel faceViewModel,
         ArrowDirection arrowDirection,
         int column);
 
-    public void ClearMoveArrows(RubiksCubeFaceControlViewModel faceViewModel);
+    public void ClearMoveArrows(RubiksCubeFaceViewModel faceViewModel);
 }
 
 internal sealed class FaceMoveSetter : IFaceMoveSetter
 {
-    public void SetMoveArrows(RubiksCubeFaceControlViewModel faceViewModel, ArrowDirection arrowDirection)
+    public void SetMoveArrows(RubiksCubeFaceViewModel faceViewModel, ArrowDirection arrowDirection)
     {
         foreach (var stickerViewModel in faceViewModel.StickerViewModels)
         {
@@ -31,7 +31,7 @@ internal sealed class FaceMoveSetter : IFaceMoveSetter
     }
 
     public void SetRowMoveArrows(
-        RubiksCubeFaceControlViewModel faceViewModel,
+        RubiksCubeFaceViewModel faceViewModel,
         ArrowDirection arrowDirection,
         int row)
     {
@@ -42,7 +42,7 @@ internal sealed class FaceMoveSetter : IFaceMoveSetter
     }
 
     public void SetColumnMoveArrows(
-        RubiksCubeFaceControlViewModel faceViewModel,
+        RubiksCubeFaceViewModel faceViewModel,
         ArrowDirection arrowDirection,
         int column)
     {
@@ -53,7 +53,7 @@ internal sealed class FaceMoveSetter : IFaceMoveSetter
         for (var i = start; i < end; i += step) faceViewModel.StickerViewModels[i].ArrowDirection = arrowDirection;
     }
 
-    public void ClearMoveArrows(RubiksCubeFaceControlViewModel faceViewModel)
+    public void ClearMoveArrows(RubiksCubeFaceViewModel faceViewModel)
     {
         foreach (var stickerViewModel in faceViewModel.StickerViewModels) stickerViewModel.ArrowDirection = null;
     }

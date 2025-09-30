@@ -7,7 +7,7 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
 {
     private readonly IRubiksCubeContext _cubeContext;
 
-    public RubiksCubeControlViewModel CubeViewModel => _cubeContext.CubeViewModel;
+    public RubiksCubeViewModel CubeViewModel => _cubeContext.CubeViewModel;
 
     public MainWindowViewModel()
     {

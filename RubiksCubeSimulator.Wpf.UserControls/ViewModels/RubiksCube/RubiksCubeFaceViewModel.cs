@@ -8,7 +8,7 @@ using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube.Enums;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-public sealed class RubiksCubeFaceControlViewModel :
+public sealed class RubiksCubeFaceViewModel :
     ObservableObject,
     IPublisher<MouseMoveRubiksCubeEventArgs>,
     IDisposable
@@ -23,12 +23,12 @@ public sealed class RubiksCubeFaceControlViewModel :
     public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
 
 
-    private readonly IReadOnlyList<RubiksCubeStickerControlViewModel> _stickerViewModels = Enumerable
+    private readonly IReadOnlyList<RubiksCubeStickerViewModel> _stickerViewModels = Enumerable
         .Range(0, DefaultDimension * DefaultDimension)
-        .Select(_ => new RubiksCubeStickerControlViewModel())
+        .Select(_ => new RubiksCubeStickerViewModel())
         .ToList();
 
-    public IReadOnlyList<RubiksCubeStickerControlViewModel> StickerViewModels
+    public IReadOnlyList<RubiksCubeStickerViewModel> StickerViewModels
     {
         get => _stickerViewModels;
         init
@@ -40,37 +40,9 @@ public sealed class RubiksCubeFaceControlViewModel :
     }
 
 
-    public RubiksCubeFaceControlViewModel()
+    public RubiksCubeFaceViewModel()
     {
         SubscribeRelativeMousePositionPropertyChangedHandlers();
-    }
-
-
-    internal void SetMoveArrows(ArrowDirection arrowDirection)
-    {
-        foreach (var stickerViewModel in StickerViewModels) stickerViewModel.ArrowDirection = arrowDirection;
-    }
-
-    internal void SetRowMoveArrows(ArrowDirection arrowDirection, int row)
-    {
-        var start = row * CubeDimension;
-        var end = start + CubeDimension;
-
-        for (var i = start; i < end; i++) StickerViewModels[i].ArrowDirection = arrowDirection;
-    }
-
-    internal void SetColumnMoveArrows(ArrowDirection arrowDirection, int column)
-    {
-        var start = column;
-        var end = StickerViewModels.Count;
-        var step = CubeDimension;
-
-        for (var i = start; i < end; i += step) StickerViewModels[i].ArrowDirection = arrowDirection;
-    }
-
-    internal void ClearMoveArrows()
-    {
-        foreach (var stickerViewModel in StickerViewModels) stickerViewModel.ArrowDirection = null;
     }
 
 
@@ -101,7 +73,7 @@ public sealed class RubiksCubeFaceControlViewModel :
             void OnRelativeMousePositionPropertyChanged(object? sender,
                 PropertyChangedEventArgs propertyChangedEventArgs)
             {
-                var propertyName = nameof(RubiksCubeStickerControlViewModel.RelativeMousePosition);
+                var propertyName = nameof(RubiksCubeStickerViewModel.RelativeMousePosition);
 
                 if (propertyChangedEventArgs.PropertyName != propertyName)
                     return;

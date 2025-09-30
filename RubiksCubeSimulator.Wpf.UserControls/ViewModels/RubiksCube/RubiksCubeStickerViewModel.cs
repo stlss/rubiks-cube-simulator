@@ -7,7 +7,7 @@ using RubiksCubeSimulator.Wpf.UserControls.Views.Behaviors;
 
 namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
-public sealed class RubiksCubeStickerControlViewModel : ObservableObject
+public sealed class RubiksCubeStickerViewModel : ObservableObject
 {
     public int StickerNumber { get; init; }
 
@@ -63,7 +63,7 @@ public sealed class RubiksCubeStickerControlViewModel : ObservableObject
     public IRelayCommand<RelativeMouseEventArgs> UpdateRelativeMousePositionCommand { get; }
 
 
-    public RubiksCubeStickerControlViewModel()
+    public RubiksCubeStickerViewModel()
     {
         UpdateRelativeMousePositionCommand = new RelayCommand<RelativeMouseEventArgs>(eventArgs =>
         {

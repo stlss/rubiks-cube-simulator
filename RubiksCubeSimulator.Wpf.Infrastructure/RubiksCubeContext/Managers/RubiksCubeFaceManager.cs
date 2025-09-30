@@ -6,16 +6,16 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 internal interface IRubiksCubeFaceManager
 {
-    public RubiksCubeFaceControlViewModel Create(FaceName faceName, RubiksCubeFace cubeFace);
+    public RubiksCubeFaceViewModel Create(FaceName faceName, RubiksCubeFace cubeFace);
 
-    public void Update(RubiksCubeFaceControlViewModel cubeFaceViewModel, RubiksCubeFace cubeFace);
+    public void Update(RubiksCubeFaceViewModel cubeFaceViewModel, RubiksCubeFace cubeFace);
 }
 
 internal sealed class RubiksCubeFaceManager(
     IRubiksCubeStickerColorManager stickerViewModelManager)
     : IRubiksCubeFaceManager
 {
-    public RubiksCubeFaceControlViewModel Create(FaceName faceName, RubiksCubeFace cubeFace)
+    public RubiksCubeFaceViewModel Create(FaceName faceName, RubiksCubeFace cubeFace)
     {
         var cubeDimension = cubeFace.StickerColors.Length;
 
@@ -27,7 +27,7 @@ internal sealed class RubiksCubeFaceManager(
             .Select(pair => stickerViewModelManager.Create(pair.Number, pair.Color))
             .ToList();
 
-        var viewModel = new RubiksCubeFaceControlViewModel
+        var viewModel = new RubiksCubeFaceViewModel
         {
             FaceName = faceName,
             CubeDimension = cubeDimension,
@@ -37,7 +37,7 @@ internal sealed class RubiksCubeFaceManager(
         return viewModel;
     }
 
-    public void Update(RubiksCubeFaceControlViewModel cubeFaceViewModel, RubiksCubeFace cubeFace)
+    public void Update(RubiksCubeFaceViewModel cubeFaceViewModel, RubiksCubeFace cubeFace)
     {
         var stickersWithViewModels = cubeFace.StickerColors
             .SelectMany(row => row)

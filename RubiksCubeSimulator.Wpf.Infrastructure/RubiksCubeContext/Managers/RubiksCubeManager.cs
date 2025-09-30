@@ -6,22 +6,22 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 internal interface IRubiksCubeManager
 {
-    public RubiksCubeControlViewModel Create(RubiksCube cube);
+    public RubiksCubeViewModel Create(RubiksCube cube);
 
-    public void Update(RubiksCubeControlViewModel cubeViewModel, RubiksCube cube);
+    public void Update(RubiksCubeViewModel cubeViewModel, RubiksCube cube);
 }
 
 internal sealed class RubiksCubeManager(
     IRubiksCubeFaceManager faceViewModelManager)
     : IRubiksCubeManager
 {
-    public RubiksCubeControlViewModel Create(RubiksCube cube)
+    public RubiksCubeViewModel Create(RubiksCube cube)
     {
         var upFaceViewModel = faceViewModelManager.Create(FaceName.Up, cube.UpFace);
         var rightFaceViewModel = faceViewModelManager.Create(FaceName.Right, cube.RightFace);
         var leftFaceViewModel = faceViewModelManager.Create(FaceName.Left, cube.FrontFace);
 
-        var cubeViewModel = new RubiksCubeControlViewModel
+        var cubeViewModel = new RubiksCubeViewModel
         {
             CubeDimension = cube.Dimension,
             UpFaceViewModel = upFaceViewModel,
@@ -32,9 +32,9 @@ internal sealed class RubiksCubeManager(
         return cubeViewModel;
     }
 
-    public void Update(RubiksCubeControlViewModel cubeViewModel, RubiksCube cube)
+    public void Update(RubiksCubeViewModel cubeViewModel, RubiksCube cube)
     {
-        var faceViewModels = new List<RubiksCubeFaceControlViewModel>
+        var faceViewModels = new List<RubiksCubeFaceViewModel>
         {
             cubeViewModel.UpFaceViewModel, cubeViewModel.RightFaceViewModel, cubeViewModel.LeftFaceViewModel,
         };

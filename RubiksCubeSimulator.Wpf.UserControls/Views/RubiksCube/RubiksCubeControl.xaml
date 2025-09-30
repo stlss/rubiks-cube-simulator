@@ -6,7 +6,7 @@
              xmlns:cubeViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube"
              xmlns:cubeControls="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeControlViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=cubeViewModels:RubiksCubeViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="200" d:DesignWidth="200">
 
     <Viewbox>

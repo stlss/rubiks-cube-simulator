@@ -46,7 +46,7 @@ internal sealed class RubiksCubeContextLinker(
     }
 
     private static void Subscribe(
-        RubiksCubeControlViewModel cubeViewModel,
+        RubiksCubeViewModel cubeViewModel,
         ISubscriber<MouseMoveRubiksCubeEventArgs> subscriber)
     {
         cubeViewModel.UpFaceViewModel.Subscribe(subscriber);
