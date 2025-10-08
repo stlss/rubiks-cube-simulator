@@ -36,8 +36,8 @@ internal sealed class RubiksCubeContextLinker(
         movingCubePublisher.Subscribe(movedCubePublisher);
         movedCubePublisher.Subscribe(movingCubePublisher);
 
-        Subscribe(cubeContext.CubeViewModel, movingCubePublisher);
-        Subscribe(cubeContext.CubeViewModel, movedCubePublisher);
+        Subscribe(cubeContext.MainCubeViewModel, movingCubePublisher);
+        Subscribe(cubeContext.MainCubeViewModel, movedCubePublisher);
 
         movingCubePublisher.Subscribe(moveArrowSetter);
         movedCubePublisher.Subscribe(moveArrowSetter);

@@ -19,7 +19,7 @@ internal sealed class MoveApplier(
         if (movedCubeEventArgs.MoveCanceled) return;
 
         var move = moveBuilder.Build(
-            cubeDimension: cubeContext.CubeViewModel.CubeDimension,
+            cubeDimension: cubeContext.MainCubeViewModel.CubeDimension,
             movedCubeEventArgs.FaceName,
             movedCubeEventArgs.StickerNumber,
             movedCubeEventArgs.RelativeMousePosition!.Value,

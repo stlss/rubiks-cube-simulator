@@ -9,7 +9,7 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
 public interface IRubiksCubeContext
 {
-    public RubiksCubeViewModel CubeViewModel { get; }
+    public RubiksCubeViewModel MainCubeViewModel { get; }
 
     public void Move(MoveBase move);
 
@@ -26,21 +26,21 @@ internal sealed class RubiksCubeContext(
 {
     private RubiksCube _cube = cube;
 
-    public RubiksCubeViewModel CubeViewModel { get; } = cubeManager.Create(cube);
+    public RubiksCubeViewModel MainCubeViewModel { get; } = cubeManager.Create(cube);
 
     public void Move(MoveBase move)
     {
         _cube = cubeMover.Move(_cube, move);
-        cubeManager.Update(CubeViewModel, _cube);
+        cubeManager.Update(MainCubeViewModel, _cube);
     }
 
     public void ShowMoveArrows(MoveBase move)
     {
-        cubeMoveSetter.ShowMoveArrows(CubeViewModel, move);
+        cubeMoveSetter.ShowMoveArrows(MainCubeViewModel, move);
     }
 
     public void ClearMoveArrows()
     {
-        cubeMoveSetter.ClearMoveArrows(CubeViewModel);
+        cubeMoveSetter.ClearMoveArrows(MainCubeViewModel);
     }
 }
