@@ -11,6 +11,8 @@ public interface IRubiksCubeContext
 {
     public RubiksCubeViewModel MainCubeViewModel { get; }
 
+    public RubiksCubeViewModel SubCubeViewModel { get; }
+
     public void Move(MoveBase move);
 
     public void ShowMoveArrows(MoveBase move);
@@ -28,10 +30,13 @@ internal sealed class RubiksCubeContext(
 
     public RubiksCubeViewModel MainCubeViewModel { get; } = cubeManager.Create(cube);
 
+    public RubiksCubeViewModel SubCubeViewModel { get; } = cubeManager.Create(cube);
+
     public void Move(MoveBase move)
     {
         _cube = cubeMover.Move(_cube, move);
         cubeManager.Update(MainCubeViewModel, _cube);
+        cubeManager.Update(SubCubeViewModel, _cube);
     }
 
     public void ShowMoveArrows(MoveBase move)
