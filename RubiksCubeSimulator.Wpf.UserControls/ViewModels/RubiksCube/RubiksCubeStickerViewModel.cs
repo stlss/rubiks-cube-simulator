@@ -20,12 +20,12 @@ public sealed class RubiksCubeStickerViewModel : ObservableObject
         set => SetProperty(ref _stickerColorBrush, value);
     }
 
-    private Thickness _borderThickness =  new(1.5);
+    private readonly Thickness _borderThickness =  new(1.5);
 
     public Thickness BorderThickness
     {
         get => _borderThickness;
-        set => SetProperty(ref _borderThickness, value);
+        init => SetProperty(ref _borderThickness, value);
     }
 
 

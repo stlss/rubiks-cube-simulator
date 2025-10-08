@@ -68,10 +68,15 @@ public sealed class RubiksCubeFaceViewModel :
     {
         foreach (var stickerViewModel in _stickerViewModels)
         {
+            stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
+            _relativeMousePositionPropertyChangedHandlers.Add(OnRelativeMousePositionPropertyChanged);
+
+            continue;
+
             void OnRelativeMousePositionPropertyChanged(object? sender,
                 PropertyChangedEventArgs propertyChangedEventArgs)
             {
-                var propertyName = nameof(RubiksCubeStickerViewModel.RelativeMousePosition);
+                const string propertyName = nameof(RubiksCubeStickerViewModel.RelativeMousePosition);
 
                 if (propertyChangedEventArgs.PropertyName != propertyName)
                     return;
@@ -85,9 +90,6 @@ public sealed class RubiksCubeFaceViewModel :
 
                 NotifySubscribers(mouseMoveEventArgs);
             }
-
-            stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
-            _relativeMousePositionPropertyChangedHandlers.Add(OnRelativeMousePositionPropertyChanged);
         }
     }
 
