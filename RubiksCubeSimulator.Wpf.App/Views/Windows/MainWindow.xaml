@@ -29,13 +29,18 @@
 
     <Grid Background="GhostWhite">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
 
+        <Viewbox Grid.Column="0">
+            <rubiksCubeControls:RubiksCubeListControl DataContext="{Binding CubeListViewModel}"
+                                                      Margin="50 25 25 25"/>
+        </Viewbox>
+
         <Viewbox Grid.Column="1">
-            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding CubeViewModel}"
+            <rubiksCubeControls:RubiksCubeControl DataContext="{Binding SelectedMainCubeViewModel}"
                                                   Margin="25"/>
         </Viewbox>
     </Grid>
