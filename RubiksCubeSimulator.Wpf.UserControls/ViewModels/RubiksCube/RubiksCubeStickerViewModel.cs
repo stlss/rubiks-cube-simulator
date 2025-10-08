@@ -9,6 +9,13 @@ namespace RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 public sealed class RubiksCubeStickerViewModel : ObservableObject
 {
+    private const int DefaultDimension = 3;
+
+    public int CubeDimension { get; init; } = DefaultDimension;
+
+    public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
+
+
     public int StickerNumber { get; init; }
 
 
@@ -18,14 +25,6 @@ public sealed class RubiksCubeStickerViewModel : ObservableObject
     {
         get => _stickerColorBrush;
         set => SetProperty(ref _stickerColorBrush, value);
-    }
-
-    private readonly Thickness _borderThickness =  new(1.5);
-
-    public Thickness BorderThickness
-    {
-        get => _borderThickness;
-        init => SetProperty(ref _borderThickness, value);
     }
 
 

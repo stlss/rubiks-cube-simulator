@@ -31,14 +31,12 @@ internal sealed class RubiksCubeStickerColorManager : IRubiksCubeStickerColorMan
 
     public RubiksCubeStickerViewModel Create(int cubeDimension, int stickerNumber, RubiksCubeStickerColor stickerColor)
     {
-        const int defaultCubeDimension = 3;
-
         var brush = BrushByStickerColor[stickerColor];
 
         var viewModel = new RubiksCubeStickerViewModel
         {
+            CubeDimension = cubeDimension,
             StickerNumber = stickerNumber,
-            BorderThickness = new Thickness(1.5 * defaultCubeDimension / cubeDimension),
             StickerColorBrush = brush,
         };
 
