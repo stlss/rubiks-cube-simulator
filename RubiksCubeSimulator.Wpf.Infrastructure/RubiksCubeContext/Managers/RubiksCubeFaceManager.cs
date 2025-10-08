@@ -24,7 +24,7 @@ internal sealed class RubiksCubeFaceManager(
 
         var stickerViewModels = stickerNumbers
             .Zip(stickerColors, (number, color) => (Number: number, Color: color))
-            .Select(pair => stickerViewModelManager.Create(pair.Number, pair.Color))
+            .Select(pair => stickerViewModelManager.Create(cubeDimension, pair.Number, pair.Color))
             .ToList();
 
         var viewModel = new RubiksCubeFaceViewModel

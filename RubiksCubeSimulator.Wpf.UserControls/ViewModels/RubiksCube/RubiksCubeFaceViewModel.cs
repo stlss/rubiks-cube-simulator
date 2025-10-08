@@ -20,8 +20,6 @@ public sealed class RubiksCubeFaceViewModel :
 
     public int CubeDimension { get; init; } = DefaultDimension;
 
-    public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
-
 
     private readonly IReadOnlyList<RubiksCubeStickerViewModel> _stickerViewModels = Enumerable
         .Range(0, DefaultDimension * DefaultDimension)
