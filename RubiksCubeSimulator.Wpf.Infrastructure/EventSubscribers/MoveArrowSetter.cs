@@ -18,7 +18,7 @@ internal sealed class MoveArrowSetter(
     public void OnEvent(object sender, MovingRubiksCubeEventArgs movingCubeEventArgs)
     {
         var move = moveBuilder.Build(
-            cubeDimension: cubeContext.CubeViewModel.CubeDimension,
+            cubeDimension: cubeContext.MainCubeViewModel.CubeDimension,
             movingCubeEventArgs.FaceName,
             movingCubeEventArgs.StickerNumber,
             movingCubeEventArgs.RelativeMousePosition,

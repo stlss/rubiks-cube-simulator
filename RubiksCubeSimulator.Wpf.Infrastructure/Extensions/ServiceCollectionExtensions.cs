@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RubiksCubeSimulator.Application.Extensions;
 using RubiksCubeSimulator.Domain.Services;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.MoveServices;
@@ -13,7 +12,7 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRubiksCubeContextBuilder(this IServiceCollection services)
+    public static void AddRubiksCubeContextBuilder(this IServiceCollection services)
     {
         services.AddRubiksCubeBuilder();
         services.AddRubiksCubeMover();
@@ -33,11 +32,9 @@ public static class ServiceCollectionExtensions
             cubeManager: sp.GetRequiredService<IRubiksCubeManager>(),
             cubeMover: sp.GetRequiredService<IRubiksCubeMover>(),
             cubeMoveSetter: sp.GetRequiredService<ICubeMoveSetter>()));
-
-        return services;
     }
 
-    public static IServiceCollection AddRubiksCubeContextLinker(this IServiceCollection services)
+    public static void AddKeyEventSubscriberBuilder(this IServiceCollection services)
     {
         services.AddSingleton<IKeyRubiksCubePublisherBuilder, KeyRubiksCubePublisherBuilder>();
         services.AddSingleton<IMovingRubiksCubePublisherBuilder, MovingRubiksCubePublisherBuilder>();
@@ -51,14 +48,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMoveApplierBuilder>(sp => new MoveApplierBuilder(
             moveBuilder: sp.GetRequiredService<IMoveBuilder>()));
 
-        services.AddSingleton<IRubiksCubeContextLinker>(sp => new RubiksCubeContextLinker(
+        services.AddSingleton<IKeyEventSubscriberBuilder>(sp => new KeyEventSubscriberBuilder(
             keyCubePublisherBuilder: sp.GetRequiredService<IKeyRubiksCubePublisherBuilder>(),
             movingCubePublisherBuilder: sp.GetRequiredService<IMovingRubiksCubePublisherBuilder>(),
             movedCubePublisherBuilder: sp.GetRequiredService<IMovedRubiksCubePublisherBuilder>(),
             moveArrowSetterBuilder: sp.GetRequiredService<IMoveArrowSetterBuilder>(),
             moveApplierBuilder: sp.GetRequiredService<IMoveApplierBuilder>()
         ));
-
-        return services;
     }
 }

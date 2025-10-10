@@ -2,9 +2,9 @@
 
 namespace RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube;
 
-public sealed partial class RubiksCubeControl : UserControl
+public sealed partial class RubiksCubeListControl : UserControl
 {
-    public RubiksCubeControl()
+    public RubiksCubeListControl()
     {
         InitializeComponent();
     }

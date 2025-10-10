@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using RubiksCubeSimulator.Domain.ValueObjects.RubiksCube;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
@@ -6,7 +7,7 @@ namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext.Managers;
 
 internal interface IRubiksCubeStickerColorManager
 {
-    public RubiksCubeStickerViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor);
+    public RubiksCubeStickerViewModel Create(int cubeDimension, int stickerNumber, RubiksCubeStickerColor stickerColor);
 
     public void Update(RubiksCubeStickerViewModel stickerViewModel, RubiksCubeStickerColor stickerColor);
 }
@@ -28,12 +29,13 @@ internal sealed class RubiksCubeStickerColorManager : IRubiksCubeStickerColorMan
         return new SolidColorBrush(Color.FromRgb(r, g, b));
     }
 
-    public RubiksCubeStickerViewModel Create(int stickerNumber, RubiksCubeStickerColor stickerColor)
+    public RubiksCubeStickerViewModel Create(int cubeDimension, int stickerNumber, RubiksCubeStickerColor stickerColor)
     {
         var brush = BrushByStickerColor[stickerColor];
 
         var viewModel = new RubiksCubeStickerViewModel
         {
+            CubeDimension = cubeDimension,
             StickerNumber = stickerNumber,
             StickerColorBrush = brush,
         };

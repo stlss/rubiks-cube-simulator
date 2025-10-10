@@ -20,8 +20,6 @@ public sealed class RubiksCubeFaceViewModel :
 
     public int CubeDimension { get; init; } = DefaultDimension;
 
-    public Thickness BorderThickness => new(1.5 * DefaultDimension / CubeDimension);
-
 
     private readonly IReadOnlyList<RubiksCubeStickerViewModel> _stickerViewModels = Enumerable
         .Range(0, DefaultDimension * DefaultDimension)
@@ -70,10 +68,15 @@ public sealed class RubiksCubeFaceViewModel :
     {
         foreach (var stickerViewModel in _stickerViewModels)
         {
+            stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
+            _relativeMousePositionPropertyChangedHandlers.Add(OnRelativeMousePositionPropertyChanged);
+
+            continue;
+
             void OnRelativeMousePositionPropertyChanged(object? sender,
                 PropertyChangedEventArgs propertyChangedEventArgs)
             {
-                var propertyName = nameof(RubiksCubeStickerViewModel.RelativeMousePosition);
+                const string propertyName = nameof(RubiksCubeStickerViewModel.RelativeMousePosition);
 
                 if (propertyChangedEventArgs.PropertyName != propertyName)
                     return;
@@ -87,9 +90,6 @@ public sealed class RubiksCubeFaceViewModel :
 
                 NotifySubscribers(mouseMoveEventArgs);
             }
-
-            stickerViewModel.PropertyChanged += OnRelativeMousePositionPropertyChanged;
-            _relativeMousePositionPropertyChangedHandlers.Add(OnRelativeMousePositionPropertyChanged);
         }
     }
 

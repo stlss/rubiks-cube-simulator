@@ -14,7 +14,10 @@ public sealed class RubiksCubeBuilderTests
     [SetUp]
     public void SetUp()
     {
-        var provider = new ServiceCollection().AddRubiksCubeBuilder().BuildServiceProvider();
+        var services = new ServiceCollection();
+        services.AddRubiksCubeBuilder();
+
+        var provider = services.BuildServiceProvider();
         _builder = provider.GetRequiredService<IRubiksCubeBuilder>();
     }
 
@@ -23,7 +26,7 @@ public sealed class RubiksCubeBuilderTests
     {
         const int cubeDimension = 5;
 
-        var cube = _builder.BuildSolvedCube(cubeDimension);
+        var cube = _builder.Build(cubeDimension);
 
         var faces = new List<RubiksCubeFace>
         {
@@ -65,7 +68,7 @@ public sealed class RubiksCubeBuilderTests
     {
         const int cubeDimension = -3;
 
-        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.BuildSolvedCube(cubeDimension));
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _builder.Build(cubeDimension));
 
         const string expectedParamName = nameof(cubeDimension);
 

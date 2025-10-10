@@ -20,11 +20,7 @@
 
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Border BorderBrush="Black"
-                        BorderThickness="{Binding DataContext.BorderThickness, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
-
-                    <cubeViews:RubiksCubeStickerControl DataContext="{Binding}" />
-                </Border>
+                <cubeViews:RubiksCubeStickerControl DataContext="{Binding}" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

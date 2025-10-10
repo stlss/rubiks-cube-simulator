@@ -6,7 +6,7 @@ namespace RubiksCubeSimulator.Application.RubiksCubeBuilder;
 
 internal sealed class RubiksCubeBuilder(IRubiksCubeBuildExceptionThrower cubeBuildExceptionThrower) : IRubiksCubeBuilder
 {
-    public RubiksCube BuildSolvedCube(int cubeDimension)
+    public RubiksCube Build(int cubeDimension)
     {
         cubeBuildExceptionThrower.ThrowExceptionIfRubiksCubeDimensionIsNotCorrect(cubeDimension);
 

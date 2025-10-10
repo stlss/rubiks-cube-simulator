@@ -22,7 +22,9 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid Background="{Binding StickerColorBrush}">
+    <Border BorderBrush="Black"
+            Background="{Binding StickerColorBrush}"
+            BorderThickness="{Binding BorderThickness}">
         <Image Source="/RubiksCubeSimulator.Wpf.UserControls;component/Resources/Images/leftArrow.png"
                Visibility="{Binding MoveArrowVisibility}"
                RenderTransformOrigin="0.5,0.5">
@@ -31,5 +33,5 @@
                 <RotateTransform Angle="{Binding MoveArrowAngle}" />
             </Image.RenderTransform>
         </Image>
-    </Grid>
+    </Border>
 </UserControl>

@@ -7,19 +7,19 @@ using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
-public interface IRubiksCubeContextLinker
+public interface IKeyEventSubscriberBuilder
 {
-    public void Link(IRubiksCubeContext cubeContext, IPublisher<KeyEventArgs> keyEventPublisher);
+    public ISubscriber<KeyEventArgs> Build(IRubiksCubeContext cubeContext);
 }
 
-internal sealed class RubiksCubeContextLinker(
+internal sealed class KeyEventSubscriberBuilder(
     IKeyRubiksCubePublisherBuilder keyCubePublisherBuilder,
     IMovingRubiksCubePublisherBuilder movingCubePublisherBuilder,
     IMovedRubiksCubePublisherBuilder movedCubePublisherBuilder,
     IMoveArrowSetterBuilder moveArrowSetterBuilder,
-    IMoveApplierBuilder moveApplierBuilder) : IRubiksCubeContextLinker
+    IMoveApplierBuilder moveApplierBuilder) : IKeyEventSubscriberBuilder
 {
-    public void Link(IRubiksCubeContext cubeContext, IPublisher<KeyEventArgs> keyEventPublisher)
+    public ISubscriber<KeyEventArgs> Build(IRubiksCubeContext cubeContext)
     {
         var keyCubePublisher = keyCubePublisherBuilder.Build();
         var movingCubePublisher = movingCubePublisherBuilder.Build();
@@ -28,21 +28,21 @@ internal sealed class RubiksCubeContextLinker(
         var moveArrowSetter = moveArrowSetterBuilder.Build(cubeContext);
         var moveApplier = moveApplierBuilder.Build(cubeContext);
 
-        keyEventPublisher.Subscribe(keyCubePublisher);
-
         keyCubePublisher.Subscribe(movingCubePublisher);
         keyCubePublisher.Subscribe(movedCubePublisher);
 
         movingCubePublisher.Subscribe(movedCubePublisher);
         movedCubePublisher.Subscribe(movingCubePublisher);
 
-        Subscribe(cubeContext.CubeViewModel, movingCubePublisher);
-        Subscribe(cubeContext.CubeViewModel, movedCubePublisher);
+        Subscribe(cubeContext.MainCubeViewModel, movingCubePublisher);
+        Subscribe(cubeContext.MainCubeViewModel, movedCubePublisher);
 
         movingCubePublisher.Subscribe(moveArrowSetter);
         movedCubePublisher.Subscribe(moveArrowSetter);
 
         movedCubePublisher.Subscribe(moveApplier);
+
+        return keyCubePublisher;
     }
 
     private static void Subscribe(
