@@ -14,7 +14,10 @@ public sealed class RubiksCubeBuilderTests
     [SetUp]
     public void SetUp()
     {
-        var provider = new ServiceCollection().AddRubiksCubeBuilder().BuildServiceProvider();
+        var services = new ServiceCollection();
+        services.AddRubiksCubeBuilder();
+
+        var provider = services.BuildServiceProvider();
         _builder = provider.GetRequiredService<IRubiksCubeBuilder>();
     }
 

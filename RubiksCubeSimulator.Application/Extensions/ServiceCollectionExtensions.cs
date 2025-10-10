@@ -10,17 +10,15 @@ namespace RubiksCubeSimulator.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRubiksCubeBuilder(this IServiceCollection services)
+    public static void AddRubiksCubeBuilder(this IServiceCollection services)
     {
         services.AddSingleton<IRubiksCubeBuildExceptionThrower, RubiksCubeBuildExceptionThrower>();
 
         services.AddSingleton<IRubiksCubeBuilder>(sp => new RubiksCubeBuilder.RubiksCubeBuilder(
             cubeBuildExceptionThrower: sp.GetRequiredService<IRubiksCubeBuildExceptionThrower>()));
-
-        return services;
     }
 
-    public static IServiceCollection AddRubiksCubeMover(this IServiceCollection services)
+    public static void AddRubiksCubeMover(this IServiceCollection services)
     {
         services.AddSingleton<IRubiksCubeChecker, RubiksCubeChecker>();
         services.AddSingleton<IRubiksCubeMoveChecker, RubiksCubeMoveChecker>();
@@ -39,7 +37,5 @@ public static class ServiceCollectionExtensions
             cubeMoveMapper: sp.GetRequiredService<IRubiksCubeMoveMapper>(),
             clockwiseMutableCubeMover: sp.GetRequiredService<IClockwiseMutableRubiksCubeMover>(),
             counterclockwiseMutableCubeMover: sp.GetRequiredService<ICounterclockwiseMutableRubiksCubeMover>()));
-
-        return services;
     }
 }

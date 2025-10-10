@@ -29,10 +29,13 @@ public sealed class RubiksCubeMoverTests
     [SetUp]
     public void SetUp()
     {
-        var provider = new ServiceCollection()
-            .AddRubiksCubeBuilder()
-            .AddRubiksCubeMover()
-            .BuildServiceProvider();
+        var services = new ServiceCollection();
+
+        services.AddRubiksCubeBuilder();
+        services.AddRubiksCubeMover();
+        services.BuildServiceProvider();
+
+        var provider = services.BuildServiceProvider();
 
         _builder = provider.GetRequiredService<IRubiksCubeBuilder>();
         _mover = provider.GetRequiredService<IRubiksCubeMover>();
