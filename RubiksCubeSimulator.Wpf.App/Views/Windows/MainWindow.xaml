@@ -36,7 +36,8 @@
 
         <Viewbox Grid.Column="0">
             <rubiksCubeControls:RubiksCubeListControl DataContext="{Binding CubeListViewModel}"
-                                                      Margin="50 25 25 25"/>
+                                                      Margin="50 25 25 25"
+                                                      IsHitTestVisible="{Binding DataContext.IsCubeListViewModelEnabled, RelativeSource={RelativeSource AncestorType=Window}}" />
         </Viewbox>
 
         <Viewbox Grid.Column="1">

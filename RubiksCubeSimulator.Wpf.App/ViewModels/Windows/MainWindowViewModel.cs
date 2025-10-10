@@ -1,51 +1,69 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RubiksCubeSimulator.Wpf.App.Infrastructure;
+using RubiksCubeSimulator.Wpf.Events;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
 
-internal sealed class MainWindowViewModel : MainWindowViewModelBase
+internal sealed class MainWindowViewModel : ObservableObject
 {
+    private readonly IRubiksCubeServiceProvider _serviceProvider = new RubiksCubeServiceProvider();
+
     private readonly Dictionary<RubiksCubeViewModel, IRubiksCubeContext> _mapSubCubeViewModelToContext;
+    private readonly Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> _mapCubeContextToKeyEventSubscriber;
+
+    private IRubiksCubeContext _selectedCubeContext;
+    private readonly HashSet<Key> _pressedKeys = [];
+
+
+    private IRubiksCubeContext SelectedCubeContext
+    {
+        get => _selectedCubeContext;
+        set
+        {
+            _selectedCubeContext = value;
+            OnPropertyChanged(nameof(SelectedMainCubeViewModel));
+        }
+    }
 
     public RubiksCubeListViewModel CubeListViewModel { get; }
 
-    private RubiksCubeViewModel _selectedMainCubeViewModel;
+    public RubiksCubeViewModel SelectedMainCubeViewModel => _selectedCubeContext.MainCubeViewModel;
 
-    public RubiksCubeViewModel SelectedMainCubeViewModel
-    {
-        get => _selectedMainCubeViewModel;
-        private set => SetProperty(ref _selectedMainCubeViewModel, value);
-    }
+    public bool IsCubeListViewModelEnabled => _pressedKeys.Count == 0;
+
+
+    public IRelayCommand<KeyEventArgs> KeyDownCommand { get; }
+
+    public IRelayCommand<KeyEventArgs> KeyUpCommand { get; }
+
 
     public MainWindowViewModel()
     {
         var cubeContexts = CreateCubeContexts(6);
-        LinkCubeContextsWithWindow(cubeContexts);
-
-        var selectedCubeContext = cubeContexts[1];
+        _selectedCubeContext = cubeContexts[1];
 
         _mapSubCubeViewModelToContext = CreateMapSubCubeViewModelToContext(cubeContexts);
-        CubeListViewModel = CreateCubeListViewModel(cubeContexts, selectedCubeContext);
-        _selectedMainCubeViewModel = selectedCubeContext.MainCubeViewModel;
+        _mapCubeContextToKeyEventSubscriber = CreateMapCubeContextToKeyEventSubscriber(cubeContexts);
 
+        CubeListViewModel = CreateCubeListViewModel(cubeContexts, SelectedCubeContext);
         CubeListViewModel.PropertyChanged += OnSelectedCubeViewModelPropertyChanged;
+
+        KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
+        KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
     }
+
 
     private List<IRubiksCubeContext> CreateCubeContexts(int cubeContextCount)
     {
         return Enumerable.Range(2, cubeContextCount)
-            .Select(ServiceProvider.RubiksCubeContextBuilder.Build)
+            .Select(_serviceProvider.RubiksCubeContextBuilder.Build)
             .ToList();
-    }
-
-    private void LinkCubeContextsWithWindow(IEnumerable<IRubiksCubeContext> cubeContexts)
-    {
-        foreach (var cubeContext in cubeContexts)
-        {
-            ServiceProvider.RubiksCubeContextLinker.Link(cubeContext, this);
-        }
     }
 
     private static Dictionary<RubiksCubeViewModel, IRubiksCubeContext> CreateMapSubCubeViewModelToContext(
@@ -53,6 +71,14 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
     {
         return cubeContexts
             .Select(cubeContext => (cubeContext.SubCubeViewModel, cubeContext))
+            .ToDictionary();
+    }
+
+    private Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> CreateMapCubeContextToKeyEventSubscriber(
+        IEnumerable<IRubiksCubeContext> cubeContexts)
+    {
+        return cubeContexts
+            .Select(cubeContext => (cubeContext, _serviceProvider.KeyEventSubscriberBuilder.Build(cubeContext)))
             .ToDictionary();
     }
 
@@ -69,6 +95,7 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
         };
     }
 
+
     private void OnSelectedCubeViewModelPropertyChanged(
         object? sender,
         PropertyChangedEventArgs propertyChangedEventArgs)
@@ -81,6 +108,26 @@ internal sealed class MainWindowViewModel : MainWindowViewModelBase
         var subCubeViewModel = ((RubiksCubeListViewModel)sender!).SelectedCubeViewModel!;
         var cubeContext = _mapSubCubeViewModelToContext[subCubeViewModel];
 
-        SelectedMainCubeViewModel = cubeContext.MainCubeViewModel;
+        SelectedCubeContext = cubeContext;
+    }
+
+
+    private void HandleKeyEventArgs(KeyEventArgs keyEventArgs)
+    {
+        NotifyKeyEventSubscriber(keyEventArgs);
+        ChangePressedKeys(keyEventArgs);
+    }
+
+    private void NotifyKeyEventSubscriber(KeyEventArgs keyEventArgs)
+    {
+        var keyEventSubscriber = _mapCubeContextToKeyEventSubscriber[SelectedCubeContext];
+        keyEventSubscriber.OnEvent(this, keyEventArgs);
+    }
+
+    private void ChangePressedKeys(KeyEventArgs keyEventArgs)
+    {
+        if (keyEventArgs.IsDown) _pressedKeys.Add(keyEventArgs.Key);
+        else if (keyEventArgs.IsUp) _pressedKeys.Remove(keyEventArgs.Key);
+        OnPropertyChanged(nameof(IsCubeListViewModelEnabled));
     }
 }
