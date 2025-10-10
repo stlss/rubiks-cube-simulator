@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddRubiksCubeContextLinker(this IServiceCollection services)
+    public static IServiceCollection AddKeyEventSubscriberBuilder(this IServiceCollection services)
     {
         services.AddSingleton<IKeyRubiksCubePublisherBuilder, KeyRubiksCubePublisherBuilder>();
         services.AddSingleton<IMovingRubiksCubePublisherBuilder, MovingRubiksCubePublisherBuilder>();
@@ -51,7 +51,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMoveApplierBuilder>(sp => new MoveApplierBuilder(
             moveBuilder: sp.GetRequiredService<IMoveBuilder>()));
 
-        services.AddSingleton<IRubiksCubeContextLinker>(sp => new RubiksCubeContextLinker(
+        services.AddSingleton<IKeyEventSubscriberBuilder>(sp => new KeyEventSubscriberBuilder(
             keyCubePublisherBuilder: sp.GetRequiredService<IKeyRubiksCubePublisherBuilder>(),
             movingCubePublisherBuilder: sp.GetRequiredService<IMovingRubiksCubePublisherBuilder>(),
             movedCubePublisherBuilder: sp.GetRequiredService<IMovedRubiksCubePublisherBuilder>(),

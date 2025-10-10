@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers;
-using RubiksCubeSimulator.Wpf.Infrastructure.EventSubscribers.Builders;
 using RubiksCubeSimulator.Wpf.Infrastructure.Extensions;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
@@ -11,7 +8,7 @@ internal interface IRubiksCubeServiceProvider
 {
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder { get; }
 
-    public IRubiksCubeContextLinker RubiksCubeContextLinker { get;  }
+    public IKeyEventSubscriberBuilder KeyEventSubscriberBuilder { get;  }
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -30,13 +27,12 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddRubiksCubeContextBuilder();
-        services.AddRubiksCubeContextLinker();
+        services.AddKeyEventSubscriberBuilder();
     }
-
 
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder =>
         _serviceProvider.GetRequiredService<IRubiksCubeContextBuilder>();
 
-    public IRubiksCubeContextLinker RubiksCubeContextLinker =>
-        _serviceProvider.GetRequiredService<IRubiksCubeContextLinker>();
+    public IKeyEventSubscriberBuilder KeyEventSubscriberBuilder =>
+        _serviceProvider.GetRequiredService<IKeyEventSubscriberBuilder>();
 }
