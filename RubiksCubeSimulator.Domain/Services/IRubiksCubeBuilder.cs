@@ -4,5 +4,5 @@ namespace RubiksCubeSimulator.Domain.Services;
 
 public interface IRubiksCubeBuilder
 {
-    public RubiksCube BuildSolvedCube(int cubeDimension);
+    public RubiksCube Build(int cubeDimension);
 }
