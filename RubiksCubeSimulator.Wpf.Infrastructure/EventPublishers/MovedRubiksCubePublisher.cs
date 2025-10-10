@@ -4,7 +4,7 @@ using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
-public interface IMovedRubiksCubePublisher :
+internal interface IMovedRubiksCubePublisher :
     IPublisher<MovedRubiksCubeEventArgs>,
     ISubscriber<MovingRubiksCubeEventArgs>,
     ISubscriber<MouseMoveRubiksCubeEventArgs>,

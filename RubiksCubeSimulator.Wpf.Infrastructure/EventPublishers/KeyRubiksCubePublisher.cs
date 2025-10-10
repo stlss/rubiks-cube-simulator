@@ -5,7 +5,7 @@ using RubiksCubeSimulator.Wpf.Events.EventArgs.Enums;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.EventPublishers;
 
-public interface IKeyRubiksCubePublisher :
+internal interface IKeyRubiksCubePublisher :
     IPublisher<InputKeyRubiksCubeEventArgs>,
     ISubscriber<KeyEventArgs>
 {
