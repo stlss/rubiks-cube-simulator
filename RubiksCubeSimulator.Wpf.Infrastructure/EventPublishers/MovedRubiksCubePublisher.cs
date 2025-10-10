@@ -16,7 +16,7 @@ internal sealed class MovedRubiksCubePublisher :
     PublisherBase<MovedRubiksCubeEventArgs>,
     IMovedRubiksCubePublisher
 {
-    private MovingRubiksCubeEventArgs _lastMovingRubiksCubeEventArgs = null!;
+    private MovingRubiksCubeEventArgs? _lastMovingRubiksCubeEventArgs;
     private MouseMoveRubiksCubeEventArgs? _lastMouseMoveEventArgs;
     private readonly object _lock = new();
 
@@ -32,6 +32,7 @@ internal sealed class MovedRubiksCubePublisher :
 
     public void OnEvent(object sender, InputKeyRubiksCubeEventArgs movingCubeEventArgs)
     {
+        if (_lastMovingRubiksCubeEventArgs == null) return;
         if (movingCubeEventArgs.KeyAction != KeyAction.Up || movingCubeEventArgs.InputKey == InputKey.Shift) return;
 
         MouseMoveRubiksCubeEventArgs? lastMouseMoveEventArgsSnapshot;
