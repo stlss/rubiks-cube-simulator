@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddRubiksCubeBuilder();
         services.AddRubiksCubeMover();
+        services.AddMoveGenerator();
 
         services.AddSingleton<IRubiksCubeManager, RubiksCubeManager>();
         services.AddSingleton<IRubiksCubeFaceManager, RubiksCubeFaceManager>();
@@ -31,6 +32,7 @@ public static class ServiceCollectionExtensions
             cubeBuilder: sp.GetRequiredService<IRubiksCubeBuilder>(),
             cubeManager: sp.GetRequiredService<IRubiksCubeManager>(),
             cubeMover: sp.GetRequiredService<IRubiksCubeMover>(),
+            moveGenerator: sp.GetRequiredService<IMoveGenerator>(),
             cubeMoveSetter: sp.GetRequiredService<ICubeMoveSetter>()));
     }
 

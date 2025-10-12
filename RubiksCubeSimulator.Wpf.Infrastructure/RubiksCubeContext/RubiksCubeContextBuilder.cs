@@ -13,11 +13,12 @@ internal sealed class RubiksCubeContextBuilder(
     IRubiksCubeBuilder cubeBuilder,
     IRubiksCubeManager cubeManager,
     IRubiksCubeMover cubeMover,
+    IMoveGenerator moveGenerator,
     ICubeMoveSetter cubeMoveSetter) : IRubiksCubeContextBuilder
 {
     public IRubiksCubeContext Build(int cubeDimension)
     {
         var cube = cubeBuilder.Build(cubeDimension);
-        return new RubiksCubeContext(cube, cubeManager, cubeMover, cubeBuilder, cubeMoveSetter);
+        return new RubiksCubeContext(cube, cubeManager, cubeMover, cubeBuilder,  moveGenerator, cubeMoveSetter);
     }
 }
