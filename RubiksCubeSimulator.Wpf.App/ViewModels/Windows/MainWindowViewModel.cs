@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using RubiksCubeSimulator.Wpf.App.Infrastructure;
 using RubiksCubeSimulator.Wpf.Events;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+using RubiksCubeSimulator.Wpf.UserControls.ViewModels.ButtonGroup;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
@@ -33,9 +34,14 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     public RubiksCubeListViewModel CubeListViewModel { get; }
 
+    public ButtonGroupViewModel ButtonGroupViewModel { get; }
+
     public RubiksCubeViewModel SelectedMainCubeViewModel => _selectedCubeContext.MainCubeViewModel;
 
-    public bool IsCubeListViewModelEnabled => _pressedKeys.Count == 0;
+
+    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0;
+
+    public bool IsButtonGroupControlEnabled => _pressedKeys.Count == 0;
 
 
     public IRelayCommand<KeyEventArgs> KeyDownCommand { get; }
@@ -53,6 +59,8 @@ internal sealed class MainWindowViewModel : ObservableObject
 
         CubeListViewModel = CreateCubeListViewModel(cubeContexts, SelectedCubeContext);
         CubeListViewModel.PropertyChanged += OnSelectedCubeViewModelPropertyChanged;
+
+        ButtonGroupViewModel = CreateButtonGroupViewModel();
 
         KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
         KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
@@ -95,6 +103,11 @@ internal sealed class MainWindowViewModel : ObservableObject
         };
     }
 
+    private static ButtonGroupViewModel CreateButtonGroupViewModel()
+    {
+        return new ButtonGroupViewModel();
+    }
+
 
     private void OnSelectedCubeViewModelPropertyChanged(
         object? sender,
@@ -128,6 +141,8 @@ internal sealed class MainWindowViewModel : ObservableObject
     {
         if (keyEventArgs.IsDown) _pressedKeys.Add(keyEventArgs.Key);
         else if (keyEventArgs.IsUp) _pressedKeys.Remove(keyEventArgs.Key);
-        OnPropertyChanged(nameof(IsCubeListViewModelEnabled));
+
+        OnPropertyChanged(nameof(IsCubeListControlEnabled));
+        OnPropertyChanged(nameof(IsButtonGroupControlEnabled));
     }
 }
