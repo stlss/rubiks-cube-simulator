@@ -7,17 +7,17 @@ using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
 
-public interface IKeyEventSubscriberBuilder
+public interface IKeySubscriberBuilder
 {
     public ISubscriber<KeyEventArgs> Build(IRubiksCubeContext cubeContext);
 }
 
-internal sealed class KeyEventSubscriberBuilder(
+internal sealed class KeySubscriberBuilder(
     IKeyRubiksCubePublisherBuilder keyCubePublisherBuilder,
     IMovingRubiksCubePublisherBuilder movingCubePublisherBuilder,
     IMovedRubiksCubePublisherBuilder movedCubePublisherBuilder,
     IMoveArrowSetterBuilder moveArrowSetterBuilder,
-    IMoveApplierBuilder moveApplierBuilder) : IKeyEventSubscriberBuilder
+    IMoveApplierBuilder moveApplierBuilder) : IKeySubscriberBuilder
 {
     public ISubscriber<KeyEventArgs> Build(IRubiksCubeContext cubeContext)
     {

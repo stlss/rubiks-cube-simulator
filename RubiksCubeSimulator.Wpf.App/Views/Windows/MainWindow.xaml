@@ -6,6 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewModels="clr-namespace:RubiksCubeSimulator.Wpf.App.ViewModels.Windows"
         xmlns:rubiksCubeControls="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.RubiksCube;assembly=RubiksCubeSimulator.Wpf.UserControls"
+        xmlns:buttonControls="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.Views.ButtonGroup;assembly=RubiksCubeSimulator.Wpf.UserControls"
         x:ClassModifier="internal"
         mc:Ignorable="d"
         Title="Rubik's Cube Simulator" Height="450" Width="800"
@@ -29,20 +30,26 @@
 
     <Grid Background="GhostWhite">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <Viewbox Grid.Column="0">
             <rubiksCubeControls:RubiksCubeListControl DataContext="{Binding CubeListViewModel}"
-                                                      Margin="50 25 25 25"
-                                                      IsHitTestVisible="{Binding DataContext.IsCubeListViewModelEnabled, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                                      Margin="80 40 40 40"
+                                                      IsHitTestVisible="{Binding DataContext.IsCubeListControlEnabled, RelativeSource={RelativeSource AncestorType=Window}}" />
         </Viewbox>
 
         <Viewbox Grid.Column="1">
             <rubiksCubeControls:RubiksCubeControl DataContext="{Binding SelectedMainCubeViewModel}"
-                                                  Margin="25"/>
+                                                  Margin="40"/>
+        </Viewbox>
+
+        <Viewbox Grid.Column="2">
+            <buttonControls:ButtonGroupControl DataContext="{Binding ButtonGroupViewModel}"
+                                               Margin="40 40 80 40"
+                                               IsHitTestVisible="{Binding DataContext.IsButtonGroupControlEnabled, RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Viewbox>
     </Grid>
 </Window>

@@ -38,4 +38,9 @@ public static class ServiceCollectionExtensions
             clockwiseMutableCubeMover: sp.GetRequiredService<IClockwiseMutableRubiksCubeMover>(),
             counterclockwiseMutableCubeMover: sp.GetRequiredService<ICounterclockwiseMutableRubiksCubeMover>()));
     }
+
+    public static void AddMoveGenerator(this IServiceCollection services)
+    {
+        services.AddSingleton<IMoveGenerator>(sp => new MoveGenerator.MoveGenerator());
+    }
 }

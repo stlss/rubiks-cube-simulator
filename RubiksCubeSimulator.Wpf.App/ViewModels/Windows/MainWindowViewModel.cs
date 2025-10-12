@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using RubiksCubeSimulator.Wpf.App.Infrastructure;
 using RubiksCubeSimulator.Wpf.Events;
 using RubiksCubeSimulator.Wpf.Infrastructure.RubiksCubeContext;
+using RubiksCubeSimulator.Wpf.UserControls.ViewModels.ButtonGroup;
 using RubiksCubeSimulator.Wpf.UserControls.ViewModels.RubiksCube;
 
 namespace RubiksCubeSimulator.Wpf.App.ViewModels.Windows;
@@ -15,7 +16,7 @@ internal sealed class MainWindowViewModel : ObservableObject
     private readonly IRubiksCubeServiceProvider _serviceProvider = new RubiksCubeServiceProvider();
 
     private readonly Dictionary<RubiksCubeViewModel, IRubiksCubeContext> _mapSubCubeViewModelToContext;
-    private readonly Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> _mapCubeContextToKeyEventSubscriber;
+    private readonly Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> _mapCubeContextToKeySubscriber;
 
     private IRubiksCubeContext _selectedCubeContext;
     private readonly HashSet<Key> _pressedKeys = [];
@@ -33,9 +34,14 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     public RubiksCubeListViewModel CubeListViewModel { get; }
 
+    public ButtonGroupViewModel ButtonGroupViewModel { get; }
+
     public RubiksCubeViewModel SelectedMainCubeViewModel => _selectedCubeContext.MainCubeViewModel;
 
-    public bool IsCubeListViewModelEnabled => _pressedKeys.Count == 0;
+
+    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0;
+
+    public bool IsButtonGroupControlEnabled => _pressedKeys.Count == 0;
 
 
     public IRelayCommand<KeyEventArgs> KeyDownCommand { get; }
@@ -49,10 +55,12 @@ internal sealed class MainWindowViewModel : ObservableObject
         _selectedCubeContext = cubeContexts[1];
 
         _mapSubCubeViewModelToContext = CreateMapSubCubeViewModelToContext(cubeContexts);
-        _mapCubeContextToKeyEventSubscriber = CreateMapCubeContextToKeyEventSubscriber(cubeContexts);
+        _mapCubeContextToKeySubscriber = CreateMapCubeContextToKeySubscriber(cubeContexts);
 
         CubeListViewModel = CreateCubeListViewModel(cubeContexts, SelectedCubeContext);
         CubeListViewModel.PropertyChanged += OnSelectedCubeViewModelPropertyChanged;
+
+        ButtonGroupViewModel = CreateButtonGroupViewModel();
 
         KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
         KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
@@ -74,11 +82,11 @@ internal sealed class MainWindowViewModel : ObservableObject
             .ToDictionary();
     }
 
-    private Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> CreateMapCubeContextToKeyEventSubscriber(
+    private Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> CreateMapCubeContextToKeySubscriber(
         IEnumerable<IRubiksCubeContext> cubeContexts)
     {
         return cubeContexts
-            .Select(cubeContext => (cubeContext, _serviceProvider.KeyEventSubscriberBuilder.Build(cubeContext)))
+            .Select(cubeContext => (cubeContext, _serviceProvider.KeySubscriberBuilder.Build(cubeContext)))
             .ToDictionary();
     }
 
@@ -93,6 +101,38 @@ internal sealed class MainWindowViewModel : ObservableObject
             CubeViewModels = new ObservableCollection<RubiksCubeViewModel>(subCubeViewModels),
             SelectedCubeViewModel = selectedCubeContext.SubCubeViewModel,
         };
+    }
+
+    private ButtonGroupViewModel CreateButtonGroupViewModel()
+    {
+        const int delayTime = 15;
+
+        return new ButtonGroupViewModel
+        {
+            RecoverSelectedCubeCommand = new RelayCommand(RecoverSelectedCube),
+            ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube),
+            RecoverAllCubesCommand = new RelayCommand(RecoverAllCubes),
+            ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes),
+        };
+
+        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
+
+        void RecoverSelectedCube() => SelectedCubeContext.Recover();
+
+        async Task ShuffleSelectedCube() => await SelectedCubeContext.ShuffleAsync(delayTime);
+
+        void RecoverAllCubes()
+        {
+            var cubeContexts = GetCubeContexts();
+            foreach (var cubeContext in cubeContexts) cubeContext.Recover();
+        }
+
+        async Task ShuffleAllCubes()
+        {
+            var cubeContexts = GetCubeContexts();
+            var shuffleTasks = cubeContexts.Select(cubeContext => cubeContext.ShuffleAsync(delayTime));
+            await Task.WhenAll(shuffleTasks);
+        }
     }
 
 
@@ -120,7 +160,7 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private void NotifyKeyEventSubscriber(KeyEventArgs keyEventArgs)
     {
-        var keyEventSubscriber = _mapCubeContextToKeyEventSubscriber[SelectedCubeContext];
+        var keyEventSubscriber = _mapCubeContextToKeySubscriber[SelectedCubeContext];
         keyEventSubscriber.OnEvent(this, keyEventArgs);
     }
 
@@ -128,6 +168,8 @@ internal sealed class MainWindowViewModel : ObservableObject
     {
         if (keyEventArgs.IsDown) _pressedKeys.Add(keyEventArgs.Key);
         else if (keyEventArgs.IsUp) _pressedKeys.Remove(keyEventArgs.Key);
-        OnPropertyChanged(nameof(IsCubeListViewModelEnabled));
+
+        OnPropertyChanged(nameof(IsCubeListControlEnabled));
+        OnPropertyChanged(nameof(IsButtonGroupControlEnabled));
     }
 }

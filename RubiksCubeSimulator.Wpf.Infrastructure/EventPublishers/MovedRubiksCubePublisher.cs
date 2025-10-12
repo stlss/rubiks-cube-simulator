@@ -50,5 +50,7 @@ internal sealed class MovedRubiksCubePublisher :
         };
 
         NotifySubscribers(cubeMovedEventArgs);
+
+        _lastMovingRubiksCubeEventArgs = null;
     }
 }

@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="RubiksCubeSimulator.Wpf.UserControls.Views.ButtonGroup.ButtonGroupControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:buttonViewModels="clr-namespace:RubiksCubeSimulator.Wpf.UserControls.ViewModels.ButtonGroup"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=buttonViewModels:ButtonGroupViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="400" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RubiksCubeSimulator.Wpf.UserControls;component/Resources/MaterialDesignThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="GroupBoxHeaderTemplate">
+                <TextBlock Text="{Binding}"
+                           FontSize="36"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"/>
+            </DataTemplate>
+
+            <Style x:Key="RecoverButtonStyle"
+                   TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignOutlinedDarkButton}">
+
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Margin" Value="7.5 15 7.5 7.5"/>
+            </Style>
+
+            <Style x:Key="ShuffleButtonStyle"
+                   TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}">
+
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Margin" Value="7.5 7.5 7.5 15"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UniformGrid Columns="1" Rows="2" Width="410">
+        <GroupBox Header="Selected Cube"
+                  HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}"
+                  Margin="0 0 0 50">
+
+            <StackPanel>
+                <Button Content="Recover"
+                        Style="{StaticResource RecoverButtonStyle}"
+                        Command="{Binding RecoverSelectedCubeCommand}"/>
+
+                <Button Content="Shuffle"
+                        Style="{StaticResource ShuffleButtonStyle}"
+                        Command="{Binding ShuffleSelectedCubeCommand}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="All Cubes"
+                  HeaderTemplate="{StaticResource GroupBoxHeaderTemplate}"
+                  Margin="0 50 0 0">
+
+            <StackPanel>
+                <Button Content="Recover"
+                        Style="{StaticResource RecoverButtonStyle}"
+                        Command="{Binding RecoverAllCubesCommand}"/>
+
+                <Button Content="Shuffle"
+                        Style="{StaticResource ShuffleButtonStyle}"
+                        Command="{Binding ShuffleAllCubesCommand}"/>
+            </StackPanel>
+        </GroupBox>
+    </UniformGrid>
+</UserControl>

@@ -15,6 +15,10 @@ public interface IRubiksCubeContext
 
     public void Move(MoveBase move);
 
+    public void Recover();
+
+    public Task ShuffleAsync(int delayTime = 0);
+
     public void ShowMoveArrows(MoveBase move);
 
     public void ClearMoveArrows();
@@ -24,6 +28,8 @@ internal sealed class RubiksCubeContext(
     RubiksCube cube,
     IRubiksCubeManager cubeManager,
     IRubiksCubeMover cubeMover,
+    IRubiksCubeBuilder cubeBuilder,
+    IMoveGenerator moveGenerator,
     ICubeMoveSetter cubeMoveSetter) : IRubiksCubeContext
 {
     private RubiksCube _cube = cube;
@@ -37,6 +43,24 @@ internal sealed class RubiksCubeContext(
         _cube = cubeMover.Move(_cube, move);
         cubeManager.Update(MainCubeViewModel, _cube);
         cubeManager.Update(SubCubeViewModel, _cube);
+    }
+
+    public void Recover()
+    {
+        _cube = cubeBuilder.Build(_cube.Dimension);
+        cubeManager.Update(MainCubeViewModel, _cube);
+        cubeManager.Update(SubCubeViewModel, _cube);
+    }
+
+    public async Task ShuffleAsync(int delayTime = 0)
+    {
+        var moves = moveGenerator.Generate(_cube.Dimension);
+
+        foreach (var move in moves)
+        {
+            Move(move);
+            await Task.Delay(delayTime);
+        }
     }
 
     public void ShowMoveArrows(MoveBase move)
