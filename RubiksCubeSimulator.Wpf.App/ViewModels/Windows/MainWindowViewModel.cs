@@ -103,9 +103,23 @@ internal sealed class MainWindowViewModel : ObservableObject
         };
     }
 
-    private static ButtonGroupViewModel CreateButtonGroupViewModel()
+    private ButtonGroupViewModel CreateButtonGroupViewModel()
     {
-        return new ButtonGroupViewModel();
+        return new ButtonGroupViewModel
+        {
+            RecoverSelectedCubeCommand = new RelayCommand(RecoverSelectedCube),
+            RecoverAllCubesCommand = new RelayCommand(RecoverAllCubes),
+        };
+
+        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
+
+        void RecoverSelectedCube() => SelectedCubeContext.Recover();
+
+        void RecoverAllCubes()
+        {
+            var cubeContexts = GetCubeContexts();
+            foreach (var cubeContext in cubeContexts) cubeContext.Recover();
+        }
     }
 
 

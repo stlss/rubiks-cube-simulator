@@ -15,6 +15,8 @@ public interface IRubiksCubeContext
 
     public void Move(MoveBase move);
 
+    public void Recover();
+
     public void ShowMoveArrows(MoveBase move);
 
     public void ClearMoveArrows();
@@ -24,6 +26,7 @@ internal sealed class RubiksCubeContext(
     RubiksCube cube,
     IRubiksCubeManager cubeManager,
     IRubiksCubeMover cubeMover,
+    IRubiksCubeBuilder cubeBuilder,
     ICubeMoveSetter cubeMoveSetter) : IRubiksCubeContext
 {
     private RubiksCube _cube = cube;
@@ -35,6 +38,13 @@ internal sealed class RubiksCubeContext(
     public void Move(MoveBase move)
     {
         _cube = cubeMover.Move(_cube, move);
+        cubeManager.Update(MainCubeViewModel, _cube);
+        cubeManager.Update(SubCubeViewModel, _cube);
+    }
+
+    public void Recover()
+    {
+        _cube = cubeBuilder.Build(_cube.Dimension);
         cubeManager.Update(MainCubeViewModel, _cube);
         cubeManager.Update(SubCubeViewModel, _cube);
     }
