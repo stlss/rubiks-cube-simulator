@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
             cubeMoveSetter: sp.GetRequiredService<ICubeMoveSetter>()));
     }
 
-    public static void AddKeyEventSubscriberBuilder(this IServiceCollection services)
+    public static void AddKeySubscriberBuilder(this IServiceCollection services)
     {
         services.AddSingleton<IKeyRubiksCubePublisherBuilder, KeyRubiksCubePublisherBuilder>();
         services.AddSingleton<IMovingRubiksCubePublisherBuilder, MovingRubiksCubePublisherBuilder>();
@@ -48,7 +48,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMoveApplierBuilder>(sp => new MoveApplierBuilder(
             moveBuilder: sp.GetRequiredService<IMoveBuilder>()));
 
-        services.AddSingleton<IKeyEventSubscriberBuilder>(sp => new KeyEventSubscriberBuilder(
+        services.AddSingleton<IKeySubscriberBuilder>(sp => new KeySubscriberBuilder(
             keyCubePublisherBuilder: sp.GetRequiredService<IKeyRubiksCubePublisherBuilder>(),
             movingCubePublisherBuilder: sp.GetRequiredService<IMovingRubiksCubePublisherBuilder>(),
             movedCubePublisherBuilder: sp.GetRequiredService<IMovedRubiksCubePublisherBuilder>(),

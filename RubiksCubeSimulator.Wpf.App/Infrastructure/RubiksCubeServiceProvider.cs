@@ -8,7 +8,7 @@ internal interface IRubiksCubeServiceProvider
 {
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder { get; }
 
-    public IKeyEventSubscriberBuilder KeyEventSubscriberBuilder { get;  }
+    public IKeySubscriberBuilder KeySubscriberBuilder { get;  }
 }
 
 internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
@@ -27,12 +27,12 @@ internal sealed class RubiksCubeServiceProvider : IRubiksCubeServiceProvider
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddRubiksCubeContextBuilder();
-        services.AddKeyEventSubscriberBuilder();
+        services.AddKeySubscriberBuilder();
     }
 
     public IRubiksCubeContextBuilder RubiksCubeContextBuilder =>
         _serviceProvider.GetRequiredService<IRubiksCubeContextBuilder>();
 
-    public IKeyEventSubscriberBuilder KeyEventSubscriberBuilder =>
-        _serviceProvider.GetRequiredService<IKeyEventSubscriberBuilder>();
+    public IKeySubscriberBuilder KeySubscriberBuilder =>
+        _serviceProvider.GetRequiredService<IKeySubscriberBuilder>();
 }

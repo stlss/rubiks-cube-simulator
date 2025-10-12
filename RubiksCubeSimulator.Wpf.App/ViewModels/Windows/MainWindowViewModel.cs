@@ -16,7 +16,7 @@ internal sealed class MainWindowViewModel : ObservableObject
     private readonly IRubiksCubeServiceProvider _serviceProvider = new RubiksCubeServiceProvider();
 
     private readonly Dictionary<RubiksCubeViewModel, IRubiksCubeContext> _mapSubCubeViewModelToContext;
-    private readonly Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> _mapCubeContextToKeyEventSubscriber;
+    private readonly Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> _mapCubeContextToKeySubscriber;
 
     private IRubiksCubeContext _selectedCubeContext;
     private readonly HashSet<Key> _pressedKeys = [];
@@ -55,7 +55,7 @@ internal sealed class MainWindowViewModel : ObservableObject
         _selectedCubeContext = cubeContexts[1];
 
         _mapSubCubeViewModelToContext = CreateMapSubCubeViewModelToContext(cubeContexts);
-        _mapCubeContextToKeyEventSubscriber = CreateMapCubeContextToKeyEventSubscriber(cubeContexts);
+        _mapCubeContextToKeySubscriber = CreateMapCubeContextToKeySubscriber(cubeContexts);
 
         CubeListViewModel = CreateCubeListViewModel(cubeContexts, SelectedCubeContext);
         CubeListViewModel.PropertyChanged += OnSelectedCubeViewModelPropertyChanged;
@@ -82,11 +82,11 @@ internal sealed class MainWindowViewModel : ObservableObject
             .ToDictionary();
     }
 
-    private Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> CreateMapCubeContextToKeyEventSubscriber(
+    private Dictionary<IRubiksCubeContext, ISubscriber<KeyEventArgs>> CreateMapCubeContextToKeySubscriber(
         IEnumerable<IRubiksCubeContext> cubeContexts)
     {
         return cubeContexts
-            .Select(cubeContext => (cubeContext, _serviceProvider.KeyEventSubscriberBuilder.Build(cubeContext)))
+            .Select(cubeContext => (cubeContext, _serviceProvider.KeySubscriberBuilder.Build(cubeContext)))
             .ToDictionary();
     }
 
@@ -133,7 +133,7 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private void NotifyKeyEventSubscriber(KeyEventArgs keyEventArgs)
     {
-        var keyEventSubscriber = _mapCubeContextToKeyEventSubscriber[SelectedCubeContext];
+        var keyEventSubscriber = _mapCubeContextToKeySubscriber[SelectedCubeContext];
         keyEventSubscriber.OnEvent(this, keyEventArgs);
     }
 
