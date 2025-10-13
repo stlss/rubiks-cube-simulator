@@ -109,19 +109,19 @@ internal sealed class MainWindowViewModel : ObservableObject
 
         return new ButtonGroupViewModel
         {
-            RecoverSelectedCubeCommand = new RelayCommand(RecoverSelectedCube),
+            ResetSelectedCubeCommand = new RelayCommand(ResetSelectedCube),
             ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube),
-            RecoverAllCubesCommand = new RelayCommand(RecoverAllCubes),
+            ResetAllCubesCommand = new RelayCommand(ResetAllCubes),
             ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes),
         };
 
         IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
 
-        void RecoverSelectedCube() => SelectedCubeContext.Recover();
+        void ResetSelectedCube() => SelectedCubeContext.Recover();
 
         async Task ShuffleSelectedCube() => await SelectedCubeContext.ShuffleAsync(delayTime);
 
-        void RecoverAllCubes()
+        void ResetAllCubes()
         {
             var cubeContexts = GetCubeContexts();
             foreach (var cubeContext in cubeContexts) cubeContext.Recover();
