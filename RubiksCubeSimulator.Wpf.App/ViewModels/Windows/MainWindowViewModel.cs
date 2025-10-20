@@ -21,6 +21,9 @@ internal sealed class MainWindowViewModel : ObservableObject
     private IRubiksCubeContext _selectedCubeContext;
     private readonly HashSet<Key> _pressedKeys = [];
 
+    private bool _isHandledKey = true;
+    private bool _isShuffling;
+
 
     private IRubiksCubeContext SelectedCubeContext
     {
@@ -39,7 +42,7 @@ internal sealed class MainWindowViewModel : ObservableObject
     public RubiksCubeViewModel SelectedMainCubeViewModel => _selectedCubeContext.MainCubeViewModel;
 
 
-    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0;
+    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0 && !_isShuffling;
 
     public bool IsButtonGroupControlEnabled => _pressedKeys.Count == 0;
 
@@ -62,8 +65,8 @@ internal sealed class MainWindowViewModel : ObservableObject
 
         ButtonGroupViewModel = CreateButtonGroupViewModel();
 
-        KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
-        KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
+        KeyDownCommand = new RelayCommand<KeyEventArgs>(e => HandleKeyEventArgs(e!), _ => _isHandledKey);
+        KeyUpCommand = new RelayCommand<KeyEventArgs>(e => HandleKeyEventArgs(e!), _ => _isHandledKey);
     }
 
 
@@ -106,20 +109,19 @@ internal sealed class MainWindowViewModel : ObservableObject
     private ButtonGroupViewModel CreateButtonGroupViewModel()
     {
         const int delayTime = 15;
+        var isEnabledButtons = true;
 
         return new ButtonGroupViewModel
         {
-            ResetSelectedCubeCommand = new RelayCommand(ResetSelectedCube),
-            ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube),
-            ResetAllCubesCommand = new RelayCommand(ResetAllCubes),
-            ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes),
+            ResetSelectedCubeCommand = new RelayCommand(ResetSelectedCube, GetIsEnabledButtons),
+            ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube, GetIsEnabledButtons),
+            ResetAllCubesCommand = new RelayCommand(ResetAllCubes, GetIsEnabledButtons),
+            ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes, GetIsEnabledButtons),
         };
-
-        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
 
         void ResetSelectedCube() => SelectedCubeContext.Recover();
 
-        async Task ShuffleSelectedCube() => await SelectedCubeContext.ShuffleAsync(delayTime);
+        async Task ShuffleSelectedCube() => await ExecuteWithDisableAsync(() => SelectedCubeContext.ShuffleAsync(delayTime));
 
         void ResetAllCubes()
         {
@@ -127,12 +129,57 @@ internal sealed class MainWindowViewModel : ObservableObject
             foreach (var cubeContext in cubeContexts) cubeContext.Recover();
         }
 
-        async Task ShuffleAllCubes()
+        async Task ShuffleAllCubes() => await ExecuteWithDisableAsync(async () =>
         {
             var cubeContexts = GetCubeContexts();
             var shuffleTasks = cubeContexts.Select(cubeContext => cubeContext.ShuffleAsync(delayTime));
             await Task.WhenAll(shuffleTasks);
+        });
+
+        async Task ExecuteWithDisableAsync(Func<Task> func)
+        {
+            Disable();
+            await func();
+            Enable();
         }
+
+        void Disable()
+        {
+            isEnabledButtons = _isHandledKey = false;
+            _isShuffling = true;
+
+            NotifyCanExecuteChangedButtonCommands();
+            NotifyCanExecuteChangedKeyCommands();
+            OnPropertyChanged(nameof(IsCubeListControlEnabled));
+        }
+
+        void Enable()
+        {
+            isEnabledButtons = _isHandledKey = true;
+            _isShuffling = false;
+
+            NotifyCanExecuteChangedButtonCommands();
+            NotifyCanExecuteChangedKeyCommands();
+            OnPropertyChanged(nameof(IsCubeListControlEnabled));
+        }
+
+        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
+
+        bool GetIsEnabledButtons() => isEnabledButtons;
+    }
+
+    private void NotifyCanExecuteChangedButtonCommands()
+    {
+        ButtonGroupViewModel.ResetSelectedCubeCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ShuffleSelectedCubeCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ResetAllCubesCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ShuffleAllCubesCommand!.NotifyCanExecuteChanged();
+    }
+
+    private void NotifyCanExecuteChangedKeyCommands()
+    {
+        KeyDownCommand.NotifyCanExecuteChanged();
+        KeyUpCommand.NotifyCanExecuteChanged();
     }
 
 
