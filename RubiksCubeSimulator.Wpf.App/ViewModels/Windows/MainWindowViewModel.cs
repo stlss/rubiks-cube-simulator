@@ -106,33 +106,70 @@ internal sealed class MainWindowViewModel : ObservableObject
     private ButtonGroupViewModel CreateButtonGroupViewModel()
     {
         const int delayTime = 15;
+        var isEnabledButtons = true;
 
         return new ButtonGroupViewModel
         {
-            ResetSelectedCubeCommand = new RelayCommand(ResetSelectedCube),
-            ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube),
-            ResetAllCubesCommand = new RelayCommand(ResetAllCubes),
-            ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes),
+            ResetSelectedCubeCommand = new RelayCommand(ResetSelectedCube, GetIsEnabledButtons),
+            ShuffleSelectedCubeCommand = new AsyncRelayCommand(ShuffleSelectedCube, GetIsEnabledButtons),
+            ResetAllCubesCommand = new RelayCommand(ResetAllCubes, GetIsEnabledButtons),
+            ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes, GetIsEnabledButtons),
         };
 
-        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
+        void ResetSelectedCube() => ExecuteWithDisable(() => SelectedCubeContext.Recover());
 
-        void ResetSelectedCube() => SelectedCubeContext.Recover();
+        async Task ShuffleSelectedCube() => await ExecuteWithDisableAsync(() => SelectedCubeContext.ShuffleAsync(delayTime));
 
-        async Task ShuffleSelectedCube() => await SelectedCubeContext.ShuffleAsync(delayTime);
-
-        void ResetAllCubes()
+        void ResetAllCubes() => ExecuteWithDisable(() =>
         {
             var cubeContexts = GetCubeContexts();
             foreach (var cubeContext in cubeContexts) cubeContext.Recover();
-        }
+        });
 
-        async Task ShuffleAllCubes()
+        async Task ShuffleAllCubes() => await ExecuteWithDisableAsync(async () =>
         {
             var cubeContexts = GetCubeContexts();
             var shuffleTasks = cubeContexts.Select(cubeContext => cubeContext.ShuffleAsync(delayTime));
             await Task.WhenAll(shuffleTasks);
+        });
+
+        void ExecuteWithDisable(Action action)
+        {
+            DisableButtons();
+            action();
+            EnableButtons();
         }
+
+        async Task ExecuteWithDisableAsync(Func<Task> func)
+        {
+            DisableButtons();
+            await func();
+            EnableButtons();
+        }
+
+        void DisableButtons()
+        {
+            isEnabledButtons = false;
+            NotifyCanExecuteChangedButtonCommands();
+        }
+
+        void EnableButtons()
+        {
+            isEnabledButtons = true;
+            NotifyCanExecuteChangedButtonCommands();
+        }
+
+        IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
+
+        bool GetIsEnabledButtons() => isEnabledButtons;
+    }
+
+    private void NotifyCanExecuteChangedButtonCommands()
+    {
+        ButtonGroupViewModel.ResetSelectedCubeCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ShuffleSelectedCubeCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ResetAllCubesCommand!.NotifyCanExecuteChanged();
+        ButtonGroupViewModel.ShuffleAllCubesCommand!.NotifyCanExecuteChanged();
     }
 
 
