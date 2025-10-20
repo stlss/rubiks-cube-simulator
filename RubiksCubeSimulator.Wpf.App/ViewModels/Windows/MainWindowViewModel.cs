@@ -20,6 +20,7 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private IRubiksCubeContext _selectedCubeContext;
     private readonly HashSet<Key> _pressedKeys = [];
+    private bool _isHandledKey = true;
 
 
     private IRubiksCubeContext SelectedCubeContext
@@ -62,8 +63,8 @@ internal sealed class MainWindowViewModel : ObservableObject
 
         ButtonGroupViewModel = CreateButtonGroupViewModel();
 
-        KeyDownCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
-        KeyUpCommand = new RelayCommand<KeyEventArgs>(keyEventArgs => HandleKeyEventArgs(keyEventArgs!));
+        KeyDownCommand = new RelayCommand<KeyEventArgs>(e => HandleKeyEventArgs(e!), _ => _isHandledKey);
+        KeyUpCommand = new RelayCommand<KeyEventArgs>(e => HandleKeyEventArgs(e!), _ => _isHandledKey);
     }
 
 
@@ -135,28 +136,30 @@ internal sealed class MainWindowViewModel : ObservableObject
 
         void ExecuteWithDisable(Action action)
         {
-            DisableButtons();
+            Disable();
             action();
-            EnableButtons();
+            Enable();
         }
 
         async Task ExecuteWithDisableAsync(Func<Task> func)
         {
-            DisableButtons();
+            Disable();
             await func();
-            EnableButtons();
+            Enable();
         }
 
-        void DisableButtons()
+        void Disable()
         {
-            isEnabledButtons = false;
+            isEnabledButtons = _isHandledKey = false;
             NotifyCanExecuteChangedButtonCommands();
+            NotifyCanExecuteChangedKeyCommands();
         }
 
-        void EnableButtons()
+        void Enable()
         {
-            isEnabledButtons = true;
+            isEnabledButtons = _isHandledKey = true;
             NotifyCanExecuteChangedButtonCommands();
+            NotifyCanExecuteChangedKeyCommands();
         }
 
         IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
@@ -170,6 +173,12 @@ internal sealed class MainWindowViewModel : ObservableObject
         ButtonGroupViewModel.ShuffleSelectedCubeCommand!.NotifyCanExecuteChanged();
         ButtonGroupViewModel.ResetAllCubesCommand!.NotifyCanExecuteChanged();
         ButtonGroupViewModel.ShuffleAllCubesCommand!.NotifyCanExecuteChanged();
+    }
+
+    private void NotifyCanExecuteChangedKeyCommands()
+    {
+        KeyDownCommand.NotifyCanExecuteChanged();
+        KeyUpCommand.NotifyCanExecuteChanged();
     }
 
 
