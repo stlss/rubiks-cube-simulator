@@ -20,7 +20,9 @@ internal sealed class MainWindowViewModel : ObservableObject
 
     private IRubiksCubeContext _selectedCubeContext;
     private readonly HashSet<Key> _pressedKeys = [];
+
     private bool _isHandledKey = true;
+    private bool _isShuffling;
 
 
     private IRubiksCubeContext SelectedCubeContext
@@ -40,7 +42,7 @@ internal sealed class MainWindowViewModel : ObservableObject
     public RubiksCubeViewModel SelectedMainCubeViewModel => _selectedCubeContext.MainCubeViewModel;
 
 
-    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0;
+    public bool IsCubeListControlEnabled => _pressedKeys.Count == 0 && !_isShuffling;
 
     public bool IsButtonGroupControlEnabled => _pressedKeys.Count == 0;
 
@@ -117,15 +119,15 @@ internal sealed class MainWindowViewModel : ObservableObject
             ShuffleAllCubesCommand = new AsyncRelayCommand(ShuffleAllCubes, GetIsEnabledButtons),
         };
 
-        void ResetSelectedCube() => ExecuteWithDisable(() => SelectedCubeContext.Recover());
+        void ResetSelectedCube() => SelectedCubeContext.Recover();
 
         async Task ShuffleSelectedCube() => await ExecuteWithDisableAsync(() => SelectedCubeContext.ShuffleAsync(delayTime));
 
-        void ResetAllCubes() => ExecuteWithDisable(() =>
+        void ResetAllCubes()
         {
             var cubeContexts = GetCubeContexts();
             foreach (var cubeContext in cubeContexts) cubeContext.Recover();
-        });
+        }
 
         async Task ShuffleAllCubes() => await ExecuteWithDisableAsync(async () =>
         {
@@ -133,13 +135,6 @@ internal sealed class MainWindowViewModel : ObservableObject
             var shuffleTasks = cubeContexts.Select(cubeContext => cubeContext.ShuffleAsync(delayTime));
             await Task.WhenAll(shuffleTasks);
         });
-
-        void ExecuteWithDisable(Action action)
-        {
-            Disable();
-            action();
-            Enable();
-        }
 
         async Task ExecuteWithDisableAsync(Func<Task> func)
         {
@@ -151,15 +146,21 @@ internal sealed class MainWindowViewModel : ObservableObject
         void Disable()
         {
             isEnabledButtons = _isHandledKey = false;
+            _isShuffling = true;
+
             NotifyCanExecuteChangedButtonCommands();
             NotifyCanExecuteChangedKeyCommands();
+            OnPropertyChanged(nameof(IsCubeListControlEnabled));
         }
 
         void Enable()
         {
             isEnabledButtons = _isHandledKey = true;
+            _isShuffling = false;
+
             NotifyCanExecuteChangedButtonCommands();
             NotifyCanExecuteChangedKeyCommands();
+            OnPropertyChanged(nameof(IsCubeListControlEnabled));
         }
 
         IReadOnlyList<IRubiksCubeContext> GetCubeContexts() => _mapCubeContextToKeySubscriber.Keys.ToList();
