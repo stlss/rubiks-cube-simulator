@@ -13,6 +13,4 @@ Use the buttons on the right side of the screen to randomly shuffle or reset the
 
 ### Moving the Cube
 Move the cube, point the cursor at the cube and use the W, A, S, D and Shift keys.
-![MovingCube1](Gifs/MovingCube1.gif)
-
-![MovingCube2](Gifs/MovingCube2.gif)
+![MovingCube1](Gifs/MovingCube.gif)
