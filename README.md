@@ -12,5 +12,14 @@ Use the buttons on the right side of the screen to randomly shuffle or reset the
 ![ShufflingResettingCube](Resources/Gifs/ShufflingResettingCube.gif)
 
 ### Moving the Cube
-Move the cube, point the cursor at the cube and use the W, A, S, D and Shift keys.
+Move the cube, point the cursor at the cube and use the 'W', 'A', 'S', 'D' and 'Shift' keys.
 ![MovingCube](Resources/Gifs/MovingCube.gif)
+
+## Installation
+* Download the `RubiksCubeSimulator.zip` archive from the [release page](https://github.com/stlss/rubiks-cube-simulator/releases/tag/v1.0)
+* Extract the zip-archive - it contains `.cmd` file a folder with the compiled application binaries
+* Run `CreateShortсut.cmd` to create a desktop shortcut
+* Launch **Rubik's Cube Simulator** using the created shortcut
+
+### Requirements
+* Windows 10 or later (64-bit)
